@@ -117,3 +117,11 @@ print('hello')
 > - git config --global -l
 > - git config user.name
 
+# 원격저장소 주요 개념
+ ## 중앙집중버전관리시스템
+ > - 로컬에서는 파일을 편집하고 서버에 반영
+ > - 중앙 서버에서만 버전을 관리
+
+ ## 분산버전관리시스템
+ > - 로컬에서도 버전을 기록하고 관리
+ > - 원격 저장소(remote repository)를 활용하여 협업
