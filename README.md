@@ -11,3 +11,5 @@
 📄 [2022.12.28_Git_활용](https://github.com/zzgh06/TIL/blob/master/Git.md)
 
 📄 [2022.12.29_Git_Branch](https://github.com/zzgh06/TIL/blob/master/GitBranch.md)
+
+📄 [2022.12.30_취업특강1](https://github.com/zzgh06/TIL/blob/master/%EC%B7%A8%EC%97%85%ED%8A%B9%EA%B0%951.md)
