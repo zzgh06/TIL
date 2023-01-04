@@ -17,3 +17,5 @@
 📄 [2023.01.02_Python_기초](https://github.com/zzgh06/TIL/blob/master/python%EA%B8%B0%EC%B4%88.md)
 
 📄 [2023.01.03_Python_제어문](https://github.com/zzgh06/TIL/blob/master/python_%EC%A0%9C%EC%96%B4%EB%AC%B8.md)
+
+📄 [2023.01.04_Python_함수](https://github.com/zzgh06/TIL/blob/master/python_%ED%95%A8%EC%88%98.md)
