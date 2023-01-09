@@ -21,3 +21,5 @@
 📄 [2023.01.04_Python_함수](https://github.com/zzgh06/TIL/blob/master/python_%ED%95%A8%EC%88%98.md)
 
 📄 [2023.01.05_Python_딕셔너리 모듈 예외처리](https://github.com/zzgh06/TIL/blob/master/python_%EB%AA%A8%EB%93%88_%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC.md)
+
+📄 [2023.01.09_Python_메서드](https://github.com/zzgh06/TIL/blob/master/python_method.md)
