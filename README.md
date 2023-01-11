@@ -27,3 +27,5 @@
 📄 [2023.01.10_Python_def](https://github.com/zzgh06/TIL/blob/master/python_def.md)
 
 📄 [2023.01.11_Python_class](https://github.com/zzgh06/TIL/blob/master/python_class.md)
+
+📄 [2023.01.11_swea_02](https://github.com/zzgh06/TIL/blob/master/02_swea.py)
