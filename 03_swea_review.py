@@ -31,7 +31,7 @@
 # 정수 N 의 약수를 오름차순으로 출력하는 프로그램을 작성하라.
 # 10
 
-# number = int(input())
-# for num in range(1, number+1): # 10의 약수를 구하기 위해 1~10까지 순회 되도록 for문을 사용
-#     if number % num == 0: # number 10을 num 1~10까지 차례대로 나눴을 때 나머지가 0 이 나오는 수 1 2 5 10 이 10의 약수 임으로 if 문 사용
-#         print(num, end=" ")
+number = int(input())
+for num in range(1, number+1): # 10의 약수를 구하기 위해 1~10까지 순회 되도록 for문을 사용
+    if number % num == 0: # number 10을 num 1~10까지 차례대로 나눴을 때 나머지가 0 이 나오는 수 1 2 5 10 이 10의 약수 임으로 if 문 사용
+        print(num, end=" ")
