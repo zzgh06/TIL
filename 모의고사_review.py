@@ -46,3 +46,90 @@
 #         print(f'#{t} 1')
 #     else:
 #         print(f'#{t} 0')
+
+# 3. 문자열의 거울상 
+# ‘b’, ‘d’, ‘p’, ‘q’로 이루어진 문자열이 주어진다. 이 문자열을 거울에 비추면 어떤 문자열이 되는지 구하는 프로그램을 작성하라.
+
+# 예를 들어, “bdppq”를 거울에 비추면 “pqqbd”처럼 나타날 것이다.
+
+# T = int(input())
+
+# for t in range(1, T+1):
+#     s = input()
+#     mirror = ''
+#     # 문자열을 역슬라이싱하고 뒤집어 반복문을 통해 순회
+#     for m in s[::-1]:
+#         # 조건문을 통해 문자열 'b'일 경우 'd'을 mirror 변수에 더해준다, 다른 문자열도 마찬가지의 형태로 진행한다
+#         if m == 'b':
+#             mirror += 'd'
+#         elif m == 'd':
+#             mirror += 'b'
+#         elif m == 'p':
+#             mirror += 'q'
+#         else:
+#             mirror += 'p'
+#     print(f'#{t} {mirror}')
+
+# 2번째 방법, 딕셔너리 사용하여 각 입력할 문자열을 key, 해당 문자열의 반대 형태를 value로 형성한다. 
+# dict_alpah = {
+#     'b' : 'd',
+#     'd' : 'b',
+#     'p' : 'q',
+#     'q' : 'p'
+# }
+
+# T = int(input())
+
+# for t in range(1, T+1):
+#     s = input()
+#     # mirror 변수에 입력된 문자열을 역슬라싱한 것을 대입하고
+#     mirror = s[::-1]
+#     # 딕셔너리 value 값을 저장할 문자열 변수 text를 생성해준다
+#     text = ''
+#     for i in range(len(mirror)):
+#         # 딕셔너리의 각 value 값을 차례대로 text 변수에 더하여 저장한다.
+#         text += dict_alpah[mirror[i]]
+
+#     print(f'#{t} {text}')
+
+# 4. 소득불균형
+# 통계 자료를 처리할 때, 평균이 전체 집단의 특징을 꼭 잘 표현하는 것은 아니다.
+# 예를 들어, 대다수의 국가에서는 적은 수의 사람이 국가 전체 소득의 꽤 많은 부분을 차지하기 때문에,
+# 해당 국가의 평균 소득은 보통 사람들의 소득보다 높은 경우가 많다.
+# 당신은, n명의 사람의 소득이 주어졌을 때 이 중 평균 이하의 소득을 가진 사람들의 수를 출력해야 한다.
+
+# T = int(input())
+
+# for t in range(1, T+1):
+#     n = int(input())
+#     cnt = 0
+#     income = list(map(int, input().split()))
+#     average = sum(income)//n
+    
+#     for num in income:
+#         if num <= average:
+#             cnt += 1
+#     print(f'#{t} {cnt}')
+
+# 4. 직사각형 길이 찾기
+# 직사각형의 네 변 중에서 세 변의 길이가 주어진다.
+# 나머지 한 변의 길이가 얼마인지 출력하는 프로그램을 작성하라.
+# 세 변의 길이는 상하좌우 어디든 될 수 있으므로 그 순서는 중요하지 않다.
+# 입력으로 직사각형이 불가능한 경우는 주어지지 않는다.
+
+# T = int(input())
+
+# for t in range(1, T+1):
+#     a, b, c = list(map(int, input().split()))
+#     if a == b:
+#         d = c
+#     elif a == c:
+#         d = b
+#     else:
+#         d = a
+#     print(f'#{t} {d}')
+
+# 5. 최빈수 구하기
+
+
+        
