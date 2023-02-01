@@ -87,3 +87,45 @@
 #             # 이때 출력은 실제 값으로 해야하기 때문에 인덱스 [1]를 출력
 #         else:
 #             print(0) # heap 리스트가 비어있다면 0를 출력함
+
+# 11279 : 최대힙
+# 배열에 자연수 x를 넣는다.
+# 배열에서 가장 큰 값을 출력하고, 그 값을 배열에서 제거한다.
+# import sys
+# import heapq
+
+# n = int(input())
+# heap = []
+
+# # Max Heap
+# for _ in range(n):
+#     x = int(sys.stdin.readline())
+#     if x != 0:
+#         heapq.heappush(heap, (-x))
+#     else:
+#         if len(heap) == 0:
+#             print(0)
+#         else:   
+#             print(-1 * heapq.heappop(heap))
+            # print(abs(heapq.heappop(heap)))
+# heapq 모듈을 사용하면서 약간의 트릭을 넣음으로써 최대 힙을 구현할 수 있다. heapq.heappush를 할 때 -의 값으로 집어넣는 것이다. 
+# 그렇다면, 기본적으로 heapq 모듈은 최소힙을 가정하므로 - 값이 가장 클 수록 상위에 위치하게 된다. 이것을 출력할 때 절댓값만 씌워주면 최대힙과 똑같다. 
+# (물론 음수는 들어가지 않는다는 전제하에. 이 문제는 음수는 입력하지 않는다고 했으므로 이렇게 풀 수 있음)
+
+
+# 10814 : 나이순 정렬 # lamda, sort
+# 조건 1) 나이순
+# 조건 2) 나이가 같으면 회원가입 순(기본적으로 회원가입순으로 입력조건이 갖춰져 있음)
+
+n = int(input())
+member = []
+
+for i in range(n):
+    age, name = map(str, input().split()) # 나이, 이름
+    age = int(age) # 나이순 정렬을 위해 정수형으로 변환
+    member.append((age, name)) 
+
+member.sort(key = lambda x : x[0]) # (age, name)에서 age만 비교하기 위해 lamda 활용
+
+for i in member:
+    print(i[0], i[1])
