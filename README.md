@@ -12,7 +12,7 @@
 
 📄[2023.02.01_2D_LIST](https://github.com/zzgh06/TIL/blob/master/2D_list.md)
 
-📄[2023.02.01_2D_LIST](https://github.com/zzgh06/TIL/blob/master/2D_list.md)
+📄[2023.02.02_Graph](https://github.com/zzgh06/TIL/blob/master/230202_graph.md)
 
 ### **📘 1월 Link**
 
