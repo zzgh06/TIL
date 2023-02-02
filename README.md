@@ -6,13 +6,17 @@
     2. 당일 실습 문제 review 하며 복습
 
 ### **💻 금일 회고**
-    
+    오늘 오전 graph 내용 자체는 크게 어렵지 않았으나, 역시나 이를 코드로 구현하니 헷갈린다 그래서 파이썬 튜텨를 활용했다.
+    index 활용능력이 부족한 듯 하다, 부족한 부분을 알았으니 연습만이 답인 것 같다, 계속 문제를 풀어보자!!
+    그리고 여러 함수를 사용하면서 그 방법이 헷갈리는게 많은 것 같다, 필수적으로 많이 사용하는 함수는 날 잡아서 외워나야겠다.
 
 ### **📗 2월 LINK**
 
 📄[2023.02.01_2D_LIST](https://github.com/zzgh06/TIL/blob/master/2D_list.md)
 
 📄[2023.02.02_Graph](https://github.com/zzgh06/TIL/blob/master/230202_graph.md)
+
+📄[23.02.02_training_review](https://github.com/zzgh06/TIL/blob/master/230202_training_review.py)
 
 ### **📘 1월 Link**
 
