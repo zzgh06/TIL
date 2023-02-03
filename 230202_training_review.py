@@ -62,8 +62,8 @@
 #     for j in range(i+1, len(word)):
 #         first = word[:i] # ['m', 'o', 'b', 'i', 't']
 #         second = word[i:j] # ['o', 'b', 'i', 't', 'e']
-#         third = word[j:] # ['l']
-#     print(first, second, third)
+#         third = word[j:] # ['b', 'i', 't', 'e', 'l']
+#         print(first, second, third)
 #         first.reverse()  # .reverse는 리스트 함수로 각 단어를 뒤집는다
 #         second.reverse()
 #         third.reverse()
