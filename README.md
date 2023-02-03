@@ -6,9 +6,9 @@
     2. 당일 실습 문제 review 하며 복습
 
 ### **💻 금일 회고**
-    오늘 오전 graph 내용 자체는 크게 어렵지 않았으나, 역시나 이를 코드로 구현하니 헷갈린다 그래서 파이썬 튜텨를 활용했다.
-    index 활용능력이 부족한 듯 하다, 부족한 부분을 알았으니 연습만이 답인 것 같다, 계속 문제를 풀어보자!!
-    그리고 여러 함수를 사용하면서 그 방법이 헷갈리는게 많은 것 같다, 필수적으로 많이 사용하는 함수는 날 잡아서 외워나야겠다.
+    오늘은 3번째(?) 알고리즘 테스트를 진행했다, 문제를 풀면서 어려웠지만 스스로 부족한 부분이 뭔지 점검할 수 있었으니 성과(?)는 있었던 같다.
+    백준보다는 SWEA의 지문이 좀더 이해하기가 쉬웠던 같기는 한데 그래도 어렵다!
+    강사님 말씀처럼 나중에 되돌아봤을때, 이정도는 쉽게 풀 수 있는 개발자로 성장했었으면 좋겠다.    
 
 ### **📗 2월 LINK**
 
@@ -17,6 +17,8 @@
 📄[2023.02.02_Graph](https://github.com/zzgh06/TIL/blob/master/230202_graph.md)
 
 📄[23.02.02_training_review](https://github.com/zzgh06/TIL/blob/master/230202_training_review.py)
+
+📄[23.02.03_algorithm_test_review](https://github.com/zzgh06/TIL/blob/master/230203_algorithm_test_review.py)
 
 ### **📘 1월 Link**
 
