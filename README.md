@@ -6,8 +6,11 @@
     2. 당일 실습 문제 review 하며 복습
 
 ### **💻 금일 회고**
-    너무 피곤해서 오늘은 도저히 집중히 되지않아 백준 2839 설탕 문제만 하나 진행했다.
-    우선 쉬고 컨디션을 회복하여 다시 시작하는 한 주를 기운차게 하는 것이 나을 듯하다!!😵
+    그래프 이해할 듯 말듯한 상태에서 깊이우선탐색(DFS)를 진행하니 더 알듯말듯했던 것 같다 😵
+    오늘 비모 강사님께서 말씀하신 것처럼 문제를 한 번 읽을 때 꼼꼼히 읽도록 습관을 고쳐야겠다고 생각하여
+    실습시간에 문제의 지문을 읽어 내려갈때 꼼꼼히 읽으니 여러번 읽지 않아서 시간적으로 낭비가 덜했던 것 같다.
+    오늘 마지막 문제는 대각선에 위치한 것도 탐색해야하는 것까진 알겠는데 그 이후에는 어떻게 해야할지 감이 안와서 손도 못됐다.
+    내일 강사님의 문제 풀이 시간에 집중해야겠다!
 
 ### **📗 2월 LINK**
 
@@ -20,6 +23,8 @@
 📄[23.02.03_algorithm_test_review](https://github.com/zzgh06/TIL/blob/master/mock%20exam/230203_algorithm_test_review.py)
 
 📄[23.02.04_list_function](https://github.com/zzgh06/TIL/blob/master/individual%20learning/230204_list_function.md)
+
+📄[23.02.06_DFS](https://github.com/zzgh06/TIL/blob/master/class_content/230206_DFS.md)
 
 ### **📘 1월 Link**
 
