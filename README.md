@@ -6,12 +6,12 @@
     2. 당일 실습 문제 review 하며 복습
 
 ### **💻 금일 회고**
-    오늘은 교회에 다녀오니 21시가 넘어 그냥 쉬려다 그래도 1 커밋은 하고 쉬자라는 마음으로 
-    코드업 기본 100제 중, 10문제만 풀었다, 내일 마저 풀고 백준 문제를 풀이를 다시 시작해야겠다. 
-    다시 시작하는 한 주간도 열심히 화이팅 하자💪
+    오늘은 sql의 DQL 검색에서 좀 더 심화적인 부분을 배웠다, 알고리즘에서 워낙 데여서 그런지 아직은 할만한것 같다.
+    또, 코드업 기본 100제 나머지 부분들을 다 클리어 하고, 이것이 코딩테스트다 알고리즘에 챕터 초반 부분을 진행했다. 
     
 ### **📒 금일 알고리즘 풀이**
-    코드업 기본 100제(6051 ~ 6060)
+    코드업 기본 100제(6061 ~ 6068)
+    이것이 코딩테스트다 그리디 알고리즘 예제 1, 문제 1
 
 
 ### **📗 2월 LINK**
@@ -31,6 +31,8 @@
 📄[23.02.08_RDBMS](https://github.com/zzgh06/TIL/blob/master/class_content/230208_RDBMS.md)
 
 📄[23.02.08_SQL_Basics](https://github.com/zzgh06/TIL/blob/master/class_content/230209_SQL_Basics.md)
+
+📄[23.02.13_SQL_Single_Table_Queries](https://github.com/zzgh06/TIL/blob/master/class_content/230213_SQL_Single_Table_Queries.md)
 
 ### **📘 1월 Link**
 
