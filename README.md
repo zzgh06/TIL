@@ -42,6 +42,8 @@
 
 📄[23.02.15_SQL_Multi_Table_Queries](https://github.com/zzgh06/TIL/blob/master/class_content/230215_SQL_Multi_Table_Queries.md)
 
+📄[23.02.16_SQL_Nested_Queries](https://github.com/zzgh06/TIL/blob/master/class_content/230216_SQL_Nested_Queries.md)
+
 ### **📘 1월 Link**
 
 📄 [2022.12.27_markdown](https://github.com/zzgh06/TIL/blob/master/class_content/markdown.md)
