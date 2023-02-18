@@ -45,3 +45,10 @@
 # for tc in range(1, T+1):
 #     n, m = map(int, input().split())
 #     print(f'#{tc}', n**m)
+
+# 10807 : 개수 세기
+# n = int(input())
+# numbers = list(map(int, input().split()))
+# v = int(input())
+# print(numbers.count(v))
+    
