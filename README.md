@@ -11,7 +11,6 @@
     바빠서 알고리즘도 제대로 풀지 못했고 당연히 sql 문제도 풀지 못하였는데, 오후 실습 초반에 기억을 더듬느라 다소 어려움이 있었다.
     과정이 끝나더라도 휘발성 지식이 되지 않도록 계속 문제 풀이를 진행해야겠다;;
     저녁에는 복습 후에 sql 문제 1문제와 알고리즘 풀이를 3문제 진행하였다, 원래는 다섯 문제 정도 풀고싶었는데, 포기 ㅎㅎ
-    너무 스스로를 자만한 자습 목표였나보다;; 
 
     
 ### **📒 금일 알고리즘 풀이**
@@ -46,6 +45,8 @@
 📄[23.02.15_SQL_Multi_Table_Queries](https://github.com/zzgh06/TIL/blob/master/class_content/230215_SQL_Multi_Table_Queries.md)
 
 📄[23.02.16_SQL_Nested_Queries](https://github.com/zzgh06/TIL/blob/master/class_content/230216_SQL_Nested_Queries.md)
+
+📄[23.02.20_SQL__Advanced01](https://github.com/zzgh06/TIL/blob/master/class_content/230220_SQL_Advanced01.md)
 
 ### **📘 1월 Link**
 
