@@ -6,11 +6,11 @@
     2. 당일 실습 문제 review 하며 복습
 
 ### **💻 금일 회고**
-    오늘 웹 실습은 학습 내용을 이해하며 진행했다기 보다, 억지로 이해하여 꾸역꾸역한 느낌이다.
-    뭐 하나 쉬운 과정은 없는 듯 하다.
-    저녁 개인 자습 시간에는 sqld 자격증 공부, 알고리즘 강의 1강 시청 등 나름 계획대로 진행하다,
-    너무 졸려서 금일 학습내용 정리는 다음으로 미루려고 한다. 공부할 때 왜 체력이 중요하다고 하는지
-    새삼 깨닫는 요즘이다.
+    금일 web 실습도 열심히 삽질하면서 억지로 조정해가는 느낌이었다, 강의 내용은 오히려 이전 강의보다 이해가 잘되서 실습에서도 그럴 줄 알았는데...
+    그러지 못했다, 그래도 조건에 따라 화면 구성은 했으니 일단 ok(?)겠지...ㅎㅎ
+    개인 자습 시간에는 sqld 자격증 공부를 하다, 중간에 개인적으로 큰 일(?)생겨서 집중해서 진행하지 못했다, 내일 휴일이니깐 오늘 못한 것 만큼
+    빡세게 해야할 것 같다. 
+    내일을 위해(?) 금일은 학습내용까지 TIL에 정리하고 마무리하고자 한다.
 
 
 ### **📒 금일 알고리즘 풀이**
@@ -51,6 +51,8 @@
 📄[23.02.22_Web_HTML_and_CSS](https://github.com/zzgh06/TIL/blob/master/class_content/230222_Web_HTML_and_CSS.md)
 
 📄[23.02.23_Web_The_Box_Model](https://github.com/zzgh06/TIL/blob/master/class_content/230223_Web_The_Box_Model.md)
+
+📄[23.02.28_Web_Flexible_box](https://github.com/zzgh06/TIL/blob/master/class_content/230228_Web_Flexible_box.md)
 
 ### **📘 1월 Link**
 
