@@ -20,7 +20,7 @@
 
 
 ### **📙 3월 LINK**
-📄[23.03.02_Web_Semantic]()
+📄[23.03.02_Web_Semantic](https://github.com/zzgh06/TIL/blob/master/class_content/230302_Web_Semantic.md)
 
 ### **📗 2월 LINK**
 
