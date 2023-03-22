@@ -6,9 +6,8 @@
     2. 당일 실습 문제 review 하며 복습
 
 ### **💻 금일 회고**
-    오늘은 오전 강의 후, 오후에는 예비군 훈련을 갔다오느라 실습을 진행하지 못해 집에 돌아온 후
-    실습을 진행해봤다, 그러나 뭐가 문제인지 연결이 안된다. 짜증난다... 근데 피곤해서 더 이상
-    시도를 하지 못하겠다. 내일 정신이 말짱한(?) 상태로 다시 해봐야겠다.
+    django 경로 문제로 인해 오늘 좀 고생했다, 경로... 생각보다 많이 중요한 것 같다.
+    그래도 프론트와 달리 오류가 어디서 발생하는지 알 수 있으니깐 앞으로도 이를 활용해서 문제를 잘 해결해 나가야겠다.
     
 
 ### **📒 금일 알고리즘 풀이**
@@ -16,6 +15,10 @@
 
 ### **📙 3월 LINK**
 📄[23.03.02_Web_Semantic](https://github.com/zzgh06/TIL/blob/master/class_content/230302_Web_Semantic.md)
+
+📄[23.03.21_Django_Basic](https://github.com/zzgh06/TIL/blob/master/Django/230321_django.md)
+
+📄[23.03.22_Django_template](https://github.com/zzgh06/TIL/blob/master/Django/230322_django.md)
 
 ### **📗 2월 LINK**
 
