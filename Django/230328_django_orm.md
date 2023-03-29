@@ -115,6 +115,39 @@ print(count)
 # 마지막 단일 데이터의 title, content, journalist 필드를 조회하고 아래와 같은 형식으로 출력 last() 메서드 활용
 newspaper = Newspaper.objects.last()
 print(f"title : {newspaper.title}\ncontent : {newspaper.content}\njournalist : {newspaper.journalist}")
+```
 
+## ORM UPDATE
+
+**데이터 수정**
+```python
+# 수정할 인스턴스 조회
+article = Article.objects.get(pk=1)
+
+# 인스턴스 변수를 변경
+article.title = '변경'
+
+# 저장
+article.save()
+
+# 정상적으로 변경된 것을 확인
+article.title
+# 결과 : 변경
+```
+
+## ORM DELETE
+
+**데이터 삭제**
+```python
+# 삭제할 인스턴스 조회
+article = Article.objects.get(pk=1)
+
+# delete 메서드 호출 (삭제된 객체가 반환)
+article.delete()
+(1, {'article.Aticle' : 1})
+
+# 삭제한 데이터는 더이상 조회할 수 없음
+Article.objects.get(pk=1)
+# DoexNotExist: ...
 ```
 
