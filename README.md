@@ -6,14 +6,14 @@
     2. 당일 실습 문제 review 하며 복습
 
 ### **💻 금일 회고**
-    오늘은 querySetAPI를 이용히여 sql 쿼리에 데이터를 생성, 조회를 하였다.
-    음 어렵긴한데, html, css, js 보다는 나은 것 같기도 하다, 이것도 초반이라 그럴 수도 있다 ^^
-    우선 백엔드 방향에 중점을 두고 공부해보고자 한다, 내일부터는 백준 알고리즘 문제 혹은 이코테를 통해 그동안
-    놓고 있었던 알고리즘을 다시 시작하고자 한다. 
+    오늘 django 학습 및 실습 내용 자체는 복잡했지만 진행함에 있어서 Error는 뜨지 않고 나름 매끄럽게 진행된 것 같다.
+    그러나 그렇게 진행된 이유가 문제 로직 자체를 상세히 해주신 강사님 덕분이고 점차 문제를 상세히 제시하지 않고 
+    진행하신다고 하니 구조를 이해하고 계획할 수 있어야 할 것 같다.
+    오늘은 몸이 지쳤는지 집중을 잘 하지 못한 것 같다... 내일은 더 열심히 해야겠다.
     
 
 ### **📒 금일 알고리즘 풀이**
-    코드트리 조건문 전체풀이
+    코드트리 반복문 풀이
     
 
 ### **📙 3월 LINK**
@@ -24,6 +24,10 @@
 📄[23.03.22_Django_template](https://github.com/zzgh06/TIL/blob/master/Django/230322_django.md)
 
 📄[23.03.23_Django_urls](https://github.com/zzgh06/TIL/blob/master/Django/230323_django_urls.md)
+
+📄[23.03.28_Django_orm](https://github.com/zzgh06/TIL/blob/master/Django/230328_django_orm.md)
+
+📄[23.03.29_Django_orm_with_view](https://github.com/zzgh06/TIL/blob/master/Django/230329_django_orm_with_view.md)
 
 ### **📗 2월 LINK**
 
