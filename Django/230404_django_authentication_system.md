@@ -43,3 +43,106 @@ from .models import User
 
 admin.site.register(User, UserAdmin)
 ```
+
+## Login
+
+**Login**
+
+    Session을 create하는 과정
+
+**AuthenticationForm()**
+
+    로그인을 위한 built-in form
+
+```python
+로그인 페이지 작성
+# accounts/urls.py
+
+app_name = 'accounts'
+urlpatterns = [
+  path('login/', views.login, name="login"),
+]
+
+# accounts/views.py
+
+from django.contrib.auth.forms import AuthenticationForm
+
+def login(request):
+  if request.method == 'POST':
+    pass
+  else:
+    form = AuthenticationForm()
+  context = {
+    'form': form,
+  }
+  return render(request, 'account/login.html', context)
+```
+```html
+<!-- account/login.html -->
+
+<h1>로그인</h1>
+<form action="{% url 'accounts:login' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Logout">
+    <input type="submit">
+</form>
+```
+
+```python
+로그인 로직 작성
+# accounts/views.py
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as auth_login # 함수명과 빌트인 함수명이 같아 as를 통해 별칭 설정
+
+def login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user()) 
+            # get_user() : AuthenticationForm의 인스턴스 메서드 유효성 검사를 통과했을 경우 로그인 한 사용자 객체를 반환
+            return redirect('articles:index')
+    else:
+        form = AuthenticationForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/login.html', context)
+```
+
+```html
+로그인 링크 작성
+<!-- account/index.html -->
+
+<h1>Articles</h1>
+<a href="{% url 'accounts:login' %}">Login</a>
+```
+
+## Logout
+
+**Logout**
+
+    - Session을 Delete하는 과정
+    - logout(request)
+      1. 현재 요청에 대한 session data를 DB에서 삭제
+      2. 클라이언트의 쿠키에서도 session id를 삭제
+
+```python
+로그아웃 로직 작성
+# accounts/urls.py
+
+app_name = 'accounts'
+urlpatterns = [
+  path('login/', views.login, name="login"),
+  path('logout/', views.logout, name='logout'),
+]
+
+# accounts/views.py
+
+from django.contrib.auth import logout as auth_logout
+
+def logout(request):
+    auth_logout(request)
+    return redirect('articles:index')
+```
