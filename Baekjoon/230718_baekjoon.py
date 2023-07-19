@@ -19,6 +19,7 @@
 # Aa0aPAf985Bz1EhCz2W3D1gkD6x
 # 칠판에 붙여진 단어들이 주어질 때, 영석이가 세로로 읽은 순서대로 글자들을 출력하는 프로그램을 작성하시오.
 
+#1
 arr = [[] for _ in range(15)]
 
 for _ in range(5):
@@ -31,3 +32,11 @@ result = ''
 for i in range(len(arr)):
     result += ''.join(arr[i])
 print(result)
+
+#2
+words = [input() for i in range(5)]
+
+for j in range(15):
+    for i in range(5):
+        if j < len(words[i]):
+            print(words[i][j], end='')

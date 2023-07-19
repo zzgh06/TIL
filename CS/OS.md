@@ -212,3 +212,48 @@
         - CPU를 특정 프로그램이 족접하는 것으로부터 보호
       - 타이머는 time sharing을 구현하기 위해 널리 이용됨
       - 타이머는 현재 시간을 계산하기 위해서도 사용
+
+    Device Controller
+      - I/O device controller
+        - 해당 I/O 장치유형을 관리하는 일종의 작은 CPU
+        - 제어 정보를 위해 control register, status register를 가짐
+        - local buffer를 가짐(일종의 data register)
+      - I/O는 실제 device와 local buffer 사이에서 일어남
+      - Device controller는 I/O가 끝났을 경우 interrupt로 CPU에 그 사실을 알림
+
+      - device driver(장치구동기)
+        : OS 코드 중 각 장치별 처리루틴 -> software
+      - device controller(장치제어기)
+        : 각 장치를 통제하는 일종의 작은 CPU -> hardware
+
+    인터럽트(Interrupt)
+      - 현대의 운영체제는 인터럽트에 의해 구동됨
+      - 인터럽트
+        : 인터럽트 당한 시점의 레지스터와 program counter를 save 한 후 CPU의 제어를 인터럽트 처리 루틴에 넘긴다
+      - 인터럽트의 넓은 의미
+        - Trap (소프트웨어 인터럽트)
+          - Exception : 프로그램이 오류를 범한 경우
+          - System call : 사용자 프로그램이 운영체제의 서비스를 받기 위해 커널 함수를 호출하는 것
+
+        - Interrupt (하드웨어 인터럽트 : 디스크 컨트롤러, 타이머) 
+        : 하드웨어가 발생시킨 인터럽트 I/O 디바이스에 의한 인터럽트로 프로그램이 하드웨어, I/O 디바이스에 담긴 파일을 읽어와야 할 때, CPU는 직접 접근을 할 수 없기 때문에 I/O 디바이스를 전담하는 Controller에게 부탁(device driver)하여 파일을 불러오며 발생하는 인터럽트
+
+    동기식 입출려과 비동기식 입출력
+      - 동기식 입출력(synchronous I/O)
+        - I/O 요청 후 입출력 작업이 완료된 후에야 제어가 사용자 프로그램에 넘어감
+        - 구현 방법 1
+          - I/O가 끝날 때까지 CPU를 낭비시킴
+          - 매시점 하나의 I/O만 일어날 수 있음
+        - 구현 방법 2
+          - I/O가 완료될 때까지 해당 프로그램에게서 CPU를 빼앗음
+          - I/O 처리를 기다리는 줄에 그 프로그램에게서 줄 세움
+          - 다른 프로그램에게 CPU를 줌
+      - 비동기식 입출력(asynchronous I/O)
+        - I/O가 시작된 후 입출력 작업이 끝나기를 기다리지 않고 제어가 사용자 프로그램에 즉시 넘어감
+      - 두 경우 모두 I/O의 완료는 인터럽트로 알려줌
+
+    DMA(Direct Memory Access)
+      - DMA (Direct Memory Access)
+        - 빠른 입출력 장치를 메모리에 가까운 속도로 처리하기 위해 사용
+        - CPU의 중재 없이 device controller가 device의 buffer storage의 내용을 메모리에 block 단위로 직접 전송
+        - 바이트 단위가 아니라 block 단위로 인터럽트를 발생시킴
