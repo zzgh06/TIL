@@ -359,3 +359,78 @@ Process Control Block(PCB)
     - 여유 공간 마련을 위해 프로세스를 통째로 메모리에서 디스크로 쫓아냄
     - 프로세스에게서 memory를 뺏는 문제
     - degree of Multiprogramming을 제어
+
+프로세스의 상태도
+
+  ![프로세스상태도](./images//프로세스상태도.png)
+
+Thead(CPU 수행의 실행단위)
+  - "A thead(or lightweight process) is a basic unit of CPU utilization"
+  - Thead의 구성
+    - program counter
+    - register set
+    - stack space
+  
+  - Thead가 동료 thead와 공유하는 부분(=task)
+    - code section
+    - data section
+    - OS resources
+
+  - 전통적인 개념의 heavyweight process는 하나의 thead를 가지고 있는 task로 볼 수 있다
+
+  - 다중 스레드로 구성된 태스크 구조에서는 하나의 서버 스레드가 blocked(waiting) 상태인 동안에도 동일한 태스크 내의 다른 스레드가 실행(running)되어 처리를 할 수 있다
+
+  - 동일한 일을 수행하는 다중 스레드가 협력하여 높은 처리율(throughput)과 성능 향상을 얻을 수 있다
+
+  - 스레드를 사용하면 병렬성을 높일 수 있다
+  
+  ![싱글,멀티스레드](./images//싱글,멀티스레드.png)
+
+Benefits of Threads
+
+  - Responsiveness : 응답성이 빠르다
+  - Resource Sharing : 자원공유(동일 프로세스의 스레드)
+  - Economy : 효율적(경제성)
+  - Utilization of MP Architectures : 병렬성
+
+프로세스 생성(Process Creation)
+
+  - 부모 프로세스가 자식 프로세스 생성 : fork()
+  
+  - 프로세스의 트리(계층 구조)형성
+
+  - 프로세스는 자원을 필요로 함
+    - 운영체제로부터 받는다
+    - 부모와 공유한다 : 가끔, 보통은 경쟁
+
+  - 자원의 공유
+    - 부모와 자식이 모든 자원을 공유하는 모델
+    - 일부를 공유하는 모델
+    - 전혀 공유하지 않는 모델
+
+  - 수행(Execution)
+    - 부모와 자식은 공존하며 수행되는 모델
+    - 자식이 종료(terminate)될 때까지 부모가 기다리는(wait) 모델
+
+  - 주소 공간(Address space)
+    - 자식은 부모의 공간을 복사함(binary and OS data)
+    - 자식은 그 공간에 새로운 프로그램을 올림
+
+  - 유닉스의 예
+    - fork() 시스템 콜이 새로운 프로세스를 생성
+      - 부모을 그대로 복사(OS data except PID + binary)
+      - 주소 공간 할당
+    - fork 다음에 이어지는 exec() 시스템 콜을 통해 새로운 프로그램을 메모리에 올림
+
+프로세스 종료(Process Termination)
+
+  - 프로세스가 마지막 명령을 수행한 후 운영체제에게 이를 알려줌(exit)
+    - 자식이 부모에게 output data를 보냄(via wait)
+    - 프로세스의 각종 자원들이 운영체제에게 반납됨
+
+  - 부모 프로세스가 자식의 수행을 종료시킴(abort)
+    - 자식이 할당 자원의 한계치를 넘어섬
+    - 자식에게 할당된 태스크가 더 이상 필요하지 않음
+    - 부모가 종료(exit)하는 경우
+      - 운영체제는 부모 프로세스가 종료하는 경우 자식이 더 이상 수행되도록 두지 않는다
+      - 단계적인 종료
