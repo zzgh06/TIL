@@ -434,3 +434,122 @@ Benefits of Threads
     - 부모가 종료(exit)하는 경우
       - 운영체제는 부모 프로세스가 종료하는 경우 자식이 더 이상 수행되도록 두지 않는다
       - 단계적인 종료
+
+프로세스 관련한 시스템 콜
+  - fork() : create a child(copy)
+  - exec() : overlay new image
+  - wait() : sleep until child is done
+  - exit() : frees all the resources, notify parent
+
+  fork() 시스템콜
+    - A process is created by the fork() system call
+      - creates a new address space that is a duplicate of the caller
+
+  exec() 시스템콜
+    - A process can execute a different program by the exec() system call
+      - replaces the memory image of the caller with a new program
+
+  wait() 시스템콜
+    - 프로세스 A가 wait() 시스템 콜을 호출하면
+      - 커널은 child가 종료될 때까지 프로세스 A를 sleep 시킨다(block 상태)
+      - Child process가 종료되면 커널은 프로세스 A를 깨운다(replay 상태)
+
+  exit() 시스템 콜
+    - 프로세스의 종료
+      - 자발적 종료
+        - 마지막 statement 수행 후 exit() 시스템 콜을 통해
+        - 프로그램에 명시적으로 적어주지 않아도 main 함수가 리턴되는 위치에 컴파일러가 넣어줌
+
+      - 비자발적 종료
+        - 부모 프로세스가 자식 프로세스를 강제 종료시킴
+          - 자식 프로세스가 한계치를 넘어서는 자원 요청
+          - 자식에게 할당된 태스크가 더 이상 필요하지 않음
+        - 키보드로 kill, break 등을 친 경우
+        - 부모가 종료하는 경우
+          - 부모 프로세스가 종료하기 전에 자식들이 먼저 종료됨
+
+프로세스 간 협력
+
+  - 독립적 프로세스
+    - 프로세스는 각자의 주소 공간을 가지고 수행되므로 원칙적으로 하나의 프로세스는 다른 프로세스의 수행에 영향을 미치지 못함
+  
+  - 협력 프로세스
+    - 프로세스 협력 메커니즘을 통해 하나의 프로세스가 다른 프로세스의 수행에 영향을 미칠 수 있음
+
+  
+  - 프로세스 간 협력 메커니즘(IPC : InterProcess Communication)
+      
+      ![IPC](./images/IPC.png)
+
+    - 메세지를 전달하는 방법
+      - message passing : 커널을 통해 메시지 전달
+        
+        ![메시지_패싱](./images/메시지_패싱.png)
+
+    - 주소 공간을 공유하는 방법
+      - shared memory : 서로 다른 프로세스 간에도 일부 주소 공간을 공유하게 하는 shared memory 메커니즘이 있음
+
+      - thread : thread는 사실상 하나의 프로세스이므로 프로세스 간 협력으로 보기는 어렵지만 동일한 process를 구성하는 thread 들 간에는 주소 공간을 공유하므로 협력이 가능
+
+# CPU 스케줄링
+
+  - CPU-burst Time의 분포
+
+  ![CPU_burst_Time의_분포](./images/CPU_burst_Time의_분포.png)
+
+  - 프로세스의 특성 분류
+    - 프로세스는 그 특성에 따라 다음 두 가지로 나눔
+      - I/O-bound process
+        - CPU를 잡고 계산하는 시간보다 I/O에 많은 시간이 필요한 job
+        - (many short CPU bursts)
+
+      - CPU-bound process
+        - 계산 위주의 job
+        - (few very long CPU bursts)
+
+  - CPU Scheduler & Dispatcher
+    - CPU Scheduler
+      - Replay 상태의 프로세스 중에서 이번에 CPU를 줄 프로세스를 고른다
+    
+    - Dispatcher
+      - CPU의 제어권을 CPU scheduler에 의해 선택된 프로세스에게 넘긴다
+      - 이 과정을 context switch(문맥 교환)라고 한다
+
+    - CPU 스케줄링이 필요한 경우는 프로세스에게 다음과 같은 상태 변화가 있는 경우이다
+      1. Running -> Blocked(예: I/O 요청하는 시스템 콜)
+      2. Running -> Replay(예: 할당하는 시간만료로 timer Interrupt)
+      3. Blocked -> Replay(예: I/O 완료 후 인터럽트)
+      4. Terminate
+
+      * 1번, 4번 에서의 스케줄링은 nonpreemptive(=강제로 빼앗지 않고 자진 반납)
+      * 2번, 3번 스케줄링은 preemptive(=강제로 빼앗음)
+
+
+  - Scheduling Criteria
+
+  ![Scheduling Criteria](./images/Scheduling_Criteria.png)
+
+  - Scheduling Algorithms
+    - FCFS(First-Come First-Served)
+
+      ![FCFS2](./images/FCFS2.png) ![FCFS](./images/FCFS.png)
+    
+    - SJF(Shortest-Job-First)
+
+      ![SJF](./images/SJF.png)
+    
+    - Priority Scheduling
+
+      ![Priority_Scheduling](./images/Priority_Scheduling.png)
+
+    - Round Robin(RR)
+
+      ![Round_Robin](./images/Round_Robin.png)
+
+    - Multilevel Queue
+
+      ![Multilevel_Queue](./images/Multilevel%20Queue.png)
+
+    - Multilevel Feedback Queue
+
+      ![Multilevel_Feedback_Queue](./images/Multilevel_Feedback_Queue.png)
