@@ -28,8 +28,8 @@ n, m = map(int, input().split())
 map = [list(map(int, input().split())) for _ in range(n)]
 chk = [[False] * m for _ in range(n)]
 
-dy = [0, 1, 0, -1]
-dx = [1, 0, -1, 0]
+dx = [0,0,-1,1]
+dy = [1,-1,0,0]
 
 def bfs(y, x):
     rs = 1
