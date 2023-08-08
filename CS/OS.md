@@ -622,3 +622,78 @@ Benefits of Threads
 
     - Bounded Waiting(유한대기)
       : 프로세스가 critical section에 들어가려고 요청한 후부터 그 요청이 허용될 때까지 다른 프로세스들이 critical section에 들어가는 횟수에 한계가 있어야 한다.
+
+  - Deadlock and Starvation
+
+    ![Deadlock_and_starvation](./images/Deadlock_and_starvation.png)
+
+
+# 데드락
+
+  - The Deadlock Problem
+    - Deadlock
+      : 일련의 프로세스들이 서로가가진 자원을 기다리면 block된 상태
+
+    - Resource(자원)
+      - 하드웨어, 소프트웨어 등을 포함하는 개념
+      - (예) I/O device, CPU cycle, memory space, semaphore 등
+      - 프로세스가 자원을 사용하는 절차
+        : Request, Allocate, Use, Release
+    
+    - Deadlock Example
+      - 시스템에 2개의 tape drive가 있다
+      - 프로세스 P1과 P2 각각이 하나의 tape drive를 보유한 채 다른 하나를 기다리고 있다
+
+    - Deadlock 발생의 4가지 조건
+      - Mutual exclusion(상호배제)
+        : 매 순간 하나의 프로세스만이 자원을 사용할 수 있음
+
+      - No preemption(비선점)
+        : 프로세스는 자원을 스스로 내어놓을 뿐 강제로 빼앗기지 않음
+
+      - Hold and wait(보유대기)
+        : 자원을 가진 프로세스가 다른 자원을 기다릴 때 보유 자원을 놓지 않고 계속 가지고 있음
+
+      - Circular wait(환형대기)
+        : 자원을 기다리는 프로세스간에 사이클이 형성되어야 함
+
+    - Resource-Allocation_Graph
+
+    ![Resource-Allocation_Graph](./images/Resource-Allocation_Graph.png)
+
+    - Deadlock의 처리방법
+      - Deadlock Prevention
+        : 자원 할당 시 Deadlock의 4가지 필요조건 중 어느 하나가 만족되지 않도록 하는 것
+        
+      - Deadlock Avoidance
+        - 자원 요청에 대한 부가적인 정보를 이용해서 deadlock의 가능성이 없는 경우에만 자원을 할당
+        - 시스템 state가 원래 state로 돌아올 수 있는 경우에만 자원 할당
+
+      - Deadlock Detection and recovery
+        : Deadlock 발생은 허용하되 그에 대한 detection 루틴을 두어 deadlock 발견시 recover
+
+      - Deadlock Ignorance
+        - Deadlock을 시스템이 책임지지 않음
+        - UNIX를 포함한 대부분의 OS가 채택
+
+    - Deadlock Prevention
+      - Mutual Exclusion
+        : 공유해서는 안되는 자원의 경우 반드시 성립해야 함
+      
+      - Hold and Wait
+        - 프로세스가 자원을 요청할 때 다른 어떤 자원도 가지고 있지 않아야 한다
+        - 방법1 : 프로세스 시작 시 모든 필요한 자원을 할당받게 하는 방법
+        - 방법2 : 자원이 필요한 경우 보유 자원을 모두 놓고 다시 요청
+      
+      - No Preemption
+        - process가 어떤 자원을 기다려야 하는 경우 이미 보유한 자원이 선점됨
+        - 모든 필요한 자원을 얻을 수 있을 때 그 프로세스는 다시 시작된다
+        - State를 쉽게 save하고 restore할 수 있는 자원에서 주로 사용(CPU, memory)
+
+      - Circular Wait
+        - 모든 자원 유형에 할당 순서를 정하여 정해진 순서대로만 자원 할당
+
+    - Deadlock Avoidance
+      - Deadlock Avoidance
+        - 자원 요청에 대한 부가정보를 이용해서 자원 할당 deadlock으로 부터 안전한지를 동적으로 조사해서 안전한 경우에만 할당
+        - 가장 단순하고 일반적인 모델은 프로세스들이 필요로 하는 각 자원별 최대 사용량을 미리 선언하도록 하는 방법임
