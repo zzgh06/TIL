@@ -733,3 +733,91 @@ Benefits of Threads
         - 만약 시스템에 deadlock이 발생한 경우 시스템이 비정상적으로 작동하는 것을 사람이 느낀 후 직접 process를 죽이는 등의 방법으로 대처
         - UNIX, Windows 등 대부분의 범용 OS가 채택
 
+
+# 메모리 관리
+
+  - Logical(논리적) vs. Physical(물리적) Address
+    - Logical address(=virtual address)
+      - 프로세스마다 독립적으로 가지는 주소 공간
+      - 각 프로세스마다 0번지부터 시작
+      - CPU가 보는 주소는 logical address임
+  
+    - Physical address
+      - 메모리에 실제 올라가는 위치
+
+  - 주소 바인딩 : 주소를 결정하는 것
+  : Symbolic Address -> Logical Address -> Physical address
+
+    - Compile time binding
+      - 물리적 메모리 주소가 컴파일 시 알려짐
+      - 시작 위치 변경시 재컴파일
+      - 컴파일러는 절대코드(absolute code) 생성
+
+    - Load time binding
+      - Loader의 책임하에 물리적 메모리 주소 부여
+      - 컴파일러가 재배치가능코드(relocatable code)를 생성한 경우 가능
+
+    - Execution time binding(=Run time binding)
+      - 수행이 시작된 이후에도 프로세스의 메모리 상 위치를 옮길 수 있음
+      - CPU가 주소를 참조할 때마다 binding을 점검(address mapping table)
+      - 하드웨어적인 자원이 필요
+
+  - Memory-Management Unit(MMU)
+    - MMU(Memory-Management Unit)
+      : logical address를 physical address로 매핑해주는 Hardware device
+
+    - MMU scheme
+      : 사용자 프로세스가 CPU에서 수행되며 생성해내는 모든 주소 값에 대해 base register(=relocation register)의 값을 더한다
+    
+    - user program
+      - logical address만을 다룬다
+      - 실제 physical address를 볼 수 없으며 알 필요가 없다
+
+    - Hardware Support for Address Translation
+
+      ![Hardware_Support_for_Address_Translation](./images/Hardware_Support_for_Address_Translation.png)
+
+  - 불연속 할당
+    
+    - Paging  
+      Paging
+      - Process의 virtual memory를 동일한 사이즈의 page 단위로 나눔
+      - Virtual memory의 내용이 page 단위로 noncontiguous하게 저장됨
+      - 일부는 backing storage에 일부는 physical memory에 저장
+
+      Basic method
+       - physical memory를 동일한 크기의 frame으로 나눔
+       - logical memory를 동일 크기의 page로 나눔(frame과 같은 크기)
+       - 모든 가용 frame들을 관리
+       - page table을 사용하여 logical address를 physical address로 변환
+       - External fragmentation 발생 안함
+       - Internal fragmentation 발생 가능 
+
+    - Implementation of Page Table
+      - Page table은 main memory에 상주
+      - Page-table base register(PTBR)가 Page table을 가리킴
+      - Page-table length register(PTLR)가 테이블 크기를 보관
+      - 모든 메모리 접근 연산에는 2번의 memory access 필요
+      - page table 접근 1번, 실제 data/instruction 접근 1번
+      - 속도 향상을 위해 associative register 혹은 translation look-aside buffer(TLB)라 불리는 고속의 lookup hardware cache 사용
+
+    - Two-Level Page Table
+      - 현대의 컴퓨터는 address space가 매우 큰 프로그램 지원
+        - 32 bit address 사용시 : 2의 32승(4G)의 주소 공간
+          - page size가 4K시 1M개의 page table entry 필요
+          - 각 page entry가 4B시 프로세스당 4M의 page table 필요
+          - 그러나 대부분의 프로그램은 4G의 주소 공간 중 지극히 일부분만 사용하므로 page table 공간이 심하게 낭비됨
+
+        -> page table 자체를 page로 구성
+        -> 사용되지 않은 주소 공간에 대한 outer page table의 엔트리 값은 NULL 
+
+    - Multilevel Paging and Performance
+      - Address space가 더 커지면 다단계 페이지 테이블 필요
+      - 각 단계의 페이지 테이블이 메모리에 존재하므로 logical address의 physical address 변환에 더 많은 메모리 접근 필요
+      - TLB를 통해 메모리 접근 시간을 줄일 수 있음
+      - 4단계 페이지 테이블을 사용하는 경우
+        - 메모리 접근 시간이 100ns, TLB 접근 시간이 20ns이고
+        - TLB hit ratio가 98%인 경우
+          effective memory access time = 0.98 x 120 + 0.02 x 520
+                                       = 128 nanoseconds.
+          결과적으로 주소변환을 위해 28ns만 소요
