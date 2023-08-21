@@ -891,10 +891,12 @@ Benefits of Threads
         - segment는 의미 단위이기 때문에 공유와 보안에 있어 paging 보다 훨씬 효과적인다
 
       - Allocation
+      
         - first fit / best fit
         - external fragmentation 발생
         - segment의 길이가 동일하지 않으므로 가변분할 방식에서와 동일한 문제점들이 발생
 
     - Segmentation with Paging
+
       - pure segmentation과의 차이점
         : segment-table entry가 segment의 base address를 가지고 있는 것이 아니라 segment를 구성하는 page table의 base address를 가지고 있음
