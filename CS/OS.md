@@ -786,6 +786,7 @@ Benefits of Threads
       - 일부는 backing storage에 일부는 physical memory에 저장
 
       Basic method
+      
        - physical memory를 동일한 크기의 frame으로 나눔
        - logical memory를 동일 크기의 page로 나눔(frame과 같은 크기)
        - 모든 가용 frame들을 관리
@@ -794,6 +795,7 @@ Benefits of Threads
        - Internal fragmentation 발생 가능 
 
     - Implementation of Page Table
+
       - Page table은 main memory에 상주
       - Page-table base register(PTBR)가 Page table을 가리킴
       - Page-table length register(PTLR)가 테이블 크기를 보관
