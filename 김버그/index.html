@@ -1,0 +1,29 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Form - Input</title>
+  <link rel="stylesheet" href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <form action="" method="GET">
+        <input type="text" placeholder="아이디를 입력하시오" minlength="2" maxlength="10" value="김아무개">
+        
+        <label for="user-name">이름</label>
+        <input type="text" id="user-name" placeholder="이름을 입력하시오" minlength="2" maxlength="5" required>
+        
+        <input type="number" min="12" max="122" placeholder="12세 이상 122세 이하">
+        <label for="user-email">이메일</label>
+        <input type="email" id="user-email">
+        <input type="file" accept=".png, .jpg">
+        <input type="tel" placeholder="전화번호를 입력하시오." pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}">
+        <button>
+            제출
+        </button>        
+    </form>
+    
+</body>
+</html>
