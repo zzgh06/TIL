@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+}
+
+h1 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #273444;
+}
+
+/* ▼ WHERE YOUR CODE BEGINS */
+
+.user-photo,
+.user-name {
+  float: left;
+}
+
+.user-card {
+  width: 240px;
+  height: 56px;
+  padding: 8px 12px;
+  border: 1px solid #E5EAEF; 
+  border-radius: 4px;
+}
+
+.user-card::after {
+  content: "";
+  display: inline-block;
+  clear: both;
+}
+
+.user-photo {
+  position: relative;
+  margin-right: 12px;
+}
+
+.user-photo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: block;
+}
+
+.user-status {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: #21D891;
+}
+
+.user-name {
+  padding: 8px 0;
+}
