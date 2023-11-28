@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* button, input, textarea 와 같은 form 요소들은 body에 font-family를 적용하면 먹히지 않기 때문에 따로 form 태그에 선언 */
+button, 
+input,
+textarea {
+  font-family: 'Lato', sans-serif;
+}
+
+button {
+  border: none;
+  background-color: white;
+}
+
+.line-button {
+  position: relative;
+  padding: 18px 30px;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #151B26;
+  cursor: pointer;
+}
+
+.line-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #0066FF;
+  transition: width 250ms ease-in, background-color 250ms ease-in;
+}
+
+.line-button:hover::after {
+  width: 100%;
+  background-color: hotpink;
+}
