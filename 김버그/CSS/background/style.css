@@ -23,7 +23,7 @@ body {
 
 .card {
   display: flex;
-  width: 840px;
+  width: 840px ;
   padding: 24px;
 }
 
@@ -33,66 +33,77 @@ body {
   height: 200px;
   border-radius: 6px;
   margin-right: 24px;
-  background-image: url(./assets/img-house.jpg);
+  background-image: url('./assets/img-house.jpg');
   background-repeat: no-repeat;
-  background-size: cover;
   background-position: center center;
+  background-size: cover;
   overflow: hidden;
 }
 
-.card-image .like-button {
+.like-button {
   position: absolute;
   top: 12px;
   left: 12px;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
   border: none;
-  background-color: white;
-  background-image: url(./assets/icon-favorite.svg);
+  border-radius: 50%;
+  background-image: url('./assets/icon-favorite.svg');
   background-repeat: no-repeat;
-  background-position: center center;
   background-size: 24px 24px;
-  cursor: pointer;
-}
-
-.card-content {
-  flex-grow: 1;
+  background-position: center center;
+  background-color: #fff;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+}
+
+.property-type span {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.42857143;
+  color: #7D858F;
 }
 
 .plus-badge {
   display: inline-block;
+  width: 48px;
   padding: 1px 8px;
   margin-right: 6px;
+  margin-bottom: 8px;
   border-radius: 4px;
+  background-color: #92174D;
   font-weight: 500;
   font-size: 14px;
-  line-height: 1.4285714286;
-  color: white;
+  line-height: 1.42857143;
   text-transform: uppercase;
-  background-color: #92174D;
+  text-align: center;
+  color: white;
 }
 
-.property-type span {
-  font-size: 16px;
-  line-height: 1.25;
-  color: #7D858F;
+/* 가상요소는 display 값이 inline 이기 때문에 width, height 값이 안먹힘 */
+.property-rate::before {
+  content: '';
+  display: inline-block;
+  position: relative;
+  top : 1.5px;
+  margin-right: 2px;
+  width: 16px;
+  height: 16px;
+  background-image: url('./assets/icon-star.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 .property-rate {
+  font-weight: 400;
   font-size: 16px;
   line-height: 1.25;
 }
-
 .property-rate strong {
-  font-weight: 400;
   color: #151B26;
 }
 
@@ -100,30 +111,24 @@ body {
   color: #7D858F;
 }
 
-.property-rate::before {
-  content: '';
-  position: relative; /* 별의 위치 조정을 위해 relative 사용(자신의 기존 위치를 기억하기 때문에 그 자리를 기준으로 이동가능 */
-  top: 2px;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background-image: url(./assets/icon-star.svg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-}
-
 .card-title {
   margin-bottom: 16px;
   font-size: 20px;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.42857143;
+  text-align: center;
   color: #151B26;
 }
 
-.property-detail {
+.card-content {
+  flex-grow: 1;
+  background-color: #fff;
+}
+
+.card-detail {
+  font-weight: 400;
   font-size: 14px;
-  line-height: 1.1428571429;
+  line-height: 1.14285714;
   color: #7D858F;
 }
 
@@ -132,7 +137,6 @@ body {
   margin: 0 8px;
 }
 
-/* property-detail dd 안에 있는 span의 last-child::after */
 .property-detail dd span:last-child::after {
   content: '';
   margin: 0;
