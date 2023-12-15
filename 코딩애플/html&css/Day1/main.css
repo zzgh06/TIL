@@ -7,7 +7,7 @@
 /* background-attachment 스크롤시 배경 위치 조정가능 */
 /* filter 박스에 보정입히기(명암, 채도 등등) 주의할 점 : 사진 안에 글씨가 있으면 같이 보정이 적용됨으로 이미지가 단독으로 있을 경우 사용하는게 좋음 */
 .main-background {
-  position: relative;
+  /* position: relative; */
   width: 100%;
   height: 500px;
   padding: 1px;
@@ -65,12 +65,24 @@
 }
 
 .product-desc {
-  position: absolute;
-  left: 50%;
-  top: 90%;
-  transform: translateX(-50%);
+  position: relative;
+  top: -40px;
   width: 400px;
+  margin: auto;
   padding: 25px;
   background-color: gainsboro;
   text-align: center;
+}
+
+
+.product-desc h2 {
+  margin-bottom: 10px;
+}
+
+/* input[속성명=속성값] 모든 인풋 중 해당 속성 값만 css를 적용하고 싶을 경우 */
+input[type=text] {
+  padding: 20px;
+  font-size: 20px;
+  border: 2px solid black;
+  border-radius: 5px;
 }

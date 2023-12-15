@@ -1,0 +1,8 @@
+/* table에 존재하는 틈을 제거하기 위한 속성 */
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
+}
