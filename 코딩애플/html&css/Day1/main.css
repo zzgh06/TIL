@@ -3,6 +3,32 @@
   box-sizing: border-box;
 }
 
+.nav {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding: 10px;
+  background-color: coral;
+  font-size: 25px;
+  color: white;
+  font-weight: 700;
+}
+
+.nav-logo {
+  flex-grow: 2;
+}
+
+.nav-product {
+  margin-right: 15px;
+}
+
+/* 단워 더 알아보기 : vw(브라우저 폭에 비례) / vh(브라우저 높이에 비례) */
+/* .test {
+  width: 100px;
+  height: 100px;
+  background-color: grey;
+} */
+
 /* background-position 배경 위치조정 가능 */
 /* background-attachment 스크롤시 배경 위치 조정가능 */
 /* filter 박스에 보정입히기(명암, 채도 등등) 주의할 점 : 사진 안에 글씨가 있으면 같이 보정이 적용됨으로 이미지가 단독으로 있을 경우 사용하는게 좋음 */
@@ -85,4 +111,12 @@ input[type=text] {
   font-size: 20px;
   border: 2px solid black;
   border-radius: 5px;
+}
+
+
+/* 현재 브라우저 폭이 1200px 이하일 경우 */
+@media screen and (max-width: 1200px) {
+  .main-title {
+    font-size: 30px;
+  }
 }
