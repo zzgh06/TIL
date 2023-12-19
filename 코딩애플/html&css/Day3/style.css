@@ -25,6 +25,75 @@
   text-align: center;
 }
 
+.container i {
+  margin-bottom: 10px;
+  padding-top: 25px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background-color: burlywood;
+  color: white;
+}
+
+.shop-bg {
+  background-color: #eee;
+  padding: 20px;
+}
+
+.shop-container {
+  display: flex;
+  width: 90%;
+  margin: auto;
+}
+
+.shop-item {
+  width: 33%;
+  padding: 10px;
+}
+
+.shop-item img {
+  width: 100%;
+  display: block;
+}
+
+/* one-way 애니메이션 혼자 알아서 만드는 법  */
+/* 1. 시작스타일 정하기
+2. 최종스타일 정하기
+3. 언제 최종스타일로 변할지 트리거 주기 (대부분 마우스 올렸을 때임)
+4. transition 으로 서서히 동작하게 만들기 */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+
+.overlay:hover {
+  opacity: 1;
+}
+
+.overlay-wrap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.overlay-slide {
+  width: 100%;
+  height: 100%;
+  margin-top: 100%;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: all 1s;
+}
+
+.overlay-wrap:hover .overlay-slide {
+  margin-top: 50%;
+}
+
 @media screen and (max-width: 1200px) {
   .item {
     width: 50%;
