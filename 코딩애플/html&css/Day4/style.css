@@ -7,12 +7,25 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.landing-button {
+  padding: 10px;
+  background-color: darkslategray;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.landing-button:hover {
+  background-color: brown;
+}
+
 /* fs-dis */
 .fs-dis {
   display: flex;
   width: 100%;
   padding: 50px 50px 0 50px;
-  background: linear-gradient(to bottom, rgba(5, 137, 244, 0.704) 60%, rgba(141, 57, 206, 0.868));
+  background: linear-gradient(to bottom, rgba(5, 137, 244, 0.704) 60%, rgba(77, 58, 250, 0.868));
 }
 
 .fs-dis-desc {
@@ -38,15 +51,6 @@ body {
   line-height: 1.5;
 }
 
-.fs-dis-button button {
-  padding: 10px;
-  background-color: darkslategray;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-}
-
 .fs-dis-img {
   display: flex;
   flex-grow: 1;
@@ -59,7 +63,113 @@ body {
   height: 300px;
 }
 
+/* next-portfolio */
+
+.next-portfolio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 30px;
+}
+
+.next-portfolio strong,
+.next-portfolio p {
+  margin-bottom: 5px;
+}
+
+/* service */
+.service {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(77, 58, 250, 0.868);
+  color: white;
+}
+
+.service-desc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.service-desc .item {
+  margin-right: 25px;
+}
+
+.service-desc .item:last-child {
+  margin-right: 0;
+}
+
+.service-button {
+  margin-bottom: 5px;
+  width: 100px;
+  height: 100px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background-color: white;
+  color: rgba(77, 58, 250, 0.868);
+}
+
+.service-button:hover {
+  background-color: lightgrey;
+}
+
+.service-desc h4 {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+/* portfolio */
+.portfolio {
+  padding: 50px 75px;
+  text-align: center;
+}
+
+.portfolio-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.portfolio-item {
+  position: relative;
+  width: 45%;
+}
+
+.portfolio-item img {
+  width: 100%;
+  display: block;
+}
+
+.portfolio-overlay {
+  position: absolute;
+  margin: 50px;
+  text-align: start;
+  color: white;
+}
+
+.portfolio-overlay h4 {
+  margin-bottom: 15px;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.portfolio-overlay p {
+  font-size: 13px;
+}
+
 @media screen and (max-width: 768px) {
+  .landing-button {
+    padding: 15px 20px;
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
   /* fs-dis */
   .fs-dis {
     flex-direction: column;
@@ -69,11 +179,5 @@ body {
 
   .fs-dis-desc {
     width: 100%;
-  }
-
-  .fs-dis-button button {
-    padding: 15px 20px;
-    font-size: 15px;
-    margin-bottom: 30px;
   }
 }
