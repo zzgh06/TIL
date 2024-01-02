@@ -105,6 +105,11 @@
   margin-bottom: 10px;
 }
 
+.pseudo::first-line {
+  color: red;
+  font-size: 20px;
+}
+
 /* input[속성명=속성값] 모든 인풋 중 해당 속성 값만 css를 적용하고 싶을 경우 */
 input[type=text] {
   padding: 20px;
@@ -113,6 +118,55 @@ input[type=text] {
   border-radius: 5px;
 }
 
+/* 일부 요소 스타일링시 pseudo-element 사용 가능 */
+.input-file::file-selector-button {
+  background-color: skyblue;
+  border: none;
+  padding: 20px;
+}
+
+.input-file::file-selector-button:hover {
+  background-color: brown;
+}
+
+/* shadow dom */
+/* HTML 개발시 코드가 너무 복잡해지지 않기 위해 숨겨놓은 HTML 요소 */
+
+/* -webkit- 크롬, 사파리, Edge에서만 적용되는 스타일 */
+/* -ms- Explorer에서만 적용 */
+/* -moz- Firefox에서만 적용 */
+input[type=file]::-webkit-file-upload-button {
+  background-color: skyblue;
+  border: none;
+}
+
+/* appearance: none 브라우저 기본 CSS 안보이게 */
+input[type=range] {
+  appearance: none;
+  width: 100%;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  background-color: red;
+  width: 50px;
+  height: 50px;
+}
+
+progress {
+  appearance: none;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 10px;
+  box-shadow: inset 3px 3px 10px #ccc;
+}
+
+progress::-webkit-progress-value {
+  border-radius:10px;
+  background: linear-gradient(to right, #93F9B9, #1D976C);
+}
 
 /* 현재 브라우저 폭이 1200px 이하일 경우 */
 @media screen and (max-width: 1200px) {

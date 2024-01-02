@@ -225,3 +225,39 @@ td, th {
   - 왜냐면 10점짜리인 .class를 2개나 썼고 1점짜리인 div 태그셀렉터를 1개 썼기 때문. 
 
   - 저렇게 더 구체적으로 셀렉터를 작성할 수록 점수가 높아져서 저렇게 점수를 높여도 덮어쓰기가 가능합니다. 
+
+
+## Pseudo-element
+
+  - :pseudo-class는 다른 상태일때 ex) hover, active 등
+  - ::pseudo-element는 내부의 일부부만 스타일 줄때
+
+  `Pseudo-element로 HTML 특정부분에 스타일링하기/글씨넣기`
+  ```css
+    .text::first-letter {
+      color : red;
+    }
+
+    .text::first-line {
+      color : red;
+    }
+
+    .text::after {
+      content : '뻥이지롱';
+      color : red;
+    }
+
+    .text::before {
+      content : '뻥이지롱';
+      color : red;
+    }
+  ```
+    1. pseudo-element를 선택하려면 콜론 2개 :: 를 사용하면 됩니다. 
+
+    2. ::first-letter라고 붙이면 안에 있는 글자 중 첫 글자만 스타일을 줄 수 있습니다.
+    
+    3. ::first-line이라고 붙이면 안에 있는 글자 중 첫 줄만 스타일을 줄 수 있습니다.
+    
+    4. ::after라고 붙이면 내부의 맨 마지막 부분에 특정 글자같은걸 추가해줄 수 있습니다.
+    
+    5. ::before라고 붙이면 내부의 맨 앞 부분에 특정 글자같은걸 추가해줄 수 있습니다.
