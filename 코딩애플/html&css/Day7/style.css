@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.background {
+  background-color: #2a4cb2;
+  font-size: 14px;
+  font-size: 32px;
+}
+
+.box {
+  color: #eeeeee;
+  font-size: 18px;
+}
+
+.main-bg h4 {
+  font-size: 16px;
+}
+
+.main-bg button {
+  color: red;
+}
+
+.main-bg {
+  width: 100px;
+}
+.main-bg h4 {
+  font-size: 16px;
+}
+.main-bg button {
+  color: red;
+}
+
+.btn-blue, .btn-red, .btn-green {
+  width: 100px;
+  height: 100px;
+  padding: 20px;
+}
+
+.btn-green {
+  color: green;
+}
+
+.btn-red {
+  color: red;
+}
+
+.btn-blue {
+  color: blue;
+}
+
+h2 {
+  font-size: 40px;
+  letter-spacing: -1px;
+}
+
+h3 {
+  font-size: 30px;
+  letter-spacing: -1px;
+  color: brown;
+}
+
+h4 {
+  font-size: 10px;
+  letter-spacing: -1px;
+}
+
+.li-style > li {
+  list-style: none;
+  width: 50%;
+  padding: 20px;
+  border: 1px solid lightgrey;
+}
+.li-style li:hover {
+  background: blue;
+  color: White;
+}
+
+.alert-box-yellow, .alert-box-blue, .alert-box-green {
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+.alert-box-green {
+  background-color: lightgreen;
+}
+
+.alert-box-blue {
+  background-color: lightblue;
+}
+
+.alert-box-yellow {
+  background-color: lightyellow;
+}/*# sourceMappingURL=style.css.map */
