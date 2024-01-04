@@ -155,7 +155,7 @@ $active-color: blue;
     width: 50%;
     padding: 20px;
     border: 1px solid lightgrey;
-  }
+  } 
   li:hover {
     background: $active-color;
     color: $active-text-color;
@@ -165,7 +165,7 @@ $active-color: blue;
 // 숙제 2. alert 박스 만들기
 %alert-box {
   padding: 20px;
-  border: none;
+  border: 1px solid #eee;
   border-radius: 5px;
 }
 
@@ -182,4 +182,34 @@ $active-color: blue;
 .alert-box-yellow {
   @extend %alert-box;
   background-color: lightyellow;
+}
+
+
+// 3. column 레이아웃 만들기 
+@mixin column ($size) {
+  width: $size;
+  float: left;
+  height: 50px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border: 1px solid lightskyblue;
+  background-color: lightgrey;
+  text-align: center;
+}
+
+.row {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.col-6 {
+  @include column(50%);
+}
+
+.col-4 {
+  @include column(33.33%);
+}
+
+.col-3 {
+  @include column(25%);
 }

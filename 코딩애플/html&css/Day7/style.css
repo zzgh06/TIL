@@ -86,7 +86,7 @@ h4 {
 
 .alert-box-yellow, .alert-box-blue, .alert-box-green {
   padding: 20px;
-  border: none;
+  border: 1px solid #eee;
   border-radius: 5px;
 }
 
@@ -100,4 +100,42 @@ h4 {
 
 .alert-box-yellow {
   background-color: lightyellow;
+}
+
+.row {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.col-6 {
+  width: 50%;
+  float: left;
+  height: 50px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border: 1px solid lightskyblue;
+  background-color: lightgrey;
+  text-align: center;
+}
+
+.col-4 {
+  width: 33.33%;
+  float: left;
+  height: 50px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border: 1px solid lightskyblue;
+  background-color: lightgrey;
+  text-align: center;
+}
+
+.col-3 {
+  width: 25%;
+  float: left;
+  height: 50px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border: 1px solid lightskyblue;
+  background-color: lightgrey;
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */
