@@ -393,3 +393,273 @@ $기본사이즈 : 16px;
 - 보통 비슷한 디자인의 요소들을 양산할 때 많이 사용합니다.
 - % 기호는 .대신 쓸 수 있는 임시클래스인데 CSS파일에서 클래스로 컴파일하지 않고싶을 때 쓰는 기호입니다.
 - 컴파일하고나면 %기호 안에 있는 것들은 흔적도 없이 사라집니다.
+
+### **Sass 문법 4. 코드를 한단어로 축약하는 @mixin**
+
+- @mixin은 스타일 여러줄을 한 단어로 치환해서 사용가능
+```css
+@mixin 버튼기본디자인() {
+  font-size : 16px;
+  padding : 10px;
+}
+
+.btn-green {
+  @include 버튼기본디자인();
+  background : green;
+}
+```
+1. @mixin이라고 쓰고,
+
+2. 이름을 하나 지어주고 ( ){ } 붙이고,
+
+3. 한 단어로 치환할 값들을 중괄호 안에 쭉 나열하시면 됩니다.
+
+- 그럼 이제 밑에서 자유롭게 @include mixin이름 으로 사용하면 mixin 안에 있던 코드가 그 자리에 복붙됩니다.
+
+- mixin과 extend 문법은 유사, mixin만의 장점이 하나 있는데, 바로 내부에 묶어둔 속성들에 구멍을 하나 뿅 뚫어줄 수 있다는 것
+```css
+@mixin 버튼기본디자인($구멍) {
+  font-size : 16px;
+  padding : 10px;
+  background : $구멍;
+}
+```
+- 소괄호의 역할이 바로 구멍인데, 이제 버튼기본디자인()이라는 단어를 사용하실 때 소괄호구멍 안에 아무거나 값을 집어넣을 수 있습니다.
+
+```css
+@mixin 버튼기본디자인($구멍) {
+  font-size : 16px;
+  padding : 10px;
+  background : $구멍;
+}
+
+.btn-green {
+  @include 버튼기본디자인(#229f72);
+}
+```
+- 그럼 응용하면 btn-green 말고도 파란버튼, 빨간버튼 자유자재로 만드실 수 있겠죠.
+- 이것이 mixin의 장점이라고 보시면 됩니다.
+
+1. 긴 코드를 한 단어로 축약할 수도 있고
+
+2. 코드내부에 구멍을 뚫어 사용할 때마다 각각 다른 내용을 집어넣을 수 있습니다.
+
+
+### **Sass 문법 5. @use와 언더바 파일**
+CSS파일마다 맨위에 첨부하는 reset같은걸 자주 복붙하는 분들은 `import문법`을 사용하시길 바랍니다.
+
+```css
+@use 'reset.scss';
+```
+- 이러면 reset.scss 파일을 해당 SCSS파일에 전부 복붙할 수 있습니다.
+- 파일이 다른 폴더 안에 있다면 '폴더명/reset.scss' 이런 식으로 경로를 잘 써주시면 됩니다.
+
+```css
+@use '_reset.scss';
+```
+- scss 파일명을 작명할 때 언더바를 파일명 맨 앞에 붙이는 경우가 있습니다.
+- 언더바 _기호를 파일명 맨앞에 사용하시면 "이 파일은 CSS파일로 따로 컴파일하지 말아주세요" 라는 의미입니다.
+- 그냥 첨부용 파일이라는 것이지요.
+
+```css
+@use '_reset.scss';
+
+reset.$변수명;  /* 다른 파일의 변수쓰는법 */
+@include reset.mixin이름();  /* 다른 파일의 mixin쓰는법 */
+```
+
+- @use 해온 다른 파일에 있던 $변수와 @mixin을 가져다 쓸 수도 있습니다.
+- 이 경우엔 그냥 쓰는게 아니라 꼭 파일명을 앞에 붙여야합니다. 
+- 응용하면 다른 파일에서 자주 사용할법한 _button.scss _navbar.scss 이런 파일들을 미리 다 만들어놓고 멋지게 첨부식으로 CSS를 개발할 수 있습니다.
+
+
+## transform & animation 으로 매끄러운 애니메이션 만들기
+### transform 관련 CSS 속성들 
+```css
+.box {
+  transform : rotate(10deg); 
+  transform : translate(10px, 20px);
+  transform : scale(2);
+  transform : skew(30deg);
+  
+  /*transform 두개 이상을 한꺼번에 쓰려면*/
+  transform : rotate(10deg) translateX(30px);
+}
+```
+- transform 은 어떤 요소를 독립적으로 움직이게 만들고 싶을 때 사용합니다.
+- 본인 원래 위치에서 자유롭게 (다른 요소에 영향 없이) 이동하게 됩니다.
+- rotate는 회전, translate는 좌표이동, scale은 확대축소, skew는 비틀기 입니다.
+
+### 복잡한 애니메이션 구현법
+1. 가장 먼저 @keyframes 를 정의합니다.
+```css
+@keyframes 움찔움찔{
+  0% {
+    transform : translateX(0px); /* 애니메이션이 0%만큼 동작시 */
+  }
+  50% {
+    transform : translateX(-20px); /* 애니메이션이 50%만큼 동작시 */
+  }
+  100% {
+    transform : translateX(20px); /* 애니메이션이 100%만큼 동작시 */
+  }
+}
+```
+- `@keyframes는` 커스텀 애니메이션을 정의하기 위한 공간이라고 생각하시면 됩니다.
+- '움찔움찔'이라는 애니메이션을
+- 0% 진행했을 때의 CSS,
+- 50% 진행했을 때의 CSS,
+- 100% 진행했을 때의 CSS를 각각 작성합니다.
+- (% 수치는 맘대로 변경, 추가 가능합니다)
+
+2. keyframes를 원하는 곳에 첨부합니다.
+```css
+.box:hover {
+  animation-name : 움찔움찔;
+  animation-duration : 1s;
+}
+```
+- animation 속성을 이용하시면 애니메이션을 동작시킬 수 있습니다 .
+- 꼭 필요한 속성은 name과 duration이고
+- 애니메이션 이름을 name에
+- 애니메이션 동작시간을 duration에 넣으면 됩니다.
+- 그럼 진짜 마우스 올렸을 때 움찔움찔 애니메이션이 동작합니다. 
+
+3. 애니메이션 세부조정하기
+```css
+.box:hover {
+  animation-name : 움찔움찔;
+  animation-duration : 1s;
+  animation-timing-function : linear; /*베지어 주기*/
+  animation-delay : 1s; /*시작 전 딜레이*/
+  animation-iteration-count : 3; /*몇회 반복할것인가*/
+  animation-play-state : paused;  /*애니메이션을 멈추고 싶은 경우 자바스크립트로 이거 조정*/
+  animation-fill-mode: forwards;  /*애니메이션 끝난 후에 원상복구 하지말고 정지*/
+}
+```
+
+### margin, width, left, 이런거 말고 transform 쓰라는 이유 
+
+- 크롬같은 웹브라우저들은 html css를 2D 그래픽으로 바꿔주는 간단한 프로그램입니다.
+- 근데 html css를 그래픽으로 바꿀 때
+- layout 잡기 -> 색칠하기 -> transform 적용하기 순서로 동작합니다.  
+- layout이 바뀌면 layout 부터 transform 까지 쭉 다시 렌더링해야하는데
+- transform이 바뀌면 transform 부분만 다시 렌더링하면 됩니다. 
+- 그래서 뭔가 이동시키고 싶으면 margin 쓰는 것 보다 transform 쓰는게 빠르게 동작합니다.
+
+
+## CSS Grid 레이아웃
+
+### 간단한 Grid 레이아웃 만들기 
+
+Grid 레이아웃은 말그대로 격자를 만드는 레이아웃입니다. 
+
+```html
+<div class="grid-container">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+```
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 100px 100px 100px;
+  grid-gap: 10px;
+}
+```
+- 부모<div>에 display : grid를 주면 자식 <div>들은 전부 격자처럼 진열됩니다. 
+- grid-template-columns는 격자의 열 너비와 갯수
+- grid-template-rows는 격자의 행 높이와 갯수를 설정하는 속성입니다.
+- fr이라는 단위는 몇배만큼 차지할지를 나타내는 값입니다.
+- 그런데 격자를 왜 만드냐고요? 격자 그려놓으면 레이아웃 만들기 편해질 수 있으니까요. 
+
+### Grid로 레이아웃 만드는 법 1. 자식 div 높이와 폭을 조정하기 
+
+grid로 레이아웃 만드는 법은 두개가 있습니다. 
+
+첫째 방법은 직접 자식에게 명령을 주어, 몇 칸을 차지할지를 정해주는 겁니다. 
+```html
+<div class="grid-container">
+    <div class="grid-nav">헤더</div>
+    <div class="grid-sidebar">사이드바</div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+```
+```css
+.grid-nav {
+  grid-column : 1 / 4;
+  grid-row : 2 / 4;
+}
+```
+- 자식 div박스 한개를 조금 크게 키우고 싶다면,
+- 자식이 몇개의 컬럼과 row를 차지할지 표시해주시면 됩니다.  
+- grid-column은 몇개의 컬럼을 차지할지
+- grid-row는 몇개의 row를 차지할지 설정해주는 속성입니다.
+- grid-column : 1 / 4 라고 쓰시면 1부터 4까지를 다 차지해라~ 라는 명령인데
+- 1부터 4가 뭔소리냐면
+- grid-column : 1 / 4 여기서의 숫자는
+- grid의 column에 존재하는 세로선들을 의미합니다.
+- 왼쪽 세로선부터 1,2,3 ...이라고 생각하면 됩니다. 
+- 그럼 grid-column : 1 / 4 이건 세로선 1부터 4까지 차지하라는 말입니다.
+- 그래서 박스가 사진처럼 저렇게 늘어납니다.
+- grid-row도 비슷하게 동작합니다. 가로선에 번호매겨 생각하면 됩니다. 
+
+### Grid로 레이아웃 만드는 법 2. 자식에게 이름쓰고 부모가 배치하기 
+
+- 자식에 이름을 써놓고 부모가 자식을 자유롭게 배치할 수 있습니다. 
+```html
+<div class="grid-container">
+    <div class="grid-nav">헤더</div>
+    <div class="grid-sidebar">사이드바</div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+```
+```css
+.grid-nav {
+  grid-area: 헤더;
+}
+
+.grid-sidebar {
+  grid-area: 사이드;
+}
+```
+- grid-area라는 속성을 이용해 자식에게 '헤더' 와 '사이드' 라는 멋진 이름을 붙여줍니다. 
+
+▼ 그리고 부모에게 이런 속성을 하나 추가해줍니다. 
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 100px 100px 100px;
+  grid-gap: 10px;
+  grid-template-areas: 
+    "헤더 헤더 헤더 헤더"
+    "사이드 사이드 . ."
+    "사이드 사이드 . ."
+}
+```
+- grid-template-areas라는 속성이 있는데 이건 뭐냐면
+- 자식중에 '헤더'라는 이름을 가진 애가 있다면 첫 행에 저렇게 4칸을 차지하게 해주시고
+- 자식중에 '사이드바'라는 애가 있으면 둘째 행에 저렇게 2칸을 차지하게 하고
+- 셋째 행 2칸도 차지하게 해주세요
+- 라고 명령내리는 속성입니다.

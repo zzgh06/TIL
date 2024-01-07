@@ -4,7 +4,7 @@
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 100px 100px 100px 200px;
+  grid-template-rows: 150px 150px 150px 100px;
   /* 옵션2. grid-area로 작성한 자식의 이름을 grid-template-areas를 통해 부모에 색칠하기 */
   grid-template-areas: 
     "header header header header"
@@ -53,6 +53,29 @@
 .grid-footer {
   grid-area: footer;
 }
+/* 숙제2. grid-column, grid-row 를 이용해 위 레이아웃을 제작해봅시다. */
+.grid-container2 {
+  display: grid;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* grid-template-row를 생략한 이유는 이미지 자체의 height 값이 있기  */
+  padding: 20px;
+}
+
+.grid-container2 img {
+  width : 100%;
+  display: block;
+}
+
+/* 다른 이미지와 크기를 달리하는 즉, 크게 차지하는 이미지만 얼마나 차지할지 지정하면 */
+/* 나머지 이미지는 grid-template-columns로 쪼개놓은 격자에 맞춰서 위치한다. */
+/* 그래서 크게 차지하는 이미지만 얼마나 차지할 지, css를 적용해주면 된다. */
+.grid-main-img {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
 
 /* 숙제1. 블로그 레이아웃 + 모바일 반응형 */
 @media (max-width: 767px){
@@ -62,5 +85,15 @@
       "side side side side"
       "main main main main"
       "footer footer footer footer";
+  }
+
+  /* 모바일 사이즈에서는 세로로 한칸씩 차지하기 위해서는 */
+  /* 격자를 하나로만 쪼갤 수 있도록 격자(column)를 수정하면 된다*/
+  .grid-container2 {
+    grid-template-columns: 1fr;
+  }
+  .grid-main-img {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
   }
 }
