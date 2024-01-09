@@ -1,0 +1,156 @@
+* { 
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.row {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.row::after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
+@mixin column($size) {
+  width: $size;
+  float: left;
+}
+
+.col-1 {
+  @include column(8.33%)
+}
+
+.col-2 {
+  @include column(16.6666667%)
+}
+
+.col-3 {
+  @include column(25%);
+}
+
+.col-4 {
+  @include column(33.33%);
+}
+
+.col-6 {
+  @include column(50%);
+}
+
+.col-12 {
+  @include column(100%);
+}
+
+$bg-color : rgb(42, 40, 174);
+$text-color : rgb(45, 45, 45);
+
+// nav
+nav {
+  padding: 15px 0;
+  box-shadow: 0 5px 5px rgba($color: #000000, $alpha: 0.2) ;
+}
+
+.nav-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-box {
+  display: flex;
+  width: 100%;
+  color: white;
+}
+
+.search-box {
+  input[type=text] {
+    width: 120px;
+    padding: 5px;
+    border-radius: 5px 0 0 5px;
+    border: 2px solid grey;
+    border-right: none;
+    transition: all 1s;
+  }
+}
+
+.search-box {
+  input[type=text]:focus {
+    width: 200px;
+  }
+}
+
+.search-box {
+  button {
+    width: 40px;
+    height: 42px;
+    border: 2px solid $text-color;
+    border-radius: 0 5px 5px 0;
+    background: $text-color;
+    text-align: center;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+  }
+}
+
+.alarm {
+  float: right;
+  color: $text-color;
+}
+
+.alarm i {
+  font-size: 15px;
+  margin-right: 15px;
+}
+
+.alarm button {
+  border: none;
+  background-color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+// sidebar
+.sidebar {
+  position: fixed;
+  width: 150px;
+  height: 100vh;
+  z-index: 5;
+  color: white;
+  background-color: $bg-color;
+  transform: translateX(-110px);
+  transition: all 1s;
+}
+
+.sidebar {
+  &:hover {
+    transform: translateX(0px);
+  }
+}
+
+.sidebar {
+  div {
+    margin : 15px 0px 0px 15px;
+  }
+}
+
+.sidebar {
+  i {
+    margin-right: 15px;
+    transform: translateX(105px);
+    transition: all 1s;
+  }
+}
+
+.sidebar {
+  &:hover i {
+    transform: translateX(0px);
+  } 
+}
+
