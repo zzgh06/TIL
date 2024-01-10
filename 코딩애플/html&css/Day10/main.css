@@ -8,8 +8,8 @@ body {
 }
 
 .row {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .row::after {
@@ -38,8 +38,38 @@ body {
   float: left;
 }
 
+.col-5 {
+  width: 41.6666667%;
+  float: left;
+}
+
 .col-6 {
   width: 50%;
+  float: left;
+}
+
+.col-7 {
+  width: 58.33%;
+  float: left;
+}
+
+.col-8 {
+  width: 66.6666667%;
+  float: left;
+}
+
+.col-9 {
+  width: 75%;
+  float: left;
+}
+
+.col-10 {
+  width: 83.33%;
+  float: left;
+}
+
+.col-11 {
+  width: 91.6666667%;
   float: left;
 }
 
@@ -49,8 +79,9 @@ body {
 }
 
 nav {
+  margin-left: 40px;
   padding: 15px 0;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px -2px 1px 0px rgb(175, 175, 175);
 }
 
 .nav-box {
@@ -101,10 +132,15 @@ nav {
 }
 
 .alarm button {
+  width: 25px;
   border: none;
   background-color: white;
   text-align: center;
   cursor: pointer;
+}
+
+.alarm span {
+  margin-left: 15px;
 }
 
 .sidebar {
@@ -134,4 +170,90 @@ nav {
 
 .sidebar:hover i {
   transform: translateX(0px);
+}
+
+main {
+  background: rgb(244, 244, 244);
+  padding-left: 40px;
+  margin: 0 auto;
+}
+
+.main-title {
+  margin-bottom: 15px;
+}
+
+.dashboard {
+  padding: 30px 0;
+}
+
+.dashboard-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 90%;
+  min-width: 250px;
+  padding: 20px 20px;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0 rgba(211, 187, 187, 0.74);
+  color: rgb(101, 101, 101);
+}
+
+.dashboard-card p {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.dashboard-card span {
+  color: black;
+  font-size: 18px;
+}
+
+.dashboard-icon {
+  font-size: 30px;
+}
+
+.card-color-skyblue {
+  border-left: 5px solid skyblue;
+}
+
+.card-color-green {
+  border-left: 5px solid green;
+}
+
+.card-color-blue {
+  border-left: 5px solid blue;
+}
+
+.card-color-yellow {
+  border-left: 5px solid yellow;
+}
+
+.card {
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 0 rgba(211, 187, 187, 0.74);
+  margin-right: 40px;
+}
+
+.card-title {
+  padding: 10px 15px;
+  background: rgb(244, 244, 244);
+  border-bottom: 1px solid lightgray;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 15px;
+  background: white;
+  border-bottom: 1px solid lightgrey;
+}
+
+.task span {
+  padding: 1px 8px;
+  border-radius: 10px;
+  color: white;
+  background: rgb(0, 89, 255);
 }/*# sourceMappingURL=main.css.map */

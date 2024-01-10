@@ -8,8 +8,8 @@ body {
 }
 
 .row {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .row::after {
@@ -39,21 +39,47 @@ body {
   @include column(33.33%);
 }
 
+.col-5 {
+  @include column(41.6666667%)
+}
+
 .col-6 {
   @include column(50%);
+}
+
+.col-7 {
+  @include column(58.33%);
+}
+
+.col-8 {
+  @include column(66.6666667%);
+}
+
+.col-9 {
+  @include column(75%);
+}
+
+.col-10 {
+  @include column(83.33%);
+}
+
+.col-11 {
+  @include column(91.6666667%);
 }
 
 .col-12 {
   @include column(100%);
 }
 
-$bg-color : rgb(42, 40, 174);
+$bg-color : rgb(244, 244, 244);
+$side-color : rgb(42, 40, 174);
 $text-color : rgb(45, 45, 45);
 
 // nav
 nav {
+  margin-left: 40px;
   padding: 15px 0;
-  box-shadow: 0 5px 5px rgba($color: #000000, $alpha: 0.2) ;
+  box-shadow: inset 0px -2px 1px 0px rgba(175, 175, 175, 1);
 }
 
 .nav-box {
@@ -110,10 +136,15 @@ nav {
 }
 
 .alarm button {
+  width: 25px;
   border: none;
   background-color: white;
   text-align: center;
   cursor: pointer;
+}
+
+.alarm span {
+  margin-left: 15px;
 }
 
 // sidebar
@@ -123,7 +154,7 @@ nav {
   height: 100vh;
   z-index: 5;
   color: white;
-  background-color: $bg-color;
+  background-color: $side-color;
   transform: translateX(-110px);
   transition: all 1s;
 }
@@ -152,5 +183,98 @@ nav {
   &:hover i {
     transform: translateX(0px);
   } 
+}
+
+// main
+main {
+  background: $bg-color;
+  padding-left: 40px;
+  margin: 0 auto;
+}
+
+.main-title {
+  margin-bottom: 15px;
+} 
+
+.dashboard {
+  padding: 30px 0;
+}
+
+.dashboard-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 90%;
+  min-width: 250px;
+  padding: 20px 20px;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0 rgba(211,187,187,0.74);
+  color: rgb(101, 101, 101);
+}
+
+.dashboard-card p {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.dashboard-card span {
+  color: black;
+  font-size: 18px;
+}
+
+.dashboard-icon {
+  font-size: 30px;
+}
+
+@mixin card-color($color) {
+  border-left: 5px solid $color;
+}
+
+.card-color-skyblue {
+  @include card-color(skyblue)
+}
+
+.card-color-green {
+  @include card-color(green)
+}
+
+.card-color-blue {
+  @include card-color(blue)
+}
+
+.card-color-yellow {
+  @include card-color(yellow)
+}
+
+
+// chart
+.card {
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 0 rgba(211,187,187,0.74);
+  margin-right: 40px;
+}
+
+.card-title {
+  padding: 10px 15px;
+  background: $bg-color;
+  border-bottom: 1px solid lightgray;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 15px;
+  background: white;
+  border-bottom: 1px solid lightgrey;
+}
+
+.task span {
+  padding: 1px 8px;
+  border-radius: 10px;
+  color: white;
+  background: rgb(0, 89, 255);
 }
 

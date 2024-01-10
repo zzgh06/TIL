@@ -14,24 +14,26 @@
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <div class="sidebar">
-    <div class="side-font">
-      <i class="fas fa-home"></i>
-      <span>Home</span>
+  <aside>
+    <div class="sidebar">
+      <div class="side-font">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </div>
+      <div class="side-font">
+        <i class="fas fa-headphones"></i>
+        <span>Service</span>
+      </div>
+      <div class="side-font">
+        <i class="fas fa-flag"></i>
+        <span>Alerts</span>
+      </div>
+      <div class="side-font">
+        <i class="fas fa-chart-pie"></i>
+        <span>Stats</span>
+      </div>
     </div>
-    <div class="side-font">
-      <i class="fas fa-headphones"></i>
-      <span>Service</span>
-    </div>
-    <div class="side-font">
-      <i class="fas fa-flag"></i>
-      <span>Alerts</span>
-    </div>
-    <div class="side-font">
-      <i class="fas fa-chart-pie"></i>
-      <span>Stats</span>
-    </div>
-  </div> 
+  </aside> 
   <nav>
     <div class="row">
       <div class="nav-box">
@@ -57,5 +59,122 @@
       </div>
     </div>
   </nav>
+  <main>
+    <div class="dashboard">
+      <div class="row">
+        <div class="co1-12">
+          <div class="main-title">
+            <h2>Dashboard</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div class="dashboard-card card-color-skyblue">
+            <div class="dashboard-content">
+              <p>Earnings (Monthly)</p>
+              <span><strong>$400,000</strong></span>
+            </div>
+            <div class="dashboard-icon">
+              <i class="fas fa-calendar"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="dashboard-card card-color-green">
+            <div class="dashboard-content">
+              <p>Earnings (Annual)</p>
+              <span><strong>$800,000</strong></span>
+            </div>
+            <div class="dashboard-icon">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="dashboard-card card-color-blue">
+            <div class="dashboard-content">
+              <p>Tacks</p>
+              <span><strong>13</strong></span>
+            </div>
+            <div class="dashboard-icon">
+              <i class="fas fa-tasks"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="dashboard-card card-color-yellow">
+            <div class="dashboard-content">
+              <p>Requests</p>
+              <span><strong>26</strong></span>
+            </div>
+            <div class="dashboard-icon">
+              <i class="fas fa-comments"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="chart">
+        <div class="col-8">
+          <div class="card">
+            <div class="card-title">
+              <h4>Earnings Overview</h4>
+            </div>
+            <div class="card-content">
+              <canvas id="myChart" style="height:60vh;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="task">
+          <div class="card">
+            <div class="card-title">
+              <h4>Tasks</h4>
+            </div>
+            <div class="card-content">
+              <p>Borrowed Items</p>
+              <span>14</span>
+            </div>
+            <div class="card-content">
+              <p>Trello request</p>
+              <span>2</span>
+            </div>
+            <div class="card-content">
+              <p>Marked Comments</p>
+              <span>1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'Monthly',
+                data: [0, 10, 5, 3, 20, 30, 45],
+                backgroundColor: 'rgba(27, 0, 235, 0.7)',
+                tension : 0.3,
+                fill : true,
+            }]
+        },
+        options: {
+            maintainAspectRatio: false, 
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+  </script>
 </body>
 </html>
