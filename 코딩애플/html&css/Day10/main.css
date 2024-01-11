@@ -90,6 +90,10 @@ nav {
   align-items: center;
 }
 
+.nav-dropdown {
+  display: none;
+}
+
 .search-box {
   display: flex;
   width: 100%;
@@ -131,12 +135,25 @@ nav {
   margin-right: 15px;
 }
 
-.alarm button {
-  width: 25px;
-  border: none;
-  background-color: white;
-  text-align: center;
-  cursor: pointer;
+.nav-link {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+
+.badge {
+  position: absolute;
+  top: -10px;
+  left: -5px;
+}
+
+.bg-red {
+  background: red;
+  color: white;
+  padding: 0 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .alarm span {
@@ -184,6 +201,7 @@ main {
 
 .dashboard {
   padding: 30px 0;
+  width: 100%;
 }
 
 .dashboard-card {
@@ -191,8 +209,10 @@ main {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  width: 90%;
-  min-width: 250px;
+  margin-right: 10px;
+  width: 100%;
+  min-width: 200px;
+  min-height: 100px;
   padding: 20px 20px;
   border-radius: 3px;
   background-color: white;
@@ -208,6 +228,10 @@ main {
 .dashboard-card span {
   color: black;
   font-size: 18px;
+}
+
+.dashboard-content {
+  word-wrap: break-word;
 }
 
 .dashboard-icon {
@@ -234,6 +258,7 @@ main {
   border-radius: 5px;
   box-shadow: 1px 1px 5px 0 rgba(211, 187, 187, 0.74);
   margin-right: 40px;
+  min-width: 250px;
 }
 
 .card-title {
@@ -249,11 +274,54 @@ main {
   padding: 10px 15px;
   background: white;
   border-bottom: 1px solid lightgrey;
+  word-wrap: break-word;
 }
 
 .task span {
   padding: 1px 8px;
+  height: 25px;
   border-radius: 10px;
   color: white;
   background: rgb(0, 89, 255);
+}
+
+@media (max-width: 767px) {
+  .col-3 {
+    width: 100%;
+    float: left;
+  }
+  .col-4 {
+    width: 100%;
+    float: left;
+  }
+  .col-8 {
+    width: 100%;
+    float: left;
+  }
+  .nav-dropdown {
+    display: flex;
+    justify-content: end;
+  }
+  .nav-dropdown button {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+    border: none;
+    background-color: white;
+    box-shadow: 1px 1px 5px 0 rgba(211, 187, 187, 0.74);
+    font-size: 25px;
+    color: rgb(45, 45, 45);
+  }
+  .search-box,
+  .alarm {
+    display: none;
+  }
+  .dashboard-card {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .card {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 }/*# sourceMappingURL=main.css.map */
