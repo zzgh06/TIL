@@ -663,3 +663,59 @@ grid로 레이아웃 만드는 법은 두개가 있습니다.
 - 자식중에 '사이드바'라는 애가 있으면 둘째 행에 저렇게 2칸을 차지하게 하고
 - 셋째 행 2칸도 차지하게 해주세요
 - 라고 명령내리는 속성입니다.
+
+
+## position : sticky
+- 스크롤이 되었을 때 화면에 고정되는 요소를 만들고 싶을 때 사용할 수 있는 CSS 속성입니다.
+
+- position : fixed 는 항상 화면에 고정이 되는 요소를 만들 때 사용한다고 배웠었는데 이거랑 뭔 차이가 있냐면,
+
+- position : sticky 는 스크롤이 되어서 이 요소가 화면에 나오면 고정시킨다는 특성이 있습니다.
+
+```html
+<body style="background : grey; height : 3000px">
+
+<div class="grey">
+  <div class="image">
+    <img src="appletv.jpg" width="100%">
+  </div>
+
+  <div style="clear : both"></div>
+  <div class="text">Meet the first Triple Camera System</div>
+    
+</div>
+
+</body>
+```
+```css
+.grey {
+  background: lightgrey;
+  height: 2000px;
+  margin-top: 500px;
+}
+.text {
+  float: left;
+  width : 300px;
+}
+.image {
+  float: right;
+  width : 400px;
+  position: sticky;
+  top: 100px;
+}
+```
+- 이렇게 작성하면 검고 긴 화면에 텍스트와 이미지가 하나씩 보입니다.
+
+- 이미지에 position : sticky를 주시면
+
+1. 스크롤이 되어서 이미지가 보이는 순간
+
+2. viewport의 맨 위에서부터 100px 위치에서 고정이 됩니다.
+
+3. 그리고 부모 박스를 넘어서 스크롤 되면 이미지도 같이 사라집니다. 
+
+`(주의점) position : sticky는`
+
+1. 스크롤을 할 만한 부모 박스가 있어야하고
+
+2. top 등 좌표속성과 함께 써야 제대로 보입니다. 
