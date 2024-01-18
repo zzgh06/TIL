@@ -12,10 +12,51 @@
     <div class="black-bg">
       <div class="white-bg">
         <h4>로그인하세요</h4>
-        <button class="btn btn-danger" id="close">닫기</button>
+        <form action="success.html">
+          <div class="my-3">
+            <input type="text" class="form-control" id="id">
+           </div>
+           <div class="my-3">
+             <input type="password" class="form-control" id="password">
+           </div>
+           <button type="submit" class="btn btn-primary" id="send">전송</button>
+           <button type="button" class="btn btn-danger" id="close">닫기</button>
+        </form>
       </div>
     </div> 
 
+    <script>
+      // 9강 숙제
+      // $('#send').on('click', function(e){
+      //   if (document.getElementById('id').value == ''){
+      //     e.preventDefault();
+      //     alert('아이디를 입력해주세요')
+      //   }
+      // })
+      
+      // 태그는 그냥 태그명 그대로 작성
+      $('form').on('submit', function(e){
+        // jQuery 형태로 작성하니깐 안됐음
+        // $('#id').value == '' <= 요건 안됨
+        // jQuery에서는 val() 메서드를 사용하여 요소의 값을 가져올 수 있다
+        // if ($('#id').val() === '') 이런식으로 작성되어야 한다.
+        if (document.getElementById('id').value == ''){
+          e.preventDefault();
+          alert('아이디를 입력해주세요')
+        } 
+        
+        if (document.getElementById('password').value == ''){
+          e.preventDefault();
+          alert('비밀번호를 입력해주세요')
+        } 
+        
+        if (document.getElementById('password').value.length < 6){
+          e.preventDefault();
+          alert('비밀번호는 6자 이상입니다')
+        }
+      });
+
+    </script>
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
         <span class="navbar-brand">Navbar</span>
@@ -32,12 +73,15 @@
       <li class="list-group-item">And a fifth one</li>
     </ul>
 
+    <div class="main-bg">
+      <h4>Shirts on sale</h4> 
+      <button id="login" class="btn btn-danger">로그인</button>
+    </div>
+
     <p class="hello">안녕</p>
     <p class="hello">안녕</p>
     <p class="hello">안녕</p>
     <button id="test-btn">버튼</button>
-
-    <button id="login">로그인</button>
     <script>
       // document.querySelector('.hello').innerHTML = '바보';
       // innerHTML
@@ -45,7 +89,7 @@
       // style 변경
       $('.hello').css('color', 'red')
       // class 탈부착 : .addClass() / .removeClass() / .toggleClass()
-      $('.hello').addClass('show')
+      // $('.hello').addClass('show')
 
       // <p> 3개를 전부 '바보'로 바꾸려면?
       // 1. javascript : 자바스크립트에서는 하나하나 선택해서 바꿔줘야함
@@ -70,16 +114,17 @@
         $('.hello').hide()
         // $('.hello').fadeOut()
         // $('.hello').slideUp()
-      })
+      });
 
       // 7강 숙제
       $('#login').on('click', function(){
         $('.black-bg').addClass('show-modal');
-      })
+        // $('.black-bg').fadeIn();
+      });
 
       $('#close').on('click', function(){
         $('.black-bg').removeClass('show-modal');
-      })
+      });
 
       
       // document.getElementsByClassName('navbar-toggler')[0].addEventListener('click', function(){
@@ -99,9 +144,13 @@
       // 다만 querySelectorAll를 사용하려면 인덱싱이 필요함(querySelectorAll은 유사 배열 객체 NodeList를 반환하기 때문)
       // 대신에 forEach와 같은 반복문을 통해 NodeList 내의 각 요소에 대해 addEventListener를 호출하고, 여러 요소에 대해 classList.toggle를 적용하면 가능
       
-      document.querySelector('.navbar-toggler').addEventListener('click', function(){
-        document.querySelector('.list-group').classList.toggle('show');
-      })
+      // document.querySelector('.navbar-toggler').addEventListener('click', function(){
+      //   document.querySelector('.list-group').classList.toggle('show');
+      // })
+
+      $('.navbar-toggler').on('click', function(){
+        $('.list-group').toggleClass('show')
+      });
 
       // document.querySelectorAll('.navbar-toggler')[0].addEventListener('click', function(){
       //   document.querySelectorAll('.list-group')[0].classList.toggle('show');

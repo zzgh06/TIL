@@ -231,3 +231,188 @@ https://developer.mozilla.org/en-US/docs/Web/Events
 - 그냥 함수안에 함수 넣으라고 하면 "아 저건 콜백함수구나~" 라는 반응만 보이면 됩니다.  
 - 지금 코드짤 때는 우리가 콜백함수를 직접 작성하고 그럴 일은 없고
 - 콜백함수 쓰라고 하는 자리가 있으면 잘 쓰기만 하면 됩니다. 
+
+
+## classList 다루기
+
+- 버튼누르면 등장하는 서브메뉴를 만들며
+- 자바스크립트로 class 탈부착하는 문법을 배워봅시다.
+
+```css
+.list-group {
+  display : none
+}
+.show {
+  display : block
+}
+```
+- css 파일 열어서 평소에 .list-group 붙은 요소는 숨겨놓도록 합시다. 
+- 그리고 거기에 show라는 클래스를 부착하면 보여주는 식으로 개발해봅시다.
+- 이제 버튼누르면 <ul class="list-group"> 에다가 show라는 클래스 부착하라고 코드짜면 서브메뉴 UI 완성임 
+- 왜 이따구로 class를 부착해서 만드냐고요? 
+- 나중에 display : block 말고 다른 스타일도 동시에 주고 싶을 경우 유용해서 그렇습니다.
+
+### 버튼 클릭시 저기에 클래스명을 추가해주세요
+
+- 버튼 눌렀을 때 show 라는 클래스를 저기에 추가해봅시다.
+- class명을 원하는 요소에 추가하는 법은 
+- 셀렉터로찾은요소.classList.add('클래스명') 이렇게 쓰면 됩니다.
+- class명을 원하는 요소에서 제거하는 법은 
+- 셀렉터로찾은요소.classList.remove('클래스명') 이렇게 쓰면 됩니다.
+- 당연히 구글 검색해봐야 알지 생각해서 나오는 것들이 아닙니다. 
+
+```javascript
+document.getElementsByClassName('navbar-toggler')[0].addEventListener('click', function(){
+  document.getElementsByClassName('list-group')[0].classList.add('show');
+});
+```
+▲ 그래서 class="navbar-toggler" 가진 요소 클릭하면
+class="list-group"인 요소에 show라는 클래스명 추가하라고 코드를 짰습니다.
+이제 버튼누르면 서브메뉴가 잘 보이는군요. 
+
+### 버튼 한 번 더 누르면 숨기기
+- 버튼을 한 번 더 누르면 서브메뉴를 숨기고 싶은겁니다.
+- 그럼 당연히 노예 컴퓨터에게 이렇게 명령내리면 됩니다.
+- "버튼 한 번 더 누르면 show 클래스를 제거해주세요"
+- 근데 이건 나중에 if문, 변수문법을 배우면 직접 만들어볼 수 있기 때문에
+- 좀 쉬운 방법을 먼저 알려드리자면 
+
+```javascript
+document.getElementsByClassName('navbar-toggler')[0].addEventListener('click', function(){
+  document.getElementsByClassName('list-group')[0].classList.toggle('show');
+});
+```
+``.classList.toggle() 쓰면`
+- 클래스명이 있으면 제거하고
+- 클래스명이 없으면 붙여줍니다.
+그래서 왔다갔다하는 UI 만들 때 유용하게 쓰면 되겠습니다.
+
+### querySelector
+getElementById()
+getElementsByClassName()
+이거 말고도 다른 방식으로 html 요소를 찾아주는 셀렉터도 있습니다.
+`querySelector인데` 이거 쓰면 css 잘하는 분들은 편리하게 사용가능합니다. 
+
+```html
+<div class="test1">안녕하세요</div>
+<div id="test2">안녕하세요</div>
+
+<script>
+  document.querySelector('.test1').innerHTML = '안녕';
+  document.querySelector('#test2').innerHTML = '안녕';
+</script>
+```
+- querySelector() 안에는 css 셀렉터 문법을 사용가능합니다.
+- 다만 querySelector() 는 맨 위의 한개 요소만 선택해줍니다.
+
+```html
+<div class="test1">안녕하세요</div>
+<div class="test1">안녕하세요</div>
+
+<script>
+  document.querySelectorAll('.test1')[1].innerHTML = '안녕';
+</script>
+```
+▲ 그래서 위처럼 test1이라는 클래스가 중복으로 여러개 있는데
+X번째 요소를 선택하고 싶은 경우엔 querySelectorAll() 쓰면 됩니다.
+querySelectorAll() 은 해당하는걸 다 찾아서 [] 안에 담아줍니다.
+그래서 [숫자] 를 뒤에 붙여서 원하는 위치에 있는 요소 찾아쓰면 됩니다.
+
+
+## jQuery 사용법 간단정리
+jQuery 설치는 구글에 jQuery cdn 이런거 검색하면 나오는 사이트가 있습니다.
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+```
+이제 jQuery 설치한 곳 `하단에서` jQuery 문법을 사용가능합니다.
+
+### jQuery 써서 html 변경하려면
+```html
+<p class="hello">안녕</p>
+
+<script>
+  $('.hello').html('바보'); 
+</script>
+```
+- 이렇게 코드 양이 절반으로 줄어들어서 쓰는 것일 뿐입니다. 
+- $ 이건 querySelector와 동일하게 사용하면 됩니다. 
+
+### jQuery 써서 스타일 변경하려면
+
+```html
+<p class="hello">안녕</p>
+
+<script>
+  $('.hello').css('color', 'red');
+</script>
+```
+- 이러면 css 스타일 변경이 가능합니다. 
+- (주의) html 셀렉터로 찾으면 html 함수들을 뒤에 붙여야하고
+- jQuery 셀렉터로 찾으면 jQuery 함수들을 뒤에 붙여야 잘됩니다. 
+
+### jQuery 써서 class 탈부착하려면 
+```html
+<p class="hello">안녕</p>
+
+<script>
+  $('.hello').addClass('클래스명');
+  $('.hello').removeClass('클래스명');
+  $('.hello').toggleClass('클래스명');
+</script>
+```
+
+### html 여러개를 바꾸려면
+```html
+<p class="hello">안녕</p>
+<p class="hello">안녕</p>
+<p class="hello">안녕</p>
+
+<script>
+  document.querySelectorAll('.hello')[0].innerHTML = '바보';
+  document.querySelectorAll('.hello')[1].innerHTML = '바보';
+  document.querySelectorAll('.hello')[2].innerHTML = '바보';
+</script>
+```
+- <p> 태그 3개 내용을 일괄적으로 '바보'로 바꾸려면
+- 그냥 자바스크립트는 저렇게 3줄 쓰면 됩니다.
+
+```html
+<p class="hello">안녕</p>
+<p class="hello">안녕</p>
+<p class="hello">안녕</p>
+
+<script>
+  $('.hello').html('바보');
+</script>
+```
+- 그런데 $() 셀렉터는 그냥 querySelectorAll처럼 여러개가 있으면 전부 찾아줍니다.
+- 그리고 거기에 [0] 이런 식으로 순서지정해줄 필요없이 냅다 .html() 붙이면
+- 셀렉터로 찾은 모든 요소를 한 번에 조작하고 변경해줄 수 있습니다. 
+
+### 이벤트리스너는
+```html
+<p class="hello">안녕</p>
+<button class="test-btn">버튼</button>
+
+<script>
+  $('.test-btn').on('click', function(){
+    어쩌구~
+  });
+</script>
+```
+
+### UI 애니메이션은
+```html
+<p class="hello">안녕</p>
+<button class="test-btn">버튼</button>
+
+<script>
+  $('.test-btn').on('click', function(){
+    $('.hello').fadeOut();
+  });
+</script>
+```
+- .hide() 는 사라지게, .fadeOut() 은 서서히 사라지게, .slideUp() 은 줄어들며 사라지게 만들어줍니다. 
+- 간단한 애니메이션은 이런 식으로 쉽게 사용가능합니다. 
+- 애니메이션을 반대로 주고 싶으면 show() fadeIn() slideDown() 이런게 있습니다. 
+- 아니면 fadeToggle() 이런 것도 있음 
