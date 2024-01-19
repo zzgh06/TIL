@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
   </head>
-  <body>
+  <body class="dark">
     <div class="black-bg">
       <div class="white-bg">
         <h4>로그인하세요</h4>
@@ -24,6 +24,44 @@
         </form>
       </div>
     </div> 
+
+    <script>
+      // document.getElementById('id').addEventListener('input', function(){
+      //   console.log('안녕')
+      // })
+
+      // 10강 숙제
+      // function 삼육구게임(num) {
+      //   if (num % 9 == 0){
+      //     console.log('박수 x 2');
+      //   } else if(num % 3 == 0){
+      //     console.log('박수')
+      //   } else {
+      //     console.log('통과');
+      //   }
+      // }
+      function 삼육구게임(num) {
+        if(num % 10 == 3 || num % 10 == 6 || num % 10 == 9){
+          console.log('박수')
+        } else {
+          console.log('통과');
+        }
+      }
+
+      삼육구게임(156);
+
+      function 합격했냐(num1, num2) {
+        if ((100 < num1 || 100 < num2) || (0 > num1 || 0 > num2)){
+          alert('장난치지 마세요')
+        } else if(num1 + num2 >= 120 && (num1 >= 40 && num2 >= 40)){
+          console.log('합격')
+        } else {
+          console.log('불합격')
+        }
+      }
+
+      합격했냐(20, 100)
+    </script>
 
     <script>
       // 9강 숙제
@@ -60,11 +98,37 @@
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
         <span class="navbar-brand">Navbar</span>
+        <span class="badge bg-dark" id="mode">Dark 🔄</span>
         <button class="navbar-toggler" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
     </nav>
+
+    <script>
+      // var 이름 = 'kim'; : 재선언 O 재할당 O 범위 function
+      // let 이름 = 'kim'; : 재선언 X 재할당 O 범위 {}
+      // const 이름 = 'kim'; : 재선언 X 재할당 X 범위 {}
+
+
+
+      // var 변수이름 = 변수에넣을값;
+      var cnt = 0;
+    
+      $('#mode').on('click', function () {
+        cnt++;
+        // cnt += 1;
+        // cnt = cnt +1;
+        if (cnt % 2 == 1) {
+          $('#mode').html('Light 🔄');
+          $('body').removeClass('dark');
+        } else {
+          $('#mode').html('Dark 🔄');
+          $('body').addClass('dark');
+        }
+      });
+    </script>
+
     <ul class="list-group" id="test1">
       <li class="list-group-item">An item</li>
       <li class="list-group-item">A second item</li>

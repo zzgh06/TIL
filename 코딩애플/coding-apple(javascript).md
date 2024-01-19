@@ -416,3 +416,55 @@ jQuery 설치는 구글에 jQuery cdn 이런거 검색하면 나오는 사이트
 - 간단한 애니메이션은 이런 식으로 쉽게 사용가능합니다. 
 - 애니메이션을 반대로 주고 싶으면 show() fadeIn() slideDown() 이런게 있습니다. 
 - 아니면 fadeToggle() 이런 것도 있음 
+
+
+## 폼만들며 배워보는 if else
+
+그럼 자바스크립트로 
+
+    전송버튼누르면
+    저기 <input>에 입력된 값이 공백이면 알림띄워주세요 
+
+코드 짜면 되는데 "이런 경우에만 코드 실행해주세요~" 라는 표현법은 배우지 않았습니다.
+이 경우엔 자바스크립트 if 문법쓰면 됩니다.
+
+### 잠깐 문법수업 : if else 조건문
+
+조건부로 코드를 실행하고 싶으면 if 문법을 쓰면 됩니다.
+
+```javascript
+if (조건식){
+  실행할코드
+}
+```
+
+### 간편한 alert 함수
+
+- 간단한 알림팝업 띄우고 싶으면 alert('어쩌구') 쓰면 됩니다. 
+- 사용자에게 간단한 안내문을 간편하게 띄울 수 있습니다.
+
+### 전송버튼 누르면 공백체크하라던 숙제
+
+- 태그는 그냥 태그명 그대로 작성
+- jQuery 형태로 작성하니깐 안됐음
+- $('#id').value == '' <= 요건 안됨
+- jQuery에서는 val() 메서드를 사용하여 요소의 값을 가져올 수 있다
+- if ($('#id').val() === '') 이런식으로 작성되어야 한다.
+```javascript
+$('form').on('submit', function(e){
+  if (document.getElementById('id').value == ''){
+    e.preventDefault();
+    alert('아이디를 입력해주세요')
+  } 
+  
+  if (document.getElementById('password').value == ''){
+    e.preventDefault();
+    alert('비밀번호를 입력해주세요')
+  } 
+  
+  if (document.getElementById('password').value.length < 6){
+    e.preventDefault();
+    alert('비밀번호는 6자 이상입니다')
+  }
+});
+```
