@@ -25,76 +25,6 @@
       </div>
     </div> 
 
-    <script>
-      // document.getElementById('id').addEventListener('input', function(){
-      //   console.log('안녕')
-      // })
-
-      // 10강 숙제
-      // function 삼육구게임(num) {
-      //   if (num % 9 == 0){
-      //     console.log('박수 x 2');
-      //   } else if(num % 3 == 0){
-      //     console.log('박수')
-      //   } else {
-      //     console.log('통과');
-      //   }
-      // }
-      function 삼육구게임(num) {
-        if(num % 10 == 3 || num % 10 == 6 || num % 10 == 9){
-          console.log('박수')
-        } else {
-          console.log('통과');
-        }
-      }
-
-      삼육구게임(156);
-
-      function 합격했냐(num1, num2) {
-        if ((100 < num1 || 100 < num2) || (0 > num1 || 0 > num2)){
-          alert('장난치지 마세요')
-        } else if(num1 + num2 >= 120 && (num1 >= 40 && num2 >= 40)){
-          console.log('합격')
-        } else {
-          console.log('불합격')
-        }
-      }
-
-      합격했냐(20, 100)
-    </script>
-
-    <script>
-      // 9강 숙제
-      // $('#send').on('click', function(e){
-      //   if (document.getElementById('id').value == ''){
-      //     e.preventDefault();
-      //     alert('아이디를 입력해주세요')
-      //   }
-      // })
-      
-      // 태그는 그냥 태그명 그대로 작성
-      $('form').on('submit', function(e){
-        // jQuery 형태로 작성하니깐 안됐음
-        // $('#id').value == '' <= 요건 안됨
-        // jQuery에서는 val() 메서드를 사용하여 요소의 값을 가져올 수 있다
-        // if ($('#id').val() === '') 이런식으로 작성되어야 한다.
-        if (document.getElementById('id').value == ''){
-          e.preventDefault();
-          alert('아이디를 입력해주세요')
-        } 
-        
-        if (document.getElementById('password').value == ''){
-          e.preventDefault();
-          alert('비밀번호를 입력해주세요')
-        } 
-        
-        if (document.getElementById('password').value.length < 6){
-          e.preventDefault();
-          alert('비밀번호는 6자 이상입니다')
-        }
-      });
-
-    </script>
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
         <span class="navbar-brand">Navbar</span>
@@ -104,30 +34,6 @@
         </button>
       </div>
     </nav>
-
-    <script>
-      // var 이름 = 'kim'; : 재선언 O 재할당 O 범위 function
-      // let 이름 = 'kim'; : 재선언 X 재할당 O 범위 {}
-      // const 이름 = 'kim'; : 재선언 X 재할당 X 범위 {}
-
-
-
-      // var 변수이름 = 변수에넣을값;
-      var cnt = 0;
-    
-      $('#mode').on('click', function () {
-        cnt++;
-        // cnt += 1;
-        // cnt = cnt +1;
-        if (cnt % 2 == 1) {
-          $('#mode').html('Light 🔄');
-          $('body').removeClass('dark');
-        } else {
-          $('#mode').html('Dark 🔄');
-          $('body').addClass('dark');
-        }
-      });
-    </script>
 
     <ul class="list-group" id="test1">
       <li class="list-group-item">An item</li>
@@ -146,6 +52,36 @@
     <p class="hello">안녕</p>
     <p class="hello">안녕</p>
     <button id="test-btn">버튼</button>
+
+    <p>태조 이성계가 태어난 년도는?</p>
+    <input type="text" id="answer">
+    <button id="send-answer">제출</button>
+
+    <div class="alert alert-danger">
+      <span id="time">5</span>초 이내 구매 시 사은품 증정!
+    </div>
+
+    <script>
+      // setTimeout(함수, 1000)
+
+      // function 함수(){
+      //   console.log('안녕')
+      // }
+      // setInterval(function(){
+      //   $('.alert').hide();
+      // }, 2000)
+      var cnt2 = 5;
+
+      setInterval(function(){
+          cnt2 -= 1;
+          if(cnt2 >= 0){
+            $('#time').html(cnt2)
+          } else {
+            $('.alert').hide();
+          }
+      }, 1000);
+    </script>
+
     <script>
       // document.querySelector('.hello').innerHTML = '바보';
       // innerHTML
@@ -220,6 +156,142 @@
       //   document.querySelectorAll('.list-group')[0].classList.toggle('show');
       // })
 
+    </script>
+    <script>
+      // 9강 숙제
+      // $('#send').on('click', function(e){
+      //   if (document.getElementById('id').value == ''){
+      //     e.preventDefault();
+      //     alert('아이디를 입력해주세요')
+      //   }
+      // })
+      
+      // 태그는 그냥 태그명 그대로 작성
+      $('form').on('submit', function(e){
+        // jQuery 형태로 작성하니깐 안됐음
+        // $('#id').value == '' <= 요건 안됨
+        // jQuery에서는 val() 메서드를 사용하여 요소의 값을 가져올 수 있다
+        // if ($('#id').val() === '') 이런식으로 작성되어야 한다.
+        var 아이디 = document.getElementById('id').value;
+        var 패스워드 = document.getElementById('password').value;
+
+        if (아이디 == ''){
+            e.preventDefault();
+            alert('아이디를 입력해주세요');
+        }
+
+        if (/\S+@\S+\.\S+/.test(아이디) == false){
+            e.preventDefault();
+            alert('올바른 이메일 형식을 작성해주세요');
+        }
+
+        if (패스워드 == ''){
+            e.preventDefault();
+            alert('비밀번호를 입력해주세요');
+        } 
+
+        if (패스워드.length < 6){
+            e.preventDefault();
+            alert('비밀번호는 6자 이상입니다.');
+        } else if (/[A-Z]/.test(패스워드) == false){ 
+            e.preventDefault();
+            alert('비밀번호는 대문자가 1자 이상 포함되어 있어야 합니다');
+        }
+    });
+    </script>
+    <script>
+      // document.getElementById('id').addEventListener('input', function(){
+      //   console.log('안녕')
+      // })
+
+      // 10강 숙제
+      // function 삼육구게임(num) {
+      //   if (num % 9 == 0){
+      //     console.log('박수 x 2');
+      //   } else if(num % 3 == 0){
+      //     console.log('박수')
+      //   } else {
+      //     console.log('통과');
+      //   }
+      // }
+      function 삼육구게임(num) {
+        if(num % 10 == 3 || num % 10 == 6 || num % 10 == 9){
+          console.log('박수')
+        } else {
+          console.log('통과');
+        }
+      }
+
+      삼육구게임(156);
+
+      function 합격했냐(num1, num2) {
+        if ((100 < num1 || 100 < num2) || (0 > num1 || 0 > num2)){
+          alert('장난치지 마세요')
+        } else if(num1 + num2 >= 120 && (num1 >= 40 && num2 >= 40)){
+          console.log('합격')
+        } else {
+          console.log('불합격')
+        }
+      }
+
+      합격했냐(20, 100)
+
+
+    </script>
+
+    <script>
+      // var 이름 = 'kim'; : 재선언 O 재할당 O 범위 function
+      // let 이름 = 'kim'; : 재선언 X 재할당 O 범위 {}
+      // const 이름 = 'kim'; : 재선언 X 재할당 X 범위 {}
+      let 나이 = 29;
+      const 출신지역 = '안양'; 
+      
+      var 예금액 = 60000;
+      var 미래예금액 = 0;
+
+      if (예금액 >= 50000) {
+        미래예금액 = 예금액 * 1.20 * 1.20;
+      } else {
+        미래예금액 = 에금액 * 1.15 * 1.15; 
+      }
+      console.log(미래예금액)
+
+      var first = 360;
+      var total = 0;
+      
+      total = first + first * 2 / 3 + first * 2 / 3 * 2 / 3
+      console.log(total)
+      // var 변수이름 = 변수에넣을값;
+      var cnt = 0;
+    
+      $('#mode').on('click', function () {
+        cnt++;
+        // cnt += 1;
+        // cnt = cnt +1;
+        if (cnt % 2 == 1) {
+          $('#mode').html('Light 🔄');
+          $('body').removeClass('dark');
+        } else {
+          $('#mode').html('Dark 🔄');
+          $('body').addClass('dark');
+        }
+      });
+    </script>
+
+    <script>
+      var count = 0;
+
+      $('#send-answer').on('click', function () {
+        count += 1;
+        var 유저답안 = document.getElementById('answer').value;
+        if (유저답안 == 1335){
+          alert('성공')
+        } else if (count >= 3 && 유저답안 != 1335){
+          alert('멍청아')
+        } else {
+          alert('다시 한번 입력해보세요')
+        }
+      })
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
