@@ -61,6 +61,41 @@
       <span id="time">5</span>초 이내 구매 시 사은품 증정!
     </div>
 
+    <div style="overflow: hidden;">
+      <div class="slide-container">
+        <div class="slide-box">
+          <img src="./assets/car1.png" alt="#">
+        </div>
+        <div class="slide-box">
+          <img src="./assets/car2.png" alt="#">
+        </div>
+        <div class="slide-box">
+          <img src="./assets/car3.png" alt="#">
+        </div>
+      </div>
+    </div>
+
+    <button class="slide-1">1</button>
+    <button class="slide-2">2</button>
+    <button class="slide-3">3</button>
+    <button class="next">다음</button>
+    <script>
+      $('.slide-1').on('click', function () {
+        // document.querySelector('.slide-container').style.transform = 'translateX(0)'
+        $('.slide-container').css('transform', 'translateX(0)')
+      })
+
+      $('.slide-2').on('click', function () {
+        // document.querySelector('.slide-container').style.transform = 'translateX(-100vw)'
+        $('.slide-container').css('transform', 'translateX(-100vw)')
+      })
+
+      $('.slide-3').on('click', function () {
+        // document.querySelector('.slide-container').style.transform = 'translateX(-200vw)'
+        $('.slide-container').css('transform', 'translateX(-200vw)')
+      })
+    </script>
+
     <script>
       // setTimeout(함수, 1000)
 
