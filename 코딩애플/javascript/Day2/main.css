@@ -45,7 +45,7 @@
 
 .slide-container {
   width: 300vw;
-  transition: all 1s;
+  transition: all 0.5s;
 }
 
 .slide-box {
