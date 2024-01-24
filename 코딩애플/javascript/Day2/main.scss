@@ -1,3 +1,7 @@
+:root {
+  scroll-behavior: auto;
+}
+
 .dark {
   background-color: black;
   color: white;
@@ -18,7 +22,7 @@
   // position: fixed는 브라우저의 전체 화면(viewport)을 기준으로 HTML 요소를 배치
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 5;
+  z-index: 6;
   padding: 30px;
   // display: none;
   // visibility: hidden => 애니메이션줄 때, display : none 대용
@@ -58,5 +62,25 @@
 }
 
 .slide-box img {
+  width: 100%;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+}
+
+.navbar-brand {
+  font-size: 30px;
+  transition: all 0.2s;
+}
+
+.page {
+  top: 70px;
+  height: 5px;
+  background-color: salmon;
+  position: fixed;
+  z-index: 10;
   width: 100%;
 }

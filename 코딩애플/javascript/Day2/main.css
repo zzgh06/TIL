@@ -1,3 +1,7 @@
+:root {
+  scroll-behavior: auto;
+}
+
 .dark {
   background-color: black;
   color: white;
@@ -18,7 +22,7 @@
   height: 100%;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 5;
+  z-index: 6;
   padding: 30px;
   visibility: hidden;
   height: 0;
@@ -54,5 +58,25 @@
 }
 
 .slide-box img {
+  width: 100%;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+}
+
+.navbar-brand {
+  font-size: 30px;
+  transition: all 0.2s;
+}
+
+.page {
+  top: 70px;
+  height: 5px;
+  background-color: salmon;
+  position: fixed;
+  z-index: 10;
   width: 100%;
 }/*# sourceMappingURL=main.css.map */

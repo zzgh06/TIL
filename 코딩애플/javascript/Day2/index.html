@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
   </head>
-  <body class="dark">
+  <body>
     <div class="black-bg">
       <div class="white-bg">
         <h4>로그인하세요</h4>
@@ -28,12 +28,59 @@
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
         <span class="navbar-brand">Navbar</span>
-        <span class="badge bg-dark" id="mode">Dark 🔄</span>
+        <span class="badge bg-dark" id="mode">Light 🔄</span>
         <button class="navbar-toggler" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
+      <div class="page">
+        <div class="progress"></div>
+    </div>
     </nav>
+
+    <script>
+      // window.addEventListener('scroll', function(){
+      //   // 1. 유저가 얼마나 스크롤바 내렸나
+      //   // window.scrollY(); 
+      //   // window.pageYOffset();
+
+      //   // 2. 강제로 스크롤하기
+      //   // window.scrollTo(x, y)
+
+      //   // 현재 위치부터 강제로 스크롤하기
+      //   // window.scrollBy(0, 100);
+      // });
+
+      $(window).on('scroll', function(){
+        // 현재 스크롤바 위치 출력와 현재 스크롤바 이동
+        // $(window).scrollTop(100)
+
+        // 1. 스크롤바를 100px 내리면 로고 폰트사이즈를 작게 만들어오십시오.
+        // 반대로 100px 미만으로 내리면 로고 폰트사이즈를 크게 만들어옵시다.
+        var 스크롤 = window.pageYOffset;
+        if (스크롤 >= 100){
+          $('.navbar-brand').css('font-size', '20px')
+        } else {
+          $('.navbar-brand').css('font-size', '30px')
+        }
+      })
+
+      window.addEventListener("scroll",()=> {
+            const wind = document.querySelector("html")
+            let nav = document.querySelector(".navbar");
+            let navHeight = nav.clientHeight;
+            let progress = document.querySelector(".progress");
+           
+            
+            console.log(wind.scrollTop / (wind.scrollHeight - wind.clientHeight) * 100)
+            progress.style.width = `${wind.scrollTop / (wind.scrollHeight - wind.clientHeight) * 100}%`
+            if(wind.scrollTop>navHeight) {
+                nav.classList.add("fixed");
+            } else {
+                nav.classList.remove("fixed")
+            }
+        })
+    </script>
 
     <ul class="list-group" id="test1">
       <li class="list-group-item">An item</li>
@@ -47,6 +94,38 @@
       <h4>Shirts on sale</h4> 
       <button id="login" class="btn btn-danger">로그인</button>
     </div>
+
+    <div class="lorem" style="width: 200px; height: 100px; overflow-y: scroll;">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, suscipit. Similique, ipsum ad quia placeat maxime sit eius non ea molestiae exercitationem voluptatem. Expedita libero dolores quod tenetur obcaecati voluptatem.
+    </div>
+
+    <script>
+      // 숙제 2. 회원약관 박스를 거의 끝까지 스크롤하면 alert를 띄워줍시다.
+      // div의 스크롤바 내린 양 + 눈에 보이는 div 높이 == div의 실제높이
+
+      var alertDisplayed = false;
+      $('.lorem').on('scroll', function(){
+        // div 스크롤바 내린 높이는 셀렉터.scrollTop
+        var 스크롤양 = document.querySelector('.lorem').scrollTop;
+
+        // 눈에 보이는 div 높이
+        var 높이 = document.querySelector('.lorem').clientHeight;
+
+        // div 실제높이는 셀렉터.scrollHeight
+        var 실제높이 = document.querySelector('.lorem').scrollHeight;
+
+        // 추가된 조건: alertDisplayed 변수가 false일 때만 실행
+        if (스크롤양 + 높이 > 실제높이 - 10 && alertDisplayed == false){
+          alert('약관을 모두 읽으셨습니다.')
+
+          // alert가 한 번 나타났으므로 alertDisplayed 변수를 true로 설정
+          alertDisplayed = true;
+        }
+      })
+      
+    </script>
+
+    <div style="height: 1000px;"></div>
 
     <p class="hello">안녕</p>
     <p class="hello">안녕</p>
@@ -84,16 +163,19 @@
       $('.slide-1').on('click', function () {
         // document.querySelector('.slide-container').style.transform = 'translateX(0)'
         $('.slide-container').css('transform', 'translateX(0)')
+        지금사진 = 1;
       })
 
       $('.slide-2').on('click', function () {
         // document.querySelector('.slide-container').style.transform = 'translateX(-100vw)'
         $('.slide-container').css('transform', 'translateX(-100vw)')
+        지금사진 = 2;
       })
 
       $('.slide-3').on('click', function () {
         // document.querySelector('.slide-container').style.transform = 'translateX(-200vw)'
         $('.slide-container').css('transform', 'translateX(-200vw)')
+        지금사진 = 3;
       })
 
       var 지금사진 = 1;
@@ -113,19 +195,36 @@
         지금사진 += 1;
       })
 
-      var 이전사진 = 3;
 
       $('.previous').on('click', function(){
-        if (이전사진 == 3){
+        if (지금사진 == 3){
           $('.slide-container').css('transform', 'translateX(-100vw)');
-          이전사진 -= 1;
-        } else if (이전사진 == 2){
+          지금사진 -= 1;
+        } else if (지금사진 == 2){
           $('.slide-container').css('transform', 'translateX(0)');
-          이전사진 -= 1;
+          지금사진 -= 1;
         }
       })
     </script>
 
+    <script>
+      function 시간(a, b){
+        var res = ((a * 60) + b) * 1000
+        return res
+      }
+
+      console.log(시간(2, 10))
+
+      function 할인(가격, 첫구매여부) {
+        var price = 가격 * 0.9
+        if (첫구매여부 == true){
+          price -= 1.5
+        } 
+        return parseFloat(price.toFixed(2))
+      }
+      console.log(할인(10, true))
+    </script>
+    
     <script>
       // setTimeout(함수, 1000)
 
@@ -334,11 +433,11 @@
         // cnt += 1;
         // cnt = cnt +1;
         if (cnt % 2 == 1) {
-          $('#mode').html('Light 🔄');
-          $('body').removeClass('dark');
-        } else {
           $('#mode').html('Dark 🔄');
           $('body').addClass('dark');
+        } else {
+          $('#mode').html('Light 🔄');
+          $('body').removeClass('dark');
         }
       });
     </script>
