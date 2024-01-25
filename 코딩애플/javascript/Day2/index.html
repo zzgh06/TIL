@@ -33,9 +33,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
-      <div class="page">
-        <div class="progress"></div>
-    </div>
+      <div class="progress"></div>
     </nav>
 
     <script>
@@ -65,21 +63,16 @@
         }
       })
 
-      window.addEventListener("scroll",()=> {
-            const wind = document.querySelector("html")
-            let nav = document.querySelector(".navbar");
-            let navHeight = nav.clientHeight;
-            let progress = document.querySelector(".progress");
-           
-            
-            console.log(wind.scrollTop / (wind.scrollHeight - wind.clientHeight) * 100)
-            progress.style.width = `${wind.scrollTop / (wind.scrollHeight - wind.clientHeight) * 100}%`
-            if(wind.scrollTop>navHeight) {
-                nav.classList.add("fixed");
-            } else {
-                nav.classList.remove("fixed")
-            }
-        })
+      $(window).on('scroll', function(){
+        // 유저의 스크롤양
+        // const windowScroll = window.scrollY;
+        const windowScroll = document.querySelector('html').scrollTop
+        // 실제높이에서 눈에 보이는 나머지 값을 뺀 실질적인 스크롤 양
+        const total = document.querySelector('html').scrollHeight - document.querySelector('html').clientHeight;
+        // 실질적인 스크롤양에서 유저의 스크롤양을 나눈 뒤 * 100하여 백분율을 계산 
+        const percentage = (windowScroll / total) * 100;
+        $('.progress').css('width', percentage + '%')
+      })
     </script>
 
     <ul class="list-group" id="test1">

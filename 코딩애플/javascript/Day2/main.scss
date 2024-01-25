@@ -68,6 +68,7 @@
 .navbar {
   position: fixed;
   width: 100%;
+  height: 70px;
   z-index: 5;
 }
 
@@ -76,11 +77,11 @@
   transition: all 0.2s;
 }
 
-.page {
+.progress {
   top: 70px;
   height: 5px;
   background-color: salmon;
   position: fixed;
   z-index: 10;
-  width: 100%;
+  width: 0;
 }
