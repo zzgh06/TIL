@@ -23,7 +23,25 @@
            <button type="button" class="btn btn-danger" id="close">닫기</button>
         </form>
       </div>
-    </div> 
+    </div>
+
+    <script>
+      $('.black-bg').on('click', function(e){
+        // e.target; // 유저가 실제로 누른거
+        // e.currentTarget; // 이벤트리스너 달린 곳
+        // this; // 이벤트리스너 달린 곳
+        // e.preventDefault(); // 이벤트 기본 동작 막아줌
+        // e.stopPropagation(); // 내 상위요소로 이벤트 버블링 막아줌
+
+        // jQuery를 등호를 통해 비교할 때 주의할 점은 jQuery는 복잡한 자료형태로 나타나기 때문에
+        // $(어쩌구).is($(어쩌구)) 이런식으로 비교하는게 좋다
+        if ($(e.target).is($('.black-bg'))){
+          $('.black-bg').removeClass('show-modal')
+        }
+      })
+    </script>
+
+
 
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">

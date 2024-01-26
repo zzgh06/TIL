@@ -11,10 +11,14 @@
   <body>
 	<div class="container mt-5">
 		<ul class="list">
-		  <li class="tab-button">Products</li>
-		  <li class="tab-button orange">Information</li>
-		  <li class="tab-button">Shipping</li>
-		  <li class="tab-button">Plus-content</li>
+			<!-- data-id로 몰래 숨기기 가능 -->
+			<!-- html 태그에 몰래 정보숨기기 기능 -->
+			<!-- data-작명="값" -->
+			<!-- 숨겼던 자료 출력은 셀렉터.dataset.자료이름 -->
+		  <li class="tab-button" data-id="0">Products</li>
+		  <li class="tab-button orange" data-id="1">Information</li>
+		  <li class="tab-button" data-id="2">Shipping</li>
+		  <li class="tab-button" data-id="3">Plus-content</li>
 		</ul>
 		<div class="tab-content">
 		  <p>상품설명입니다. Product</p>
