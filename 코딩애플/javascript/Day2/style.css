@@ -38,4 +38,9 @@ ul.list::after {
 
 .show {
   display: block;
+}
+
+.swiper {
+  width: 600px;
+  height: 300px;
 }/*# sourceMappingURL=style.css.map */
