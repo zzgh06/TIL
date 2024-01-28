@@ -556,3 +556,37 @@ console.log(이름); //없다고 나옴
   var 이름 = 'kim'; : 재선언 O 재할당 O 범위 function-scope
   let 이름 = 'kim'; : 재선언 X 재할당 O 범위 {block-scope}
   const 이름 = 'kim'; : 재선언 X 재할당 X 범위 {block-scope}
+
+## setTimeout 타이머주는 법
+
+기본 함수 중에 setTimeout() 이런게 있는데, 이거 쓰면 X초 후에 코드를 실행해줍니다.
+```javascript
+setTimeout(function(){ 실행할코드~ }, 기다릴시간);
+```
+
+위처럼 사용하면 됩니다.
+시간은 ms 단위로 적으면 됩니다. (1ms는 1000분의 1초)
+
+```javascript
+setTimeout(function(){ 
+  console.log('안녕')
+}, 1000);
+```
+위처럼 쓰면 1초 후에 콘솔창에 '안녕'이 뜹니다.
+
+`X초마다 코드를 실행하고 싶으면 setInterval()`
+
+X초마다 코드를 실행하고 싶으면 setTimeout() 을 연달아서 여러개 쓰거나
+```javascript
+setInterval(function(){ 실행할코드~ }, 기다릴시간);
+```
+
+위처럼 setInterval 써도 됩니다.
+그럼 X초마다 안에 있는 코드를 실행해줍니다. 
+
+```javascript
+setInterval(function(){ 
+  console.log('안녕')
+}, 1000);
+```
+위처럼 쓰면 1초 마다 콘솔창에 '안녕'이 뜹니다.
