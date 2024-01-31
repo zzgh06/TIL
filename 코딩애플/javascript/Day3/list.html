@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+	</head>
+  <body>
+    <div class="card-group container">
+      <div class="card">
+        <img src="https://via.placeholder.com/600">
+        <div class="card-body">
+          <h5 class="product">Card title</h5>
+          <p>가격 : 70000</p>
+          <button class="btn btn-danger">주문하기</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/600">
+        <div class="card-body">
+          <h5 class="product">Card title</h5>
+          <p>가격 : 70000</p>
+          <button class="btn btn-danger">주문하기</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/600">
+        <div class="card-body">
+          <h5 class="product">Card title</h5>
+          <p>가격 : 70000</p>
+          <button class="btn btn-danger">주문하기</button>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      var products = [
+        { id : 0, price : '70,000', title : 'Blossom Dress' },
+        { id : 1, price : '50,000', title : 'Springfield Shirt' },
+        { id : 2, price : '60,000', title : 'Black Monastery' }
+      ];
+
+      // var 상품명 = document.querySelectorAll('.product')
+      // var 가격 = document.querySelectorAll('.card-body p')
+      
+      // for (let i = 0; i < products.length; i++) {
+      //   상품명[i].innerHTML = products[i].title;
+      //   가격[i].innerHTML = '가격 : ' + products[i].price;       
+      // }
+
+      var 상품명2 = $('.product')
+      var 가격2 = $('.card-body p')
+
+      for (let i = 0; i < products.length; i++) {
+        상품명2.eq(i).html(products[i].title);
+        가격2.eq(i).html('가격 : ' + products[i].price);       
+      }
+
+      // 문자 변수 쉽게 넣기
+      var a = 안녕;
+      `문자${a}문자`
+
+    </script> 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
