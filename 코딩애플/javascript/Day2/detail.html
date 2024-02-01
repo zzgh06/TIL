@@ -54,6 +54,83 @@
 
   </script>
 
+  <form class="container my-5 form-group">
+    <p>상품선택</p>
+    <select class="form-select mt-2">
+      <option>모자</option>
+      <option>셔츠</option>
+      <option>바지</option>
+    </select>
+    <select class="form-select mt-2 form-hide">
+      <option>95</option>
+      <option>100</option>
+    </select>
+  </form>
+
+  <div id="test">
+    <h4>반가워</h4>
+  </div>
+
+  <script>
+    // 자바스크립트로 html 생성법 1 .createElement() 성능이 더 빠름
+    // var a = document.createElement('p');
+    // a.innerHTML = '안녕';
+    // document.querySelector('#test').appendChild(a);
+
+    // 자바스크립트로 html 생성법 2 .insertAdjacentHTML(), .append()
+    // 해당 html 요소 맨밑에 생성
+    // 밑이 아니라 그냥 새로 html요소를 갈아치우고 싶을 경우, innerHTML or html 사용
+    var 템플릿 = '<p>안녕</p>';
+    document.querySelector('#test').insertAdjacentHTML('beforeend', 템플릿);
+    // jQuery
+    $('#test').append(템플릿);
+
+    var pants = [28, 30, 32, 34];
+    var shirts = [90, 95, 100, 105];
+
+    $('.form-select').eq(0).on('input', function(){
+      var select = this.value;
+
+      if (select == '셔츠'){
+        $('.form-select').eq(1).removeClass('form-hide');
+        // var 셔츠사이즈 = `<option>95</option><option>100</option>`;
+        // $('.form-select').eq(1).html(셔츠사이즈);
+        $('.form-select').eq(1).html('');
+        shirts.forEach(function(data){
+          // .html() 메서드는 선택한 요소의 내용을 지우고 새로운 내용으로 대체(교체)합니다. 
+          // .append() 메서드는 선택한 요소의 끝에 새로운 내용을 추가합니다.
+          // 그래서 .html() 메서드를 사용하면 shirts 마지막 값인 105만 출력된다 
+          $('.form-select').eq(1).append(`<option>${data}</option>`)
+        })
+      } else if (select == '모자'){
+        $('.form-select').eq(1).addClass('form-hide');
+      } else {
+        $('.form-select').eq(1).removeClass('form-hide');
+        $('.form-select').eq(1).html('');
+        // forEach 반복문 : array에 붙일 수 있는 반복문
+        // forEach 반복문의 콜백함수 파라미터에 작명을 하면 그 안에 array의 데이터가 차례대로 출력
+        // forEach 안에 파라미터 2개 생성가능(첫째는 array 안의 데이터, 둘째는 0부터 1씩 증가하는 정수)
+        pants.forEach(function(data, i){
+          $('.form-select').eq(1).append(`<option>${data}</option>`);
+        });
+
+        // 콜백함수를 arrow function 으로 사용해도됨
+        // 그러나 arrow function 쓰면 함수 안의 this 뜻이 달라질 수 있음
+        // pants,forEach((data) => {
+        //   $('.form-select').eq(1).append(`<option>${data}</option>`);
+        // });
+      }
+    });
+
+    // object 자료 갯수만큼 반복문 돌리려면
+    var obj = {name : 'kim', age : 29}
+    for (var key in obj){
+      console.log(1); // 2번 출력됨
+      console.log(key); // key 값인 name, age 가 출력됨
+      console.log(obj[key]); // value 값인 'kim', 29 가 출려됨
+    }
+  </script>
+
 	<div class="container mt-5">
 		<ul class="list">
 			<!-- data-id로 몰래 숨기기 가능 -->
@@ -78,7 +155,6 @@
 			<p>새롭게 추가된 탭입니다. Plus-content</p>
 		  </div>
 	</div>
-
 
 	<script src="tab.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
