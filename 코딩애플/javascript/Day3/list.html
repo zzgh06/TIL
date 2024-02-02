@@ -8,61 +8,60 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
 	</head>
   <body>
-    <div class="card-group container">
-      <div class="card">
-        <img src="https://via.placeholder.com/600">
-        <div class="card-body">
-          <h5 class="product">Card title</h5>
-          <p>가격 : 70000</p>
-          <button class="btn btn-danger">주문하기</button>
-        </div>
+    <div class="container">
+      <div class="row">
+    
+          <!-- <div class="col-sm-4">
+            <img src="https://via.placeholder.com/600" class="w-100">
+            <h5>Card title</h5>
+            <p>가격 : 70000</p>
+          </div> -->
+          
+    
       </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/600">
-        <div class="card-body">
-          <h5 class="product">Card title</h5>
-          <p>가격 : 70000</p>
-          <button class="btn btn-danger">주문하기</button>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/600">
-        <div class="card-body">
-          <h5 class="product">Card title</h5>
-          <p>가격 : 70000</p>
-          <button class="btn btn-danger">주문하기</button>
-        </div>
-      </div>
-    </div>
+    </div> 
     
     <script>
       var products = [
         { id : 0, price : '70,000', title : 'Blossom Dress' },
         { id : 1, price : '50,000', title : 'Springfield Shirt' },
         { id : 2, price : '60,000', title : 'Black Monastery' }
-      ];
+      ]
 
-      // var 상품명 = document.querySelectorAll('.product')
-      // var 가격 = document.querySelectorAll('.card-body p')
-      
-      // for (let i = 0; i < products.length; i++) {
-      //   상품명[i].innerHTML = products[i].title;
-      //   가격[i].innerHTML = '가격 : ' + products[i].price;       
-      // }
-
-      var 상품명2 = $('.product')
-      var 가격2 = $('.card-body p')
-
-      for (let i = 0; i < products.length; i++) {
-        상품명2.eq(i).html(products[i].title);
-        가격2.eq(i).html('가격 : ' + products[i].price);       
-      }
-
-      // 문자 변수 쉽게 넣기
-      var a = 안녕;
-      `문자${a}문자`
+      products.forEach(function(data, i){
+        var 상품 = 
+        `<div class="col-sm-4">
+          <img src="https://via.placeholder.com/600" class="w-100">
+          <h5>${products[i].title}</h5>
+          <p>${products[i].price}</p>
+        </div>`;
+        $('.row').append(상품)
+      })
 
     </script> 
+    
+    <script>
+      
+      // $.get('https://codingapple1.github.io/hello.txt').done(function(data){
+      //   console.log(data)
+      // }).fail(function(){
+      //   console.log('실패함')
+      // })
+
+      // $.get('https://codingapple1.github.io/price.json').done(function(data){
+      //   console.log(data.price)
+      // })
+
+      // fetch('https://codingapple1.github.io/price.json')
+      // .then(res => res.json())
+      // .then(function(data){
+      //   console.log(data)
+      // })
+      // .catch(function(error){
+      //   console.log('실패함')
+      // });
+
+    </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
 </html>
