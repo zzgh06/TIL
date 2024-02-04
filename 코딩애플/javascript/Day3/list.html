@@ -24,6 +24,8 @@
 
     <div class="container">
       <button class="btn btn-primary" id="price">가격순 정렬</button>
+      <button class="btn btn-primary" id="title">상품명 역순 정렬</button>
+      <button class="btn btn-primary" id="filter">6만원 이하 상품만 보기</button>
       <button class="btn btn-danger" id="more">더보기</button>
     </div>
     <script>
@@ -45,8 +47,10 @@
         })
       }
 
+      // 기본 상품 생성
       상품생성()
 
+      // 가격 정렬
       $('#price').click(function(){
 
         products.sort(function(a, b){
@@ -58,6 +62,44 @@
 
         상품생성()
       }); 
+
+      // 상품명 역순 정렬
+      $('#title').click(function(){
+        products.sort(function(a, b){
+          if (a.title < b.title){
+            return 1;
+          } else if (a.title > b.title){
+            return -1;
+          } else {
+            return 0
+          }
+        })
+        
+        $('.row').html('');
+
+        상품생성()
+
+      })
+
+      // 6만원 이하 상품만 보기
+      $('#filter').click(function(){
+        var productsFilter = products.filter(function(a){
+          return a.price <= 60000; 
+        })
+
+        console.log(productsFilter)/
+        $('.row').html('');
+
+        productsFilter.forEach((a, i) => {
+          var 상품 = 
+          `<div class="col-sm-4">
+            <img src="https://via.placeholder.com/600" class="w-100">
+            <h5>${productsFilter[i].title}</h5>
+            <p>가격 : ${productsFilter[i].price}</p>
+          </div>`;
+          $('.row').append(상품)
+        })
+      })
 
       var 어레이 = [7, 3, 5, 2, 40]
       // array 정렬하는 법
@@ -73,6 +115,17 @@
       // 4. 그리고 array 안의 자료들을 계속 뽑아서 a, b에 넣어줍니다. 
       // 이렇게 동작해서 a - b 저렇게 쓰면 숫자순 정렬이 되는 것입니다. 
 
+      // array 자료 원하는 것만 필터하려면 .filter()
+      // filter() 결과는 변수에 저장해서 써야함
+      var 새어레이 = 어레이.filter(function(a){
+        return a < 4 // 조건식
+      })
+
+      // array 자료 전부 변형하려면 .map()
+      var 새어레이2 = 어레이.map(function(a){
+        return a * 4 // 조건식
+      })
+      console.log(새어레이2)
     </script> 
 
     <script>
