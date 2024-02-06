@@ -43,6 +43,7 @@
         { id : 2, price : 60000, title : 'Black Monastery' }
       ]
 
+      
 
       function 상품생성(){
           products.forEach((data, i) => {
@@ -51,10 +52,32 @@
             <img src="https://via.placeholder.com/600" class="w-100">
             <h5>${products[i].title}</h5>
             <p>가격 : ${products[i].price}</p>
+            <button class="buy">구매</button>
           </div>`;
           $('.row').append(상품)
         })
       }
+
+      // 로컬스토리지 사용법
+      // 1. 저장
+      // localStorage.setItem('이름', 'kim');
+      // 2. 출력
+      // localStorage.getItem('이름');
+      // 3. 제거
+      // localStorage.removeItem();
+      // 4. localStorage에 array, object 저장하려면 (원래는 문자 숫자만 저장못하는데 편법이 존재함)
+      var arr = [1, 2, 3];
+      // array, object -> JSON으로 바꾸면 저장가능(JSON 파일은 문자로 변형시켜주기 때문)
+      // 1) array, object -> JSON은 JSON.stringify();
+      var newArr = JSON.stringify(arr);
+      localStorage.setItem('num', newArr);
+
+      // 2) JSON -> array, object은 JSON.parse();
+      var 꺼낸거 = localStorage.getItem('num');
+      console.log(JSON.parse(꺼낸거));
+
+      // 수정하려면(다른 명령어가 존재하지 않음)
+      // 1 자료꺼냄 2 꺼낸거 수정 3 다시넣음
 
       // 기본 상품 생성
       상품생성()
