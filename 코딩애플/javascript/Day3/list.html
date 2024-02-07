@@ -50,13 +50,38 @@
           var 상품 = 
           `<div class="col-sm-4">
             <img src="https://via.placeholder.com/600" class="w-100">
-            <h5>${products[i].title}</h5>
+            <h5 class="title">${products[i].title}</h5>
             <p>가격 : ${products[i].price}</p>
             <button class="buy">구매</button>
           </div>`;
           $('.row').append(상품)
         })
       }
+
+      // 기본 상품 생성
+      상품생성()
+
+      // 240206 문제점
+      // 1. 상품이 생성된 후에 출력해야하는데, 생성되기 전에 코드를 작성해서 아무 값도 출력되지 않았음
+      // 2. .text() 메소드를 사용해야 태그 안에 내용이 출력됨
+      // $('.buy').siblings('h5') 까지는 그냥 태그를 선택한 것일 뿐
+      // var title = $('.buy').siblings('h5').text();
+      // console.log(title)
+
+
+      // 구매버튼누르면 상품명을 localStorage에 저장
+      $('.buy').click(function(){
+        var productTitle = $(this).siblings('h5').text();
+        if (localStorage.getItem('cart') == null){
+          localStorage.setItem('cart', JSON.stringify([productTitle]));
+        } else {
+          var cartProduct = JSON.parse(localStorage.getItem('cart'));
+          cartProduct.push(productTitle);
+          localStorage.setItem('cart', JSON.stringify(cartProduct))
+        }
+      })
+
+      // 상품 구매 누르면 상품 갯수가 올라가게
 
       // 로컬스토리지 사용법
       // 1. 저장
@@ -69,18 +94,15 @@
       var arr = [1, 2, 3];
       // array, object -> JSON으로 바꾸면 저장가능(JSON 파일은 문자로 변형시켜주기 때문)
       // 1) array, object -> JSON은 JSON.stringify();
-      var newArr = JSON.stringify(arr);
-      localStorage.setItem('num', newArr);
+      // var newArr = JSON.stringify(arr);
+      // localStorage.setItem('num', newArr);
 
       // 2) JSON -> array, object은 JSON.parse();
-      var 꺼낸거 = localStorage.getItem('num');
-      console.log(JSON.parse(꺼낸거));
+      // var 꺼낸거 = localStorage.getItem('num');
+      // console.log(JSON.parse(꺼낸거));
 
       // 수정하려면(다른 명령어가 존재하지 않음)
       // 1 자료꺼냄 2 꺼낸거 수정 3 다시넣음
-
-      // 기본 상품 생성
-      상품생성()
 
       // 가격 정렬
       $('#price').click(function(){
