@@ -61,6 +61,8 @@
       // 기본 상품 생성
       상품생성()
 
+      // 구매버튼누르면 상품명을 localStorage에 저장
+
       // 240206 문제점
       // 1. 상품이 생성된 후에 출력해야하는데, 생성되기 전에 코드를 작성해서 아무 값도 출력되지 않았음
       // 2. .text() 메소드를 사용해야 태그 안에 내용이 출력됨
@@ -68,20 +70,39 @@
       // var title = $('.buy').siblings('h5').text();
       // console.log(title)
 
-
-      // 구매버튼누르면 상품명을 localStorage에 저장
-      $('.buy').click(function(){
-        var productTitle = $(this).siblings('h5').text();
-        if (localStorage.getItem('cart') == null){
-          localStorage.setItem('cart', JSON.stringify([productTitle]));
-        } else {
-          var cartProduct = JSON.parse(localStorage.getItem('cart'));
-          cartProduct.push(productTitle);
-          localStorage.setItem('cart', JSON.stringify(cartProduct))
-        }
-      })
+  
 
       // 상품 구매 누르면 상품 갯수가 올라가게
+        $('.buy').click(function(){
+            var productTitle = $(this).siblings('h5').text();
+            // localStorage가 비어있을 경우
+            if (localStorage.getItem('cart') == null){
+              	var local = [{상품명 : productTitle, num : 1}]
+				// localStorage에 상품정보 저장
+                localStorage.setItem('cart', JSON.stringify(local));
+            } 
+			// localStorage가 내용이 존재할 경우
+			else {
+				// 1. localStorage에 담긴 자료(상품)꺼냄
+                var 장바구니 = JSON.parse(localStorage.getItem('cart'));
+				// 2. localStorage의 담겨있던 상품명과 새로 들어온 상품명이 동일할 경우, 해당 인덱스를 반환
+                var index = 장바구니.findIndex(item => item.상품명 == productTitle);
+				// 동일한 상품이 있으면 수량만 증가하여 localStorage 추가
+                if (index != -1){
+                    장바구니.forEach((data) => {
+                        if (data.상품명 == productTitle){
+                            장바구니[index].num++;
+                            localStorage.setItem('cart', JSON.stringify(장바구니));
+                        }
+                    });
+            	} 
+				// 동일한 상품이 없으면, localStorage에새로운 내용 추가
+				else {
+                장바구니.push({상품명 : productTitle, num : 1})
+                localStorage.setItem('cart', JSON.stringify(장바구니));
+            	}
+            }
+        })
 
       // 로컬스토리지 사용법
       // 1. 저장

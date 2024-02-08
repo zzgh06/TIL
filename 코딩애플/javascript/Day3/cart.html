@@ -16,10 +16,10 @@
     <script>
       var cart = JSON.parse(localStorage.cart);
       console.log(cart)
-      cart.forEach((data) => {
+      cart.forEach((data, i) => {
         var 장바구니 = 
         `<div class="col-sm-4">
-          <p>${data}</p>
+          <p>상품명 : ${data.상품명} 수량 : ${data.num}</p>
         </div>`;
         $('.cart').append(장바구니)
       })
