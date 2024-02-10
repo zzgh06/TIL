@@ -154,16 +154,43 @@
     <div style="overflow: hidden;">
       <div class="slide-container">
         <div class="slide-box">
-          <img src="./assets/car1.png" alt="#">
+          <!-- draggable="false" : 이러면 드래그&이동 안됨-->
+          <img src="./assets/car1.png" draggable="false" alt="#">
         </div>
         <div class="slide-box">
-          <img src="./assets/car2.png" alt="#">
+          <img src="./assets/car2.png" draggable="false" alt="#">
         </div>
         <div class="slide-box">
-          <img src="./assets/car3.png" alt="#">
+          <img src="./assets/car3.png" draggable="false" alt="#">
         </div>
       </div>
     </div>
+
+    <script>
+      // function 안에 있던 변수는 function 탈출을 못하기 때문에 바깥에 변수를 선언해서
+      // 갔다 써야함
+      var 시작좌표 = 0
+      var 눌렀냐 = false;
+      // 마우스를 클릭했을 때 위치 = 시작좌표
+      $('.slide-box').eq(0).mousedown(function(e){
+        console.log(e.clientX) // 현재 마우스 위치 X좌표
+        시작좌표 = e.clientX;
+        눌렀냐 = true;
+      });
+
+      // 마우스 드래그한 이동 거리
+      $('.slide-box').eq(0).mousemove(function(e){
+        if(눌렀냐 == true){
+          $('.slide-container').css('transform', `translateX(${e.clientX - 시작좌표}px)`)
+        }
+      });
+
+      $('.slide-box').eq(0).mouseup(function(e){
+        눌렀냐 = false;
+      });
+
+
+    </script>
 
     <button class="previous">이전</button>
     <button class="slide-1">1</button>
