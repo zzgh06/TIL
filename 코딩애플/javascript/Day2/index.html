@@ -169,8 +169,8 @@
     <script>
       // function 안에 있던 변수는 function 탈출을 못하기 때문에 바깥에 변수를 선언해서
       // 갔다 써야함
-      var 시작좌표 = 0
-      var 눌렀냐 = false;
+      let 시작좌표 = 0
+      let 눌렀냐 = false;
       // 마우스를 클릭했을 때 위치 = 시작좌표
       $('.slide-box').eq(0).mousedown(function(e){
         console.log(e.clientX) // 현재 마우스 위치 X좌표
