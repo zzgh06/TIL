@@ -73,36 +73,29 @@
   
 
       // 상품 구매 누르면 상품 갯수가 올라가게
-        $('.buy').click(function(){
-            var productTitle = $(this).siblings('h5').text();
-            // localStorage가 비어있을 경우
-            if (localStorage.getItem('cart') == null){
-              	var local = [{상품명 : productTitle, num : 1}]
-				// localStorage에 상품정보 저장
-                localStorage.setItem('cart', JSON.stringify(local));
-            } 
-			// localStorage가 내용이 존재할 경우
-			else {
-				// 1. localStorage에 담긴 자료(상품)꺼냄
-                var 장바구니 = JSON.parse(localStorage.getItem('cart'));
-				// 2. localStorage의 담겨있던 상품명과 새로 들어온 상품명이 동일할 경우, 해당 인덱스를 반환
-                var index = 장바구니.findIndex(item => item.상품명 == productTitle);
-				// 동일한 상품이 있으면 수량만 증가하여 localStorage 추가
-                if (index != -1){
-                    장바구니.forEach((data) => {
-                        if (data.상품명 == productTitle){
-                            장바구니[index].num++;
-                            localStorage.setItem('cart', JSON.stringify(장바구니));
-                        }
-                    });
-            	} 
-				// 동일한 상품이 없으면, localStorage에새로운 내용 추가
-				else {
-                장바구니.push({상품명 : productTitle, num : 1})
+      $('.buy').click(function(){
+        var productTitle = $(this).siblings('h5').text();
+        if (localStorage.getItem('cart') == null){
+          var local = [{상품명 : productTitle, 수량 : 1}];
+          localStorage.setItem('cart', JSON.stringify(local));
+        } else {
+          var 장바구니 = JSON.parse(localStorage.getItem('cart'));
+          // console.log(장바구니)
+          var index = 장바구니.findIndex(title => title.상품명  == productTitle);
+          if (index != -1){
+            장바구니.forEach((data) => {
+              if(data.상품명 == productTitle){
+                장바구니[index].수량++;
                 localStorage.setItem('cart', JSON.stringify(장바구니));
-            	}
-            }
-        })
+              } 
+            })
+          } else {
+                장바구니.push({상품명 : productTitle, 수량 : 1})
+                console.log(장바구니)
+                localStorage.setItem('cart', JSON.stringify(장바구니))
+              }
+        }
+      })
 
       // 로컬스토리지 사용법
       // 1. 저장

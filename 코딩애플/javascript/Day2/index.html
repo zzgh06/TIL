@@ -169,25 +169,183 @@
     <script>
       // function 안에 있던 변수는 function 탈출을 못하기 때문에 바깥에 변수를 선언해서
       // 갔다 써야함
-      let 시작좌표 = 0
-      let 눌렀냐 = false;
+      var 시작좌표 = 0
+      var 눌렀냐 = false;
+      var cnt = $('.slide-box').length;
+      console.log(cnt)
+  
+
+      for (let i = 0; i < cnt; i++) {
+        $('.slide-box').eq(i).mousedown(function(e){
+          console.log(e.clientX) // 현재 마우스 위치 X좌표
+          시작좌표 = e.clientX;
+          눌렀냐 = true;
+        });
+        // 마우스 드래그한 이동 거리
+        $('.slide-box').eq(i).mousemove(function(e){
+          if(눌렀냐 == true){
+            // 현재 슬라이드에서 - ${i}00vw 해줘야한다 (0, -100, -200 기준으로 1, 2, 3번 슬라이드)
+            $('.slide-container').css('transform', `translateX(calc(${e.clientX - 시작좌표}px - ${i}00vw))`)
+          }
+        });
+        // 마우스를 놨을 때
+        $('.slide-box').eq(i).mouseup(function(e){
+          눌렀냐 = false;
+          if(i == 0){
+            if (e.clientX - 시작좌표 < -150){
+              $('.slide-container')
+              .css('transition', 'all 0.5s')
+              .css('transform', `translateX(-100vw)`);
+            } else {
+              $('.slide-container')
+              .css('transition', 'all 0.5s')
+              .css('transform', `translateX(0vw)`);
+            }
+          }
+
+          // -150 이상 움직였을 때(좌측)
+          if (e.clientX - 시작좌표 < -150){
+            $('.slide-container')
+            .css('transition', 'all 0.5s')
+            .css('transform', `translateX(-${i+1}00vw)`);
+          } 
+
+          // 150 이상 움직였을 때(우측)
+          else if (e.clientX - 시작좌표 > 150){
+            $('.slide-container')
+            .css('transition', 'all 0.5s')
+            .css('transform', `translateX(-${i-1}00vw)`);
+          } 
+          // 150 이상 움직이지 않았을 경우, 현재 슬라이드
+          else {
+            $('.slide-container')
+            .css('transition', 'all 0.5s')
+            .css('transform', `translateX(-${i}00vw)`);
+          }
+
+          setTimeout(() => {
+            $('.slide-container').css('transition', 'none');
+          }, 500)
+        });      
+      }
+
+
       // 마우스를 클릭했을 때 위치 = 시작좌표
-      $('.slide-box').eq(0).mousedown(function(e){
-        console.log(e.clientX) // 현재 마우스 위치 X좌표
-        시작좌표 = e.clientX;
-        눌렀냐 = true;
-      });
-
+      // $('.slide-box').eq(0).mousedown(function(e){
+      //   console.log(e.clientX) // 현재 마우스 위치 X좌표
+      //   시작좌표 = e.clientX;
+      //   눌렀냐 = true;
+      // });
       // 마우스 드래그한 이동 거리
-      $('.slide-box').eq(0).mousemove(function(e){
-        if(눌렀냐 == true){
-          $('.slide-container').css('transform', `translateX(${e.clientX - 시작좌표}px)`)
-        }
-      });
+      // $('.slide-box').eq(0).mousemove(function(e){
+      //   if(눌렀냐 == true){
+      //     $('.slide-container').css('transform',
+      //      `translateX(${e.clientX - 시작좌표}px`)
+      //   }
+      // });
+      // 마우스를 놨을 때
+      // $('.slide-box').eq(0).mouseup(function(e){
+      //   눌렀냐 = false;
+      //   console.log(e.clientX - 시작좌표)
+      //   if (e.clientX - 시작좌표 < -150){
+      //   $('.slide-container')
+      //   .css('transition', 'all 0.5s')
+      //   .css('transform', `translateX(-100vw)`);
+      //   } else {
+      //     $('.slide-container')
+      //     .css('transition', 'all 0.5s')
+      //     .css('transform', 'translateX(0vw)');
+      //   }
+      //   setTimeout(() => {
+      //     $('.slide-container').css('transition', 'none');
+      //   }, 500)
+      // });
 
-      $('.slide-box').eq(0).mouseup(function(e){
+      // 1번 슬라이드
+      // $('.slide-box').eq(1).mousedown(function(e){
+      //   시작좌표 = e.clientX;
+      //   눌렀냐 = true;
+      // });
+
+      // $('.slide-box').eq(1).mousemove(function(e){
+      //   if(눌렀냐 == true){
+      //     $('.slide-container').css('transform', `translateX(calc(${e.clientX - 시작좌표}px - 100vw))`)}
+      // });
+
+      // $('.slide-box').eq(1).mouseup(function(e){
+      //   눌렀냐 = false;
+      //   if (e.clientX - 시작좌표 < -150){
+      //   $('.slide-container')
+      //   .css('transition', 'all 0.5s')
+      //   .css('transform', `translateX(-200vw)`);
+      //   } else {
+      //     $('.slide-container')
+      //     .css('transition', 'all 0.5s')
+      //     .css('transform', 'translateX(-100vw)');
+      //   }
+      //   setTimeout(() => {
+      //     $('.slide-container').css('transition', 'none');
+      //   }, 500)
+      // });
+
+      // $('.slide-box').eq(2).mousedown(function(e){
+      //   시작좌표 = e.clientX;
+      //   눌렀냐 = true;
+      // });
+
+      // $('.slide-box').eq(2).mousemove(function(e){
+      //   if(눌렀냐 == true){
+      //     $('.slide-container').css('transform', `translateX(calc(${e.clientX - 시작좌표}px - 200vw))`)}
+      // });
+
+      // $('.slide-box').eq(2).mouseup(function(e){
+      //   눌렀냐 = false;
+      //   console.log(e.clientX - 시작좌표)
+      //   if (e.clientX - 시작좌표 > -150){
+      //   $('.slide-container')
+      //   .css('transition', 'all 0.5s')
+      //   .css('transform', `translateX(-100vw)`);
+      //   } else {
+      //     $('.slide-container')
+      //     .css('transition', 'all 0.5s')
+      //     .css('transform', 'translateX(-200vw)');
+      //   }
+      //   setTimeout(() => {
+      //     $('.slide-container').css('transition', 'none');
+      //   }, 500)
+      // });
+        
+
+      // 모바일은 터치 이벤트리스너를 달아야함
+      $('.slide-box').eq(0).on('touchstart', (function(e){
+        // 터이벤트에서 X좌표 출력하려면 touches
+        시작좌표 = e.touches[0].clientX;
+        눌렀냐 = true;
+      }));
+
+      $('.slide-box').eq(0).on('touchmove', (function(e){
+        if(눌렀냐 == true){
+          $('.slide-container').css('transform',
+           `translateX(${e.touches[0].clientX - 시작좌표}px)`)
+        }
+      }));
+
+      $('.slide-box').eq(0).on('touchend', (function(e){
         눌렀냐 = false;
-      });
+    
+        if (e.changedTouches[0].clientX - 시작좌표 < -150){
+          $('.slide-container')
+          .css('transition', 'all 0.5s')
+          .css('transform', 'translateX(-100vw)');
+        } else {
+          $('.slide-container')
+          .css('transition', 'all 0.5s')
+          .css('transform', 'translateX(0vw)');
+        }
+        setTimeout(() => {
+          $('.slide-container').css('transition', 'none');
+        }, 500)
+      }));
 
 
     </script>
@@ -246,21 +404,21 @@
     </script>
 
     <script>
-      function 시간(a, b){
-        var res = ((a * 60) + b) * 1000
-        return res
-      }
+      // function 시간(a, b){
+      //   var res = ((a * 60) + b) * 1000
+      //   return res
+      // }
 
-      console.log(시간(2, 10))
+      // console.log(시간(2, 10))
 
-      function 할인(가격, 첫구매여부) {
-        var price = 가격 * 0.9
-        if (첫구매여부 == true){
-          price -= 1.5
-        } 
-        return parseFloat(price.toFixed(2))
-      }
-      console.log(할인(10, true))
+      // function 할인(가격, 첫구매여부) {
+      //   var price = 가격 * 0.9
+      //   if (첫구매여부 == true){
+      //     price -= 1.5
+      //   } 
+      //   return parseFloat(price.toFixed(2))
+      // }
+      // console.log(할인(10, true))
     </script>
     
     <script>
@@ -416,27 +574,27 @@
       //     console.log('통과');
       //   }
       // }
-      function 삼육구게임(num) {
-        if(num % 10 == 3 || num % 10 == 6 || num % 10 == 9){
-          console.log('박수')
-        } else {
-          console.log('통과');
-        }
-      }
+      // function 삼육구게임(num) {
+      //   if(num % 10 == 3 || num % 10 == 6 || num % 10 == 9){
+      //     console.log('박수')
+      //   } else {
+      //     console.log('통과');
+      //   }
+      // }
 
-      삼육구게임(156);
+      // 삼육구게임(156);
 
-      function 합격했냐(num1, num2) {
-        if ((100 < num1 || 100 < num2) || (0 > num1 || 0 > num2)){
-          alert('장난치지 마세요')
-        } else if(num1 + num2 >= 120 && (num1 >= 40 && num2 >= 40)){
-          console.log('합격')
-        } else {
-          console.log('불합격')
-        }
-      }
+      // function 합격했냐(num1, num2) {
+      //   if ((100 < num1 || 100 < num2) || (0 > num1 || 0 > num2)){
+      //     alert('장난치지 마세요')
+      //   } else if(num1 + num2 >= 120 && (num1 >= 40 && num2 >= 40)){
+      //     console.log('합격')
+      //   } else {
+      //     console.log('불합격')
+      //   }
+      // }
 
-      합격했냐(20, 100)
+      // 합격했냐(20, 100)
 
 
     </script>
@@ -456,13 +614,13 @@
       } else {
         미래예금액 = 에금액 * 1.15 * 1.15; 
       }
-      console.log(미래예금액)
+      // console.log(미래예금액)
 
       var first = 360;
       var total = 0;
       
       total = first + first * 2 / 3 + first * 2 / 3 * 2 / 3
-      console.log(total)
+      // console.log(total)
       // var 변수이름 = 변수에넣을값;
       var cnt = 0;
     
