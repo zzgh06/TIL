@@ -177,17 +177,25 @@
 
       for (let i = 0; i < cnt; i++) {
         $('.slide-box').eq(i).mousedown(function(e){
-          console.log(e.clientX) // 현재 마우스 위치 X좌표
+          // console.log(e.clientX) // 현재 마우스 위치 X좌표
           시작좌표 = e.clientX;
           눌렀냐 = true;
         });
         // 마우스 드래그한 이동 거리
         $('.slide-box').eq(i).mousemove(function(e){
           if(눌렀냐 == true){
+            let 이동거리 = e.clientX - 시작좌표;
+
+            // 0번째 슬라이드인 경우 좌측으로 이동 방지
+            if (i == 0 && 이동거리 > 0) {
+              이동거리 = 0;
+            }
+
             // 현재 슬라이드에서 - ${i}00vw 해줘야한다 (0, -100, -200 기준으로 1, 2, 3번 슬라이드)
-            $('.slide-container').css('transform', `translateX(calc(${e.clientX - 시작좌표}px - ${i}00vw))`)
+            $('.slide-container').css('transform', `translateX(calc(${이동거리}px - ${i}00vw))`);
           }
         });
+
         // 마우스를 놨을 때
         $('.slide-box').eq(i).mouseup(function(e){
           눌렀냐 = false;
@@ -196,7 +204,8 @@
               $('.slide-container')
               .css('transition', 'all 0.5s')
               .css('transform', `translateX(-100vw)`);
-            } else {
+            } 
+            else {
               $('.slide-container')
               .css('transition', 'all 0.5s')
               .css('transform', `translateX(0vw)`);
@@ -222,7 +231,6 @@
             .css('transition', 'all 0.5s')
             .css('transform', `translateX(-${i}00vw)`);
           }
-
           setTimeout(() => {
             $('.slide-container').css('transition', 'none');
           }, 500)
