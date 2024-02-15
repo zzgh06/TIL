@@ -31,5 +31,44 @@ nav {
 }
 
 .search {
-  padding: 15px 0;
+  padding: 20px 0;
+}
+
+.products-list {
+  display: flex;
+}
+.products-list .card {
+  margin-right: 10px;
+  padding: 20px;
+  border: 1px solid black;
+}
+.products-list .card:last-child {
+  margin-right: 0;
+}
+.products-list .card img {
+  border: 1px solid black;
+}
+
+.shopping-basket {
+  margin-top: 25px;
+  padding: 25px;
+  background-color: lightgray;
+}
+.shopping-basket h5 {
+  font-weight: 700;
+}
+.shopping-basket .drag-box {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+.shopping-basket .drag-box p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 700;
 }/*# sourceMappingURL=main.css.map */
