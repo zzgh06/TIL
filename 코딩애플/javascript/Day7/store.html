@@ -40,7 +40,7 @@
         </div>
         <div class="shopping-basket">
           <h5>장바구니</h5>
-          <div class="drag-box">
+          <div class="drag-box" draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)">
             <p>여기로 드래그</p>
           </div>
         </div>
@@ -69,7 +69,7 @@
         function 상품생성(data){
             data.forEach((data, i) => {
                 var 상품 =
-                `<div class="card" style="width: 18rem;">
+                `<div class="card" id="${data.id}" style="width: 18rem;" draggable="true" ondragstart="drag(event)">
                     <img src="${data.photo}" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">${data.title}</h5>
@@ -87,7 +87,8 @@
             var 사용자검색어 = $('#user-search').val();
             // console.log(사용자검색어)
             var 필터상품 = data.filter(function(a){
-              return a.title.includes(사용자검색어), a.brand.includes(사용자검색어)
+              // 여러 조건으로 리턴하고 싶으면 && 나 || 사용
+              return a.title.includes(사용자검색어) || a.brand.includes(사용자검색어)
             })
 
             // 결과를 출력하기 전에 목록 초기화
@@ -111,7 +112,7 @@
                     match => `<span style="background : yellow">${match}</span>`);
 
                     var 상품 =
-                    `<div class="card" style="width: 18rem;">
+                    `<div class="card" id="${data.id}" style="width: 18rem;" draggable="true" ondragstart="drag(event)">
                         <img src="${data.photo}" class="card-img-top" alt="">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">${강조된타이틀}</h5>
@@ -126,9 +127,23 @@
           })
         }
     });
-    </script>
-    <script>
 
+    // 
+    function allowDrop(e){
+      e.preventDefault();
+    }
+
+    function drag(e){
+      // 드래그시 값 저장
+      e.dataTransfer.setData("product", e.target.id);
+    }
+
+    function drop(e){
+      e.preventDefault();
+      // 드랍 시 저장한 값을 불러와 사용
+      var productData = e.dataTransfer.getData("product");
+      e.target.appendChild(document.getElementById(productData))
+    }
     </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
