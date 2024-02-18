@@ -38,21 +38,24 @@
         <div class="products-list">
           <!-- 상품 -->
         </div>
-        <div class="shopping-basket">
+        <div class="shopping-basket" draggable="true">
           <h5>장바구니</h5>
           <div class="drag-box" draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)">
             <p>여기로 드래그</p>
           </div>
         </div>
       </div>
+      <button></button>
     </main>
     <script>
       // 이 부분에 대한 회고 필요
       // 서버가 없을 경우, JSON 파일을 로컬에서 불러올때, 
       // 보안 이슈가 있으니, 라이브 서버를 활용하거나 서버를 따로 만들어야함
       // 로컬에서의 JSON 파일 요청방법
-      $(document).ready(function(){
-        var 전체상품; // 전체 상품 데이터를 저장할 변수
+      
+        var 전체상품 = []
+        var cart = []
+        // 전체 상품 데이터를 저장할 변수
         $.ajax({
             // 파일 위치와 요청방식(get or post) 
             url: "store.json",
@@ -64,86 +67,86 @@
             전체상품 = data.products; // 전체 상품 데이터를 변수에 저장
             상품생성(전체상품); // 수정된 부분
             검색필터(전체상품)
-        });
+            // JSON 파일의 데이터를 전역변수로 담아놓았으니 이를 **활용하여 코드를 작성하자
+            console.log(전체상품)
+            function 상품생성(data){
+              data.forEach((data, i) => {
+                  var 상품 =
+                  `<div class="card" id="${data.id}" style="width: 18rem;" draggable="true" ondragstart="drag(event)">
+                      <img src="${data.photo}" class="card-img-top" alt="">
+                      <div class="card-body">
+                          <h5 class="card-title fw-bold">${data.title}</h5>
+                          <p class="card-text text-secondary">${data.brand}</p>
+                          <p class="card-text">가격 : ${data.price}</p>
+                          <button class="btn btn-dark">담기</button>
+                      </div>
+                  </div>`;
+                  $('.products-list').append(상품);
+              });
+            }
 
-        function 상품생성(data){
-            data.forEach((data, i) => {
-                var 상품 =
-                `<div class="card" id="${data.id}" style="width: 18rem;" draggable="true" ondragstart="drag(event)">
-                    <img src="${data.photo}" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">${data.title}</h5>
-                        <p class="card-text text-secondary">${data.brand}</p>
-                        <p class="card-text">가격 : ${data.price}</p>
-                        <a href="#" class="btn btn-dark">담기</a>
-                    </div>
-                </div>`;
-                $('.products-list').append(상품);
-            });
-        }
+            function 검색필터(data){
+              $('#user-search').on('input', function(){
+                var 사용자검색어 = $('#user-search').val();
+                // console.log(사용자검색어)
+                var 필터상품 = data.filter(function(a){
+                  // 여러 조건으로 리턴하고 싶으면 && 나 || 사용
+                  return a.title.includes(사용자검색어) || a.brand.includes(사용자검색어)
+                })
 
-        function 검색필터(data){
-          $('#user-search').on('input', function(){
-            var 사용자검색어 = $('#user-search').val();
-            // console.log(사용자검색어)
-            var 필터상품 = data.filter(function(a){
-              // 여러 조건으로 리턴하고 싶으면 && 나 || 사용
-              return a.title.includes(사용자검색어) || a.brand.includes(사용자검색어)
-            })
+                // 결과를 출력하기 전에 목록 초기화
+                $('.products-list').html('') 
 
-            // 결과를 출력하기 전에 목록 초기화
-            $('.products-list').html('') 
+                if (필터상품 == 0){
+                  $('.products-list').html('<p>해당 상품이 존재하지 않습니다.</p>')
+                } else {
+                  // 필터된 상품이 있을 경우 목록에 추가
+                    필터상품.forEach((data, i) => {
+                        // 검색어 강조 표시(정규 표헌식 활용)
+                        // 정규 표현식은 텍스트에서 패턴을 찾아내고, 해당 패턴에 대해 원하는 변환을 적용할 수 있는 강력한 도구
 
-            if (필터상품 == 0){
-              $('.products-list').html('<p>해당 상품이 존재하지 않습니다.</p>')
-            } else {
-               // 필터된 상품이 있을 경우 목록에 추가
-                필터상품.forEach((data, i) => {
-                    // 검색어 강조 표시(정규 표헌식 활용)
-                    // 정규 표현식은 텍스트에서 패턴을 찾아내고, 해당 패턴에 대해 원하는 변환을 적용할 수 있는 강력한 도구
+                        // replace() : 치환 첫 번째 인자로는 정규표현식을 받고, 두 번째 인자로는 치환하려는 문자열을 받습니다. 
+                        // 문자열에서 찾고자 하는 대상을 검색해서 이를 치환하려는 문자열로 변경 후 변경된 값을 리턴
+                        
+                        var 강조된타이틀 = data.title.replace(new RegExp(`(${사용자검색어})`, 'gi'), 
+                        match => `<span style="background : yellow">${match}</span>`);
 
-                    // replace() : 치환 첫 번째 인자로는 정규표현식을 받고, 두 번째 인자로는 치환하려는 문자열을 받습니다. 
-                    // 문자열에서 찾고자 하는 대상을 검색해서 이를 치환하려는 문자열로 변경 후 변경된 값을 리턴
-                    
-                    var 강조된타이틀 = data.title.replace(new RegExp(`(${사용자검색어})`, 'gi'), 
-                    match => `<span style="background : yellow">${match}</span>`);
+                        var 강조된브랜드 = data.brand.replace(new RegExp(`(${사용자검색어})`, 'gi'), 
+                        match => `<span style="background : yellow">${match}</span>`);
 
-                    var 강조된브랜드 = data.brand.replace(new RegExp(`(${사용자검색어})`, 'gi'), 
-                    match => `<span style="background : yellow">${match}</span>`);
-
-                    var 상품 =
-                    `<div class="card" id="${data.id}" style="width: 18rem;" draggable="true" ondragstart="drag(event)">
-                        <img src="${data.photo}" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">${강조된타이틀}</h5>
-                            <p class="card-text text-secondary">${강조된브랜드}</p>
-                            <p class="card-text">가격 : ${data.price}</p>
-                            <a href="#" class="btn btn-dark">담기</a>
-                        </div>
-                    </div>`;
-                    $('.products-list').append(상품);
+                        var 상품 =
+                        `<div class="card" id="${data.id}" style="width: 18rem;" draggable="true" ondragstart="drag(event)">
+                            <img src="${data.photo}" class="card-img-top" alt="">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">${강조된타이틀}</h5>
+                                <p class="card-text text-secondary">${강조된브랜드}</p>
+                                <p class="card-text">가격 : ${data.price}</p>
+                                <button class="btn btn-dark">담기</button>
+                            </div>
+                        </div>`;
+                        $('.products-list').append(상품);
+                  })
+                }
               })
             }
-          })
-        }
-    });
 
-    // 
-    function allowDrop(e){
-      e.preventDefault();
-    }
+            function allowDrop(e){
+              e.preventDefault();
+            }
 
-    function drag(e){
-      // 드래그시 값 저장
-      e.dataTransfer.setData("product", e.target.id);
-    }
+            function drag(e){
+              // 드래그시 값 저장
+              e.dataTransfer.setData("product", e.target.id);
+            }
 
-    function drop(e){
-      e.preventDefault();
-      // 드랍 시 저장한 값을 불러와 사용
-      var productData = e.dataTransfer.getData("product");
-      e.target.appendChild(document.getElementById(productData))
-    }
+            function drop(e){
+              e.preventDefault();
+              // 드랍 시 저장한 값을 불러와 사용
+              var productData = e.dataTransfer.getData("product");
+              e.target.appendChild(document.getElementById(productData))
+            }
+        });
+
     </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
