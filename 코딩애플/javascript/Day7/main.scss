@@ -53,6 +53,11 @@ nav {
   }
 }
 
+.basket-wrap {
+  padding: 30px;
+  margin-top: 30px;
+}
+
 .shopping-basket {
   margin: 25px 0;
   padding: 25px;
@@ -61,18 +66,20 @@ nav {
     font-weight: 700;
   }
   .drag-box {
-    position: relative;
+    min-height: 300px;
     width: 100%;
-    height: 300px;
+    background: black;
+    padding: 20px;
     background-color: black;
-    color: white;
-    text-align: center;
-    p {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      font-weight: 700;
+    div {
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .product-style {
+      img {
+        width: 100%;
+        border: 1px solid black;
+      }
     }
   }
 }

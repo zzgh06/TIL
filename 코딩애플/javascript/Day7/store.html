@@ -38,10 +38,9 @@
         <div class="products-list">
           <!-- 상품 -->
         </div>
-        <div class="shopping-basket" draggable="true">
+        <div class="shopping-basket basket-wrap" draggable="true">
           <h5>장바구니</h5>
-          <div class="drag-box" draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <p>여기로 드래그</p>
+          <div class="drag-box" draggable="true">
           </div>
         </div>
       </div>
@@ -72,7 +71,7 @@
             function 상품생성(data){
               data.forEach((data, i) => {
                   var 상품 =
-                  `<div class="card" id="${data.id}" style="width: 18rem;" draggable="true" ondragstart="drag(event)">
+                  `<div class="card item" id="${data.id}" style="width: 18rem;" draggable="true">
                       <img src="${data.photo}" class="card-img-top" alt="">
                       <div class="card-body">
                           <h5 class="card-title fw-bold">${data.title}</h5>
@@ -115,7 +114,7 @@
                         match => `<span style="background : yellow">${match}</span>`);
 
                         var 상품 =
-                        `<div class="card" id="${data.id}" style="width: 18rem;" draggable="true" ondragstart="drag(event)">
+                        `<div class="card item" data="${data.id}" style="width: 18rem;" draggable="true">
                             <img src="${data.photo}" class="card-img-top" alt="">
                             <div class="card-body">
                                 <h5 class="card-title fw-bold">${강조된타이틀}</h5>
@@ -129,22 +128,47 @@
                 }
               })
             }
+            
+            $('.item').on('dragstart', function(e){
+              e.originalEvent.dataTransfer.setData('id', e.target.id)
+            });
 
-            function allowDrop(e){
+            $('.drag-box').on('dragover', function(e){
               e.preventDefault();
-            }
+            });
 
-            function drag(e){
-              // 드래그시 값 저장
-              e.dataTransfer.setData("product", e.target.id);
-            }
+            $('.drag-box').on('drop', function(e) {
+              let productId = e.originalEvent.dataTransfer.getData('id');
+              // cart에 상품이 이미있는지 찾고 없으면 let cart에 {}추가, 있으면 수량만 ++;
+              // 문제점 cart에 상품이 이미있는지 찾고있는지가 아니라 전체상품에서 찾고 있었음
+              // 그래서 index == -1 에서는 아무 값이 출력되지 않고 반대인 경우에 값이 출력되었음
+              var index = cart.findIndex((a) => a.id == productId);
+              console.log(index);
 
-            function drop(e){
-              e.preventDefault();
-              // 드랍 시 저장한 값을 불러와 사용
-              var productData = e.dataTransfer.getData("product");
-              e.target.appendChild(document.getElementById(productData))
-            }
+              if (index == -1) {
+                let 현재상품 = 전체상품.find((a) => a.id == productId);
+                console.log(현재상품);
+                현재상품.count = 1;
+                cart.push(현재상품);
+              } else {
+                cart[index].count++;   
+              }
+
+              console.log(cart);
+              // 상품을 생성
+              $('.drag-box').html('');
+              cart.forEach((data) => {
+                $('.drag-box').append(`
+                  <div class="col-md-3 bg-white product-style">
+                    <img src="${data.photo}">
+                    <h4>${data.title}</h4>
+                    <h4>${data.brand}</h4>
+                    <p>${data.price}</p>
+                    <input type="number" value="${data.count}" class="item-count w-100">
+                  </div>
+                `);
+              })
+            });
         });
 
     </script>
