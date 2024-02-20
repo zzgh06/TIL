@@ -66,6 +66,7 @@ nav {
     font-weight: 700;
   }
   .drag-box {
+    display: flex;
     min-height: 300px;
     width: 100%;
     background: black;
@@ -74,10 +75,14 @@ nav {
     div {
       padding: 15px;
       border-radius: 5px;
+      background: white;
     }
-    .product-style {
+    .drag-product {
+      width: 220px;
+      text-align: center;
       img {
         width: 100%;
+        margin-bottom: 10px;
         border: 1px solid black;
       }
     }

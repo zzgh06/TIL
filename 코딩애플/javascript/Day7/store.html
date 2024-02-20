@@ -128,46 +128,46 @@
                 }
               })
             }
-            
+
             $('.item').on('dragstart', function(e){
-              e.originalEvent.dataTransfer.setData('id', e.target.id)
-            });
+              e.originalEvent.dataTransfer.setData('id', e.target.id);
+            })
 
             $('.drag-box').on('dragover', function(e){
               e.preventDefault();
-            });
+            })
 
-            $('.drag-box').on('drop', function(e) {
+            $('.drag-box').on('drop', function(e){
               let productId = e.originalEvent.dataTransfer.getData('id');
-              // cart에 상품이 이미있는지 찾고 없으면 let cart에 {}추가, 있으면 수량만 ++;
-              // 문제점 cart에 상품이 이미있는지 찾고있는지가 아니라 전체상품에서 찾고 있었음
-              // 그래서 index == -1 에서는 아무 값이 출력되지 않고 반대인 경우에 값이 출력되었음
-              var index = cart.findIndex((a) => a.id == productId);
-              console.log(index);
-
+              // console.log(productId)
+              // 장바구니 확인 cart array가 같은 id를 가진 상품이 없을 경우, 
+              // cart 안에 드래그한 상품명과 수량추가
+              // 같은 id의 상품이 있으며, 해당 상품의 수량만 추가
+              let index = cart.findIndex(드래그상품 => 드래그상품.id == productId);
+              console.log(index)
               if (index == -1) {
-                let 현재상품 = 전체상품.find((a) => a.id == productId);
-                console.log(현재상품);
-                현재상품.count = 1;
+                let 현재상품 = 전체상품.find(찾는상품 => 찾는상품.id == productId);
+                // console.log(현재상품)
+                현재상품.수량 = 1;
                 cart.push(현재상품);
+                console.log(cart)
               } else {
-                cart[index].count++;   
-              }
+                cart[index].수량++;
+              };
+              console.log(cart)
 
-              console.log(cart);
-              // 상품을 생성
               $('.drag-box').html('');
-              cart.forEach((data) => {
-                $('.drag-box').append(`
-                  <div class="col-md-3 bg-white product-style">
+
+              cart.forEach((data, i) => {
+                $('.drag-box').append(
+                  `<div class="drag-product">
                     <img src="${data.photo}">
-                    <h4>${data.title}</h4>
-                    <h4>${data.brand}</h4>
-                    <p>${data.price}</p>
-                    <input type="number" value="${data.count}" class="item-count w-100">
-                  </div>
-                `);
-              })
+                    <h5>${data.title}</h5>
+                    <p>${data.brand}</p>
+                    <input type="number" value="${data.수량}">
+                  </div>`
+                )
+              });
             });
         });
 
