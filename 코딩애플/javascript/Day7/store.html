@@ -44,7 +44,6 @@
           </div>
         </div>
       </div>
-      <button></button>
     </main>
     <script>
       // 이 부분에 대한 회고 필요
@@ -71,14 +70,12 @@
             function 상품생성(data){
               data.forEach((data, i) => {
                   var 상품 =
-                  `<div class="card item" id="${data.id}" style="width: 18rem;" draggable="true">
+                  `<div class="card item" data-id="${data.id}" draggable="true">
                       <img src="${data.photo}" class="card-img-top" alt="">
-                      <div class="card-body">
-                          <h5 class="card-title fw-bold">${data.title}</h5>
-                          <p class="card-text text-secondary">${data.brand}</p>
-                          <p class="card-text">가격 : ${data.price}</p>
-                          <button class="btn btn-dark">담기</button>
-                      </div>
+                      <h5 class="card-title fw-bold">${data.title}</h5>
+                      <p class="card-text text-secondary">${data.brand}</p>
+                      <p class="card-text">가격 : ${data.price}</p>
+                      <button class="btn btn-dark" id="btn-style" data-id="${data.id}">담기</button>
                   </div>`;
                   $('.products-list').append(상품);
               });
@@ -114,14 +111,12 @@
                         match => `<span style="background : yellow">${match}</span>`);
 
                         var 상품 =
-                        `<div class="card item" data="${data.id}" style="width: 18rem;" draggable="true">
+                        `<div class="card item" data-id="${data.id}" draggable="true">
                             <img src="${data.photo}" class="card-img-top" alt="">
-                            <div class="card-body">
-                                <h5 class="card-title fw-bold">${강조된타이틀}</h5>
-                                <p class="card-text text-secondary">${강조된브랜드}</p>
-                                <p class="card-text">가격 : ${data.price}</p>
-                                <button class="btn btn-dark">담기</button>
-                            </div>
+                            <h5 class="card-title fw-bold">${강조된타이틀}</h5>
+                            <p class="card-text text-secondary">${강조된브랜드}</p>
+                            <p class="card-text">가격 : ${data.price}</p>
+                            <button class="btn btn-dark" id="btn-style" data-id="${data.id}">담기</button>
                         </div>`;
                         $('.products-list').append(상품);
                   })
@@ -129,25 +124,12 @@
               })
             }
 
-            $('.item').on('dragstart', function(e){
-              e.originalEvent.dataTransfer.setData('id', e.target.id);
-            })
-
-            $('.drag-box').on('dragover', function(e){
-              e.preventDefault();
-            })
-
-            $('.drag-box').on('drop', function(e){
-              let productId = e.originalEvent.dataTransfer.getData('id');
-              // console.log(productId)
-              // 장바구니 확인 cart array가 같은 id를 가진 상품이 없을 경우, 
-              // cart 안에 드래그한 상품명과 수량추가
-              // 같은 id의 상품이 있으며, 해당 상품의 수량만 추가
+            function 장바구니담기(productId){
               let index = cart.findIndex(드래그상품 => 드래그상품.id == productId);
               console.log(index)
               if (index == -1) {
                 let 현재상품 = 전체상품.find(찾는상품 => 찾는상품.id == productId);
-                // console.log(현재상품)
+                console.log(현재상품)
                 현재상품.수량 = 1;
                 cart.push(현재상품);
                 console.log(cart)
@@ -168,6 +150,29 @@
                   </div>`
                 )
               });
+            }
+            $('.btn').on('click', function(e){
+              let productId = e.target.dataset.id;
+              console.log(productId)
+
+              장바구니담기(productId)
+            })
+
+            $('.item').on('dragstart', function(e){
+              e.originalEvent.dataTransfer.setData('id', e.target.dataset.id);
+            })
+
+            $('.drag-box').on('dragover', function(e){
+              e.preventDefault();
+            })
+
+            $('.drag-box').on('drop', function(e){
+              let productId = e.originalEvent.dataTransfer.getData('id');
+              // console.log(productId)
+              // 장바구니 확인 cart array가 같은 id를 가진 상품이 없을 경우, 
+              // cart 안에 드래그한 상품명과 수량추가
+              // 같은 id의 상품이 있으며, 해당 상품의 수량만 추가
+              장바구니담기(productId)
             });
         });
 

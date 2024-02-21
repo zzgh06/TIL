@@ -36,8 +36,11 @@ nav {
 
 .products-list {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .products-list .card {
+  width: 25%;
   margin-right: 10px;
   padding: 20px;
   border: 1px solid black;
@@ -47,6 +50,10 @@ nav {
 }
 .products-list .card img {
   border: 1px solid black;
+  margin-bottom: 10px;
+}
+.products-list .card #btn-style {
+  width: 60px;
 }
 
 .basket-wrap {
@@ -64,6 +71,9 @@ nav {
 }
 .shopping-basket .drag-box {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   min-height: 300px;
   width: 100%;
   background: black;
@@ -77,6 +87,7 @@ nav {
 }
 .shopping-basket .drag-box .drag-product {
   width: 220px;
+  margin: 20px;
   text-align: center;
 }
 .shopping-basket .drag-box .drag-product img {

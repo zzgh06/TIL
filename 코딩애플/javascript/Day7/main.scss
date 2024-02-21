@@ -40,7 +40,10 @@ nav {
 
 .products-list {
   display: flex;
+  justify-content: center;
+  align-items: center;
   .card {
+    width: 25%;
     margin-right: 10px;
     padding: 20px;
     border: 1px solid black;
@@ -49,6 +52,11 @@ nav {
     }
     img {
       border: 1px solid black;
+      margin-bottom: 10px;
+    }
+    #btn-style {
+      width: 60px;
+      
     }
   }
 }
@@ -67,6 +75,9 @@ nav {
   }
   .drag-box {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     min-height: 300px;
     width: 100%;
     background: black;
@@ -79,6 +90,7 @@ nav {
     }
     .drag-product {
       width: 220px;
+      margin: 20px;
       text-align: center;
       img {
         width: 100%;
