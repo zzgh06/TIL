@@ -35,13 +35,36 @@
         <div class="search">
           <input id="user-search" type="text" placeholder="검색어를 입력하세요">
         </div>
+      </div>
+
+      <div class="container">
         <div class="products-list">
           <!-- 상품 -->
         </div>
+      </div>
+
+      <div class="container">
         <div class="shopping-basket basket-wrap" draggable="true">
           <h5>장바구니</h5>
           <div class="drag-box" draggable="true">
           </div>
+        </div>
+      </div>
+
+      <div class="container my-3">
+        <h4>최종가격</h4>
+        <p class="final-price"></p>
+        <button class="buy btn btn-dark">구매하기</button>
+      </div>
+
+      <div class="modal" style="display: none;">
+        <div class="customer-information">
+          <h4>성함</h4>
+          <input type="text" id="name">
+          <h4>연락처</h4>
+          <input type="text" id="phone">
+          <button class="btn btn-dark show-receipt">입력완료</button>
+          <button class="btn btn-dark close">닫기</button>
         </div>
       </div>
     </main>
@@ -75,7 +98,7 @@
                       <h5 class="card-title fw-bold">${data.title}</h5>
                       <p class="card-text text-secondary">${data.brand}</p>
                       <p class="card-text">가격 : ${data.price}</p>
-                      <button class="btn btn-dark" id="btn-style" data-id="${data.id}">담기</button>
+                      <button class="add-btn btn btn-dark" id="btn-style" data-id="${data.id}">담기</button>
                   </div>`;
                   $('.products-list').append(상품);
               });
@@ -116,7 +139,7 @@
                             <h5 class="card-title fw-bold">${강조된타이틀}</h5>
                             <p class="card-text text-secondary">${강조된브랜드}</p>
                             <p class="card-text">가격 : ${data.price}</p>
-                            <button class="btn btn-dark" id="btn-style" data-id="${data.id}">담기</button>
+                            <button class="add-btn btn btn-dark" id="btn-style" data-id="${data.id}">담기</button>
                         </div>`;
                         $('.products-list').append(상품);
                   })
@@ -142,20 +165,22 @@
 
               cart.forEach((data, i) => {
                 $('.drag-box').append(
-                  `<div class="drag-product">
+                  `<div class="product">
                     <img src="${data.photo}">
-                    <h5>${data.title}</h5>
-                    <p>${data.brand}</p>
-                    <input type="number" value="${data.수량}">
+                    <h4>${data.title}</h4>
+                    <h5>${data.brand}</h5>
+                    <p>${data.price}</p>
+                    <input type="number" value="${data.수량}" class="product-count">
                   </div>`
                 )
               });
             }
-            $('.btn').on('click', function(e){
+            $('.add-btn').on('click', function(e){
               let productId = e.target.dataset.id;
               console.log(productId)
 
               장바구니담기(productId)
+              가격계산()
             })
 
             $('.item').on('dragstart', function(e){
@@ -173,10 +198,34 @@
               // cart 안에 드래그한 상품명과 수량추가
               // 같은 id의 상품이 있으며, 해당 상품의 수량만 추가
               장바구니담기(productId)
+              가격계산()
             });
+
+            $('.product-count').on('input', function(){})
         });
 
+        function 가격계산(){
+          let finalPrice = 0;
+          for (let i = 0; i < $('.product-count').length; i++) {
+            let count = $('.product-count').eq(i).val()
+            // console.log(parseInt(count))
+            let price = $('.product-count').eq(i).siblings('p').text()
+            // console.log(parseInt(price))
+            finalPrice += parseFloat(price * count)
+          }
+          // console.log(finalPrice)
+          $('.final-price').html(`합계 ${finalPrice}`)
+        }
+        
+        $('.buy').on('click', function(){
+          $('.modal').css('display', 'block')
+        })
+
+        $('.close').on('click', function(){
+          $('.modal').css('display', 'none')
+        })
     </script>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

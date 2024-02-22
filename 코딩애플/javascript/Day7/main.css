@@ -1,5 +1,6 @@
 body {
   box-sizing: border-box;
+  background-color: rgb(240, 240, 240);
 }
 
 nav {
@@ -85,13 +86,38 @@ nav {
   border-radius: 5px;
   background: white;
 }
-.shopping-basket .drag-box .drag-product {
+.shopping-basket .drag-box .product {
   width: 220px;
   margin: 20px;
   text-align: center;
 }
-.shopping-basket .drag-box .drag-product img {
+.shopping-basket .drag-box .product img {
   width: 100%;
   margin-bottom: 10px;
   border: 1px solid black;
+}
+
+.modal {
+  position: fixed;
+  margin: auto;
+  padding: 100px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.modal .customer-information {
+  width: 500px;
+  padding: 20px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 10px;
+}
+.modal .customer-information h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.modal .customer-information input {
+  display: block;
+  margin-bottom: 10px;
 }/*# sourceMappingURL=main.css.map */
