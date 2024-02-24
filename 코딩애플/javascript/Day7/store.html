@@ -71,7 +71,7 @@
       <div class="modal2" style="display: none;">
         <div class="white-box">
           <h4>영수증</h4>
-          <canvas id="canvas" width="350" height="350"></canvas>
+          <canvas id="canvas" width="600" height="400"></canvas>
           <div>
             <button class="btn btn-dark close">닫기</button>
           </div>
@@ -185,12 +185,12 @@
                 )
               });
 
-              가격계산()
+              가격계산();
 
               // input값 조절해도 총가격 계산
               // 이벤트핸들러가 발생할 때, 해줘야 하면서 계산된 값을 보여줌
               $('.product-count').on('input', function(){
-                가격계산()
+                가격계산();
               })
             }
             $('.add-btn').on('click', function(e){
@@ -198,6 +198,14 @@
               console.log(productId)
 
               장바구니담기(productId)
+
+              가격계산();
+
+              // input값 조절해도 총가격 계산
+              // 이벤트핸들러가 발생할 때, 해줘야 하면서 계산된 값을 보여줌
+              $('.product-count').on('input', function(){
+                가격계산();
+              })
             })
 
             $('.item').on('dragstart', function(e){
@@ -229,7 +237,7 @@
             finalPrice += parseFloat(price * count)
           }
           // console.log(finalPrice)
-          $('.final-price').html(`합계 ${finalPrice}`)
+          $('.final-price').html('총 합계 : ' + finalPrice)
         }
         
         let 성함 = '';
@@ -258,17 +266,32 @@
           console.log(cart)
           var canvas = document.getElementById('canvas'); 
           var c = canvas.getContext('2d');
+
+          let today = new Date();
+
           c.font = '17px dotum';
-          c.fillText('2024-02-22', 30, 20);
+          c.fillText(today.toLocaleString(), 30, 20);
           c.fillText('성함 : ' + 성함, 30, 100);
           c.fillText('연락처 : ' + 연락처, 30, 120);
+
+          // 시작 X, Y 좌표 초기화
+          var currentX = 95;
+          var currentY = 140;
+          
           cart.forEach((a, i) => {
-            c.fillText('상품명 : ' + a.title, 30, 140)
-            c.fillText('브랜드 : ' + a.brand, 30, 160)
-            c.fillText('가격 : ' + a.price, 30, 180)
-            c.fillText('수량 : ' + a.수량, 30, 200)
+            c.fillText('상품명 : ', 30, 140)
+            c.fillText(a.title, currentX, currentY)
+            c.fillText('브랜드 : ', 30, 160)
+            c.fillText(a.brand, currentX, currentY + 20)
+            c.fillText('가격 : ', 30, 180)
+            c.fillText(a.price, currentX, currentY + 40)
+            c.fillText('수량 : ', 30, 200)
+            c.fillText(a.수량, currentX, currentY + 60)
+            // 다음 상품 출력을 위해 X 좌표 증가
+            currentX += 130
           })
-          c.fillText('총 합계 : ' + finalPrice, 30, 260)
+
+          c.fillText($('.final-price').html(), 30, 260)
         })
     </script>
 
