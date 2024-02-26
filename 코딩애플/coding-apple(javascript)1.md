@@ -683,3 +683,570 @@ aaaaa 이런걸 찾고 싶으면 /a+/ 쓰면 됩니다.
 
 \. 이라는 기호는 왜 이렇게 썼냐면 마침표는 정규식에서 특수한 문법이기 때문에
 마침표 문법을 쓰는게 아니라 진짜 마침표를 찾아달라라는 의미로 쓰려면 백슬래시를 앞에 붙여야합니다
+
+## 함수의 return 문법 & 소수 다루기
+
+함수 function 문법은
+
+- 긴 코드 짧게 축약해서 쓸 수 있고 
+- 파라미터로 기능업그레이드도 가능하다고 했습니다.
+- 오늘 배울 return을 쓰면 함수를 쓰고나서 원하는 값을 그 자리에 퉤 뱉을 수도 있습니다.
+
+### 함수안에서 쓸 수 있는 return 문법
+
+- 함수 안에서 return이라는 문법을 사용할 수 있습니다.
+- return 오른쪽에 아무거나 적으면 
+- 함수가 실행되고난 자리에 return 오른쪽에 있던 값이 뾰로롱 남습니다. 
+
+```javascript
+function 함수(){
+  return 123
+}
+
+console.log(함수()); // 123
+```
+
+```javascript
+function 함수(){
+  console.log('안녕');
+  return 123
+  console.log('반가워');
+}
+
+함수();
+```
+
+- 그리고 return 문법은 함수종료의 뜻도 가지고 있습니다.
+- 함수안에 코드가 길면 위에서부터 한줄한줄 실행해주는데
+- return을 만나면 함수가 바로 종료됩니다.
+- 그래서 위 코드에선 console.log('반가워'); 이거 실행안됨
+
+
+## 스크롤 이벤트로 만드는 재밌는 기능들
+
+### 스크롤 이벤트리스너 
+
+```javascript
+window.addEventListener('scroll', function(){
+  console.log('안녕')
+});
+```
+- 스크롤바를 조작하면 scroll 이벤트가 발생합니다.
+
+- 그래서 scroll 이벤트리스너를 전체 페이지에 달면 전체 - 페이지를 스크롤할 때마다 원하는 코드를 실행할 수 있습니다.
+
+- 진짜 스크롤바 만질 때 마다 '안녕' 출력되나 봅시다.
+- 참고로 window는 그냥 전체 페이지를 의미합니다.
+
+- 실은 document도 전체 페이지입니다. window가 약간 더 큰 개념인데 scroll 이벤트리스너는 관습적으로 window에 붙임 
+
+### 스크롤 관련 유용한 기능들
+
+- 스크롤 이벤트리스너안에서 쓰는 유용한 기능들이 몇개 있습니다. 
+
+```javascript
+window.addEventListener('scroll', function(){
+  console.log( window.scrollY )
+});
+```
+
+- `window.scrollY` 사용하면 현재 페이지를 얼마나 위에서 부터 스크롤했는지 px 단위로 알려줍니다.
+
+- `window.scrollX` 는 가로로 얼마나 스크롤했는지 알려줍니다. (가로 스크롤바가 있으면)
+
+```javascript
+window.scrollBy(0, 100)
+```
+- window.scrollBy(x, y) 실행하면 현재 위치에서부터 스크롤해줍니다.
+- 위 코드는 현재 위치에서부터 +100px 만큼 스크롤해줍니다.
+
+```javascript
+$(window).on('scroll', function(){
+  $(window).scrollTop();
+})
+```
+
+jQuery 버전은 더 짧습니다.
+
+- $(window).scrollTop() 이거 쓰면 아까처럼 현재 페이지 스크롤 양을 알려줍니다.
+- 근데 간편한건 $(window).scrollTop(100) 이러면 페이지 강제이동도 해줌
+
+### div 박스의 스크롤바 내린 양은 
+
+박스를 셀렉터로 찾고 `.scrollTop` 붙이면 스크롤바를 위에서 부터 얼마나 내렸는지 알려줍니다.
+
+```javascript
+$('.lorem').on('scroll', function(){
+  var 스크롤양 = document.querySelector('.lorem').scrollTop;
+  console.log(스크롤양);
+});
+```
+
+### div 박스 높이 구하는 법 
+
+- 스크롤바가 생긴 박스의 경우 실제 높이같은게 궁금할 수 있습니다. 
+- 박스에 스타일로 넣은 height : 100px 이거 말고 스크롤가능한 실제높이 말입니다.
+- 그럴 땐 셀렉터로 찾아서 `.scrollHeight` 붙이면 나옵니다.
+
+```javascript
+$('.lorem').on('scroll', function(){
+  var 스크롤양 = document.querySelector('.lorem').scrollTop;
+  var 실제높이 = document.querySelector('.lorem').scrollHeight;
+  console.log(스크롤양, 실제높이);
+});
+```
+
+- 참고로 박스가 화면에 보이는 부분 높이는 .clientHeight 하면 나옵니다.
+- document.querySelector('.lorem').clientHeight; 해보셈 
+
+### 스크롤 다룰 때 주의점
+
+- 1. 스크롤이벤트리스너 안의 코드는 1초에 60번 이상 실행됩니다. 그래서 스크롤 이벤트리스너는 많이 달면 성능저하가 일어나니 스크롤바 1개마다 1개만 씁시다.  
+
+- 2. 스크롤이벤트리스너 안의 코드는 1초에 여러번 실행되다보니 바닥체크하는 코드도 여러번 실행될 수 있습니다. 
+
+- 그걸 방지하고 싶으면 구글에 검색해보는 것도 나쁘지않습니다. 변수같은걸 활용하면 됩니다.(true / false)
+
+
+
+### 페이지 내릴 때 마다 페이지를 얼마나 읽었는지 진척도를 알려주는 UI 같은건 어떻게 만들면 될까요?
+
+```javascript
+$(window).on('scroll', function(){
+  // 유저의 스크롤양
+  // const windowScroll = window.scrollY;
+  const windowScroll = document.querySelector('html').scrollTop
+  // 실제높이에서 눈에 보이는 나머지 값을 뺀 실질적인 스크롤 양
+  const total = document.querySelector('html').scrollHeight - document.querySelector('html').clientHeight;
+  // 실질적인 스크롤양에서 유저의 스크롤양을 나눈 뒤 * 100하여 백분율을 계산 
+  const percentage = (windowScroll / total) * 100;
+  $('.progress').css('width', percentage + '%')
+})
+```
+
+
+## 이벤트 버블링과 이벤트관련 함수들
+
+### 이벤트 버블링
+
+- 어떤 HTML 태그에 이벤트가 발생하면 그의 모든 상위요소까지 이벤트가 실행되는 현상을 이벤트 버블링이라고 합니다. 
+
+- click이라는 이벤트로 예를 들어보면, HTML 태그에 클릭이 발생하면 그의 모든 상위요소까지 자동으로 클릭된다는 말입니다. 
+
+```html
+<div>
+  <div>
+    <p>안녕</p>
+  </div>
+</div>
+```
+▲ 위의 코드에서 p태그 안녕이라는 글자를 클릭하면 브라우저는 사용자가 클릭을 총 3번 했다고 인지합니다.
+
+- p랑 그 위의 div랑 그 위의 div랑 이렇게요.
+- 이게 이벤트 버블링인데 브라우저는 원래 그렇게 동작하도록 되어있습니다.
+- 이 사실을 모르고 코드짜다보면 가끔 이상한 현상이 발생할 수도 있습니다. 
+
+### 이벤트리스너 안에서 쓰는 이벤트 함수들 
+
+```javascript
+document.querySelector('.black-bg').addEventListener('click', function(e){
+  e.target;
+  e.currentTarget;
+  e.preventDefault();
+  e.stopPropagation();
+})
+```
+
+- 이벤트리스너의 콜백함수에 파라미터 아무거나 추가하면  이벤트관련 유용한 함수들을 사용가능합니다. 
+
+- 파라미터 이름은 아무렇게나 작명하면 됩니다. 보통 대충 e라고 함.
+
+- e.target은 실제 클릭한 요소 알려줌 (이벤트 발생한 곳)
+
+- e.currentTarget은 지금 이벤트리스너가 달린 곳 알려줌 (참고로 this라고 써도 똑같음)
+
+- e.preventDefault() 실행하면 이벤트 기본 동작을 막아줌
+
+- e.stopPropagation() 실행하면 내 상위요소로의 이벤트 버블링을 중단해줌
+
+- 몇개만 뽑아봤는데 필요할 때 가져다가 쓰면 됩니다. 
+
+- e.target 이런거 출력해보십쇼 진짜 그게 맞나 
+
+(참고2)
+
+jQuery 셀렉터로 찾은 결과와
+- querySelector 셀렉터로 찾은 결과는 다르게 생겼습니다.
+
+- 출력해보면 전자는 이상한 object 이런게 나오고 후자는 <html> 이런게 나옵니다. 
+
+- 그래서 e.target == $('.black-bg') 이건 사용불가능합니다.그리고 애초에 jQuery 셀렉터끼리 등호비교는 불가능합니다. 
+
+- $('.black-bg').is($('.black-bg')) 이런 비교용 함수쓰든가 하면 됩니다.
+
+- 위 예제에선 $(e.target).is($('.black-bg')) 이러면 됩니다.
+
+
+그래서 오늘의 결론
+1. 이벤트 버블링은 항상 일어난다
+
+2. 이벤트 관련 유용한 함수들을 사용가능하다
+
+잘 기억해두면 됩니다. 
+
+
+## dataset 문법
+
+```html
+<div data-데이터이름="값"></div> 
+```
+
+- html 안에 유저 몰래 정보를 숨겨놓을 수 있습니다. 
+- 데이터이름 아무렇게나 작명하고 값도 넣으면 됩니다.
+
+
+```javascript
+document.querySelector().dataset.데이터이름;
+```
+
+- 이러면 html 요소에 숨겨놨던 데이터가 이 자리에 남습니다.
+- 출력해보면 진짜로 아까 숨겨놓은 값이 남습니다.
+
+
+## 쓸만한 자바스크립트 라이브러리들
+
+1. Swiper
+
+https://swiperjs.com/get-started#use-swiper-from-cdn
+
+- 캐러셀 (이미지슬라이드되는거) 만들고 싶으면 직접 코드 짜도 되겠지만
+- 좀 이쁘게 아니면 쉽게 여러기능을 만들고 싶으면 Swiper 라이브러리 써도 됩니다.
+- 호환 잘되고 이미지 lazy loading 이런 것도 되고 터치/드래그도 됩니다.
+
+
+2. Animate On Scroll
+
+- 스크롤 내리면 요소가 서서히 등장하는 애니메이션을 만들고 싶을 때 쓰면 좋습니다.
+
+- 유저가 스크롤바를 ... div 박스 현재 y좌표만큼 내리면 애니메이션 보여달라고 코드짜면 되긴 하는데 귀찮으니까요 
+ 
+https://github.com/michalsnik/aos
+
+- 여기서 css파일, js 파일 cdn버전 찾아서 html 파일에 넣고
+그 다음에 밑에 <script> 태그 열어서 
+
+```javascript
+<script>
+  AOS.init();
+</script>
+```
+
+https://michalsnik.github.io/aos/
+
+그 다음에 위 사이트에서 예제 코드 따라서 복붙하면 구현 끝인듯요 
+
+
+3. EmailJS
+
+원래 이메일 전송은 서버가 해야하지만 Gmail 이런거 서버를 잠깐 빌리면
+
+자바스크립트만으로 이메일 전송이 가능합니다. 
+유저가 내 이메일 계정으로 이메일 전송도 가능하고 
+내 이메일 계정으로 남에게 이메일 전송도 가능함 
+
+https://www.emailjs.com/docs/introduction/how-does-emailjs-work/
+
+이 사이트 가서 가입하고 계정만들고
+튜토리얼 그대로 복붙하고 거기에 내가 방금 만든 EmailJS 계정아이디만 잘 채우면 됩니다. 
+
+
+## Array 와 Object 자료형
+
+### Array 자료형 
+
+- 여러가지 자료를 한곳에 저장하고 싶을 때 사용하는 자료형입니다. 
+
+```javascript
+var car = ['소나타', 50000, 'white'];
+console.log(car[1])
+```
+
+- array 자료에서 데이터 뽑을 땐 대괄호를 뒤에 붙이면 됩니다. [x] 라고 쓰면 x번째 자료를 출력해줍니다
+
+```javascript
+var car = ['소나타', 50000, 'white'];
+car[1] = 60000;
+console.log(car[1])
+```
+- array 자료를 수정하고 싶으면 등호 이용해서 수정하면 됩니다.
+- 자료 추가도 됩니다.
+- 그래서 결론은 여러 자료를 변수 하나에 저장하고 싶으면 array를 사용하면 편리합니다
+
+### Object 자료형 
+
+- 이것도  여러가지 자료를 한곳에 저장하고 싶을 때 사용하는 자료형입니다. 
+
+```javascript
+var car2 = { name : '소나타', price : 50000 };
+```
+
+- 중괄호를 열고 자료를 콤마로 구분해서 집어넣으면 됩니다.
+
+- 그런데 자료 왼쪽에 자료의 이름을 붙여서 저장해야합니다.
+
+- 멋진 말로 자료의 이름은 key, 실제 자료는 value라고 부릅니다.
+
+- 그래서 object 자료형은 key : value 형태로 자료를 저장할 수 있습니다. 
+
+```javascript
+var car2 = { name : '소나타', price : 50000 };
+console.log(car2['name']);
+console.log(car2.name);
+```
+
+- array 자료에서 데이터 뽑을 땐 대괄호를 뒤에 붙이면 되는데
+- [자료이름] 이렇게 써야합니다.
+- .자료이름 이렇게 써도 가능합니다. 마음에드는거 쓰십쇼 
+
+```javascript
+var car2 = { name : '소나타', price : 50000 };
+car2['name'] = '그랜저';
+console.log(car2['name'])
+```
+
+- object 자료를 수정하고 싶으면 등호 이용해서 수정하면 됩니다. 자료 추가도 됩니다.
+
+- 그래서 결론은 여러 자료를 변수 하나에 저장하고 싶으면 object 사용해도 편리합니다.
+
+### Array/Object 차이 
+
+- array는 순서개념이 있습니다. 왼쪽에 적을 수록 더 앞에 있는 자료임
+
+- object는 순서개념이 없습니다. 가장 왼쪽에 적었다고 해도 1빠임을 보장해주지 않습니다.
+
+- 그래서 array 자료는 순서개념이 있다보니
+
+    - 가나다순 정렬
+    - x번 자료부터 x번 자료까지 자르기
+    - x번 자료 바꾸기
+    - 맨 뒤, 맨 앞에 자료 넣기
+    - 원하는 자료가 들어있나 검색
+
+- 순서개념이 필요한 많은 것들을 할 수 있습니다. 
+
+    - array자료.sort() 하면 가나다순 정렬되고
+    - array자료.slice(x, y) 하면 x번부터 y번 전까지 자를 수 있고 
+    - array자료.push(x) 하면 x를 맨 뒤에 입력할 수 있고
+
+이런 기본함수들이 준비되어있습니다.
+
+array 자료 조작이 필요할 때 검색해서 써보도록 합시다
+
+
+## Select 인풋 다루기
+
+```html
+<form class="container my-5 form-group">
+    <p>상품선택</p>
+    <select class="form-select mt-2">
+      <option>모자</option>
+      <option>셔츠</option>
+    </select>
+</form>
+```
+- <select> 는 <input> 이랑 똑같은데
+- 사용자가 고를 수 있는 선택지를 드랍다운 메뉴로 제공하는 <input> 입니다. 
+- 선택지는 <option>으로 넣으면 됩니다. 
+    - <select> 태그도 선택시 input, change 이벤트가 발생합니다.
+    - <select> 태그도 .value로 유저가 입력한 값을 가져올 수 있습니다.
+
+### 셔츠고르면 밑에 <select> 더 보여주기
+
+Q. 유저가 셔츠를 선택하면 하단에 95, 100 을 선택할 수 있는 <select> 박스가 등장하려면 코드 어떻게 짜면 될까요?
+
+```html
+<form class="container my-5 form-group">
+    <p>상품선택</p>
+    <select class="form-select mt-2">
+      <option>모자</option>
+      <option>셔츠</option>
+    </select>
+    <select class="form-select mt-2 form-hide">
+      <option>95</option>
+      <option>100</option>
+    </select>
+</form>
+```
+- 미리 <select> 하나 더 추가했고 form-hide 클래스에는 display : none 주었습니다.
+- 이제 "유저가 셔츠선택하면 form-hide 제거해주세요~" 라고 코드짜면 완성일듯요 
+
+```javascript
+<script>
+  $('.form-select').eq(0).on('input', function(){
+
+    var value = $('.form-select').eq(0).val();
+    if (value == '셔츠') {
+      $('.form-select').eq(1).removeClass('form-hide');
+    }
+  });
+</script>
+```
+
+
+## Select 2 : 자바스크립트로 html 생성하는 법
+
+#### html 생성하는 법 
+
+```html
+<div id="test">
+  
+</div>
+
+<script>
+  var a = '<p>안녕</p>';
+  document.querySelector('#test').insertAdjacentHTML('beforeend', a);
+</script>
+```
+
+- 문자자료로 html을 만든 다음 
+- insertAdjacentHTML() 안에 넣으면 됩니다.
+- 'beforeend' 이건 안쪽 맨 밑에 추가하라는 뜻입니다. 싫으면 맘대로 변경가능 
+
+
+```html
+<div id="test">
+  
+</div>
+
+<script>
+  var a = '<p>안녕</p>';
+  $('#test').append(a);
+</script>
+```
+
+- 이래도 됩니다. 
+- append는 안쪽 맨 밑에 추가하라는 뜻입니다. 
+
+- Q. 저는 안쪽에 추가하는게 아니라 아예 바꾸고 싶은데요
+- A. div찾아서 innerHTML = '<p></p>' 쓰셈, jQuery에선 .html() 입니다. 
+
+
+### 바지옵션 누르면 다른 사이즈가 나와야하는데
+
+```html
+<form class="container my-5 form-group">
+    <p>상품선택</p>
+    <select class="form-select mt-2">
+      <option>모자</option>
+      <option>셔츠</option>
+      <option>바지</option>
+    </select>
+    <select class="form-select mt-2 form-hide">
+      <option>95</option>
+      <option>100</option>
+    </select>
+</form>
+``` 
+
+- 첫 <select> 에 바지옵션을 추가해봅시다.
+- 이거 누르면 28과 30 사이즈가 담긴 <select>가 
+떠야합니다.
+
+코드 어떻게 짜야하죠?
+    - 당연히 html을 미리 만들어놨다가 보여줘도 되는데 실제 쇼핑몰의 경우 그렇게 만들어놓을 순 없습니다.
+    - 바지 사이즈가 매일 달라지면 어떻게 합니까 매일 아침 html 수정할 것임?
+    - 실제 서비스는 매번 서버에서 데이터를 받아와서 "데이터 갯수만큼 <option> 생성해주세요~" 라고 코드를 짜놓습니다.
+    - 그래서 우리도 이를 대비하기 위해 html을 미리 만들어놓지말고 자바스크립트로 html을 생성해봅시다.
+
+```html
+<script>
+  $('.form-select').eq(0).on('input', function(){
+
+    var value = $('.form-select').eq(0).val();
+    if (value == '셔츠') {
+      $('.form-select').eq(1).removeClass('form-hide');
+    }
+    else if (value == '바지'){
+      $('.form-select').eq(1).removeClass('form-hide');
+      $('.form-select').eq(1).html('');
+      var 템플릿 = `<option>28</option><option>30</option>`;
+      $('.form-select').eq(1).append(템플릿)
+    }
+
+  });
+</script>
+``` 
+그래서 유저가 바지를 선택하면
+
+1. 일단 둘 째 <select> 보여주셈 
+2. 둘 째 <select> 안에 비워주셈
+3. html 만들어서 둘 째 <select> 안에 append 해주셈 
+
+이라고 코드를 짰더니 진짜로 그렇게 해줍니다.
+아니면 더 간단하게 할 수도 있을듯요 
+
+
+## Select 3 : forEach, for in 반복문
+
+- 서버에서 바지 사이즈 데이터 가져와서, 그 갯수만큼 <option>을 생성해봅시다. 
+- 그래서 다음처럼 코드짜놓고 시작합시다. 
+
+```html
+<script>
+  var pants = [28, 30, 32];
+  $('.form-select').eq(0).on('input', function(){
+
+    var value = $('.form-select').eq(0).val();
+    if (value == '셔츠') {
+      $('.form-select').eq(1).removeClass('form-hide');
+    }
+    else if (value == '바지'){
+      $('.form-select').eq(1).removeClass('form-hide');
+      $('.form-select').eq(1).html('');
+      여기다 무슨 코드 짜야함 
+    }
+  });
+</script>
+```
+
+- 맨 위에 pants 라는 변수를 하나 만들고 서버에서 보낸데이터라고 가정해봅시다.
+- pants 데이터 갯수만큼 <option>을 생성하고싶으면 어떻게 해야할까요? 
+- 반복문 쓰면 될 것 같은데요 
+
+```javascript
+$('#test').append(템플릿);
+
+    var pants = [28, 30, 32, 34];
+    var shirts = [90, 95, 100, 105];
+
+    $('.form-select').eq(0).on('input', function(){
+      var select = this.value;
+
+      if (select == '셔츠'){
+        $('.form-select').eq(1).removeClass('form-hide');
+        $('.form-select').eq(1).html('');
+        shirts.forEach(function(data){
+          // .html() 메서드는 선택한 요소의 내용을 지우고 새로운 내용으로 대체(교체)합니다. 
+          // .append() 메서드는 선택한 요소의 끝에 새로운 내용을 추가합니다.
+          // 그래서 .html() 메서드를 사용하면 shirts 마지막 값인 105만 출력된다 
+          $('.form-select').eq(1).append(`<option>${data}</option>`)
+        })
+      } else if (select == '모자'){
+        $('.form-select').eq(1).addClass('form-hide');
+      } else {
+        $('.form-select').eq(1).removeClass('form-hide');
+        $('.form-select').eq(1).html('');
+        // forEach 반복문 : array에 붙일 수 있는 반복문
+        // forEach 반복문의 콜백함수 파라미터에 작명을 하면 그 안에 array의 데이터가 차례대로 출력
+        // forEach 안에 파라미터 2개 생성가능(첫째는 array 안의 데이터, 둘째는 0부터 1씩 증가하는 정수)
+        pants.forEach(function(data, i){
+          $('.form-select').eq(1).append(`<option>${data}</option>`);
+        });
+
+        // 콜백함수를 arrow function 으로 사용해도됨
+        // 그러나 arrow function 쓰면 함수 안의 this 뜻이 달라질 수 있음
+        // pants,forEach((data) => {
+        //   $('.form-select').eq(1).append(`<option>${data}</option>`);
+        // });
+      }
+```
