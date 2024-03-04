@@ -402,3 +402,87 @@ copy[0] = '여자코트 추천';
 {...기존state} 
 
 이렇게 하면 독립적인 카피가 하나 생성됩니다.
+
+
+## Component : 많은 div들을 한 단어로 줄이고 싶으면
+
+
+### 복잡한 html을 한 단어로 치환할 수 있는 Component 문법
+
+- 리액트는 긴 HTML을 한 단어로 깔끔하게 치환해서 넣을 수 있는 문법을 제공합니다.
+- `Component라고 합니다.`
+- 이걸 이용하면 함수 만들듯, 변수 만들듯 HTML을 깔끔하게 한 단어로 치환해서 원하는 곳에 꽂아넣을 수 있습니다.
+
+```jsx
+function App (){
+  return (
+    <div>
+      (생략)
+      <Modal></Modal>
+    </div>
+  )
+}
+
+function Modal(){
+  return (
+    <div className="modal">
+      <h4>제목</h4>
+      <p>날짜</p>
+      <p>상세내용</p>
+    </div>
+  )
+}
+```
+▲ 이렇게 하시면 원하는 HTML을 한 단어로 줄일 수 있습니다.
+
+줄이는 법은
+1. function을 이용해서 함수를 하나 만들어주고 작명합니다. 
+2. 그 함수 안에 return () 안에 축약을 원하는 HTML을 담으면 됩니다.
+3. 그럼 원하는 곳에서 <함수명></함수명> 사용하면 아까 축약한 HTML이 등장합니다.
+
+- 이렇게 축약한 HTML 덩어리를 Component 라고 부릅니다. 
+- 앞으로 HTML 깔끔하게 축약해서 쓰고싶으면 Component 이런 식으로 많이 만들어 쓰십시오.
+- <div> 뭉텅이보다 깔끔하게 <Modal> 이렇게 되어있으니
+- 남이 봤을 때 & 미래의 내가 봤을 때 레이아웃을 바로 파악이 가능하니 나중에 관리하기도 좋겠죠?
+
+
+
+### Component 만들 때 주의점 
+
+1. component 작명할 땐 영어대문자로 보통 작명합니다.
+2. return () 안엔 html 태그들이 평행하게 여러개 들어갈 수 없습니다.
+3. function App(){} 내부에서 만들면 안됩니다. 
+왜냐면 function App(){} 이것도 다시보니 컴포넌트 생성문법이죠?
+component 안에 component 를 만들진 않습니다. 
+4. <컴포넌트></컴포넌트> 이렇게 써도 되고 <컴포넌트/> 이렇게 써도 됩니다. 
+
+
+
+### arrow function 써도 됩니다
+
+```jsx
+function Modal(){
+  return ( <div></div> )
+}
+
+let Modal = () => {
+  return ( <div></div>) 
+}
+```
+
+
+
+### 어떤 HTML들을 Component 만드는게 좋을까
+
+기준은 없습니다만 관습적으로 어떤 부분을 주로 Component화 하냐면
+
+- 사이트에 반복해서 출현하는 HTML 덩어리들은 Component로 만들면 좋습니다.
+- 내용이 매우 자주 변경될 것 같은 HTML 부분을 잘라서 Component로 만들면 좋습니다.
+- 다른 페이지를 만들고 싶다면 그 페이지의 HTML 내용을 하나의 Component로 만드는게 좋습니다.
+- 또는 다른 팀원과 협업할 때 웹페이지를 Component 단위로 나눠서 작업을 분배하기도 합니다. 
+
+
+
+### Component의 단점
+
+- 일단 HTML 깔끔하게 쓰려고 Component를 수백개 만들면 그것 만으로도 관리가 힘듭니다.
