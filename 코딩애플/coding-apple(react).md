@@ -1058,3 +1058,176 @@ A. 맞습니다. title같은 state도 자식컴포넌트 안에 만들어보면 
 오늘 요약 :
 1. 그래서 UI만드는 3-step 외워주면 알아서 뭐든 만들 수 있습니다.
 2. state는 state를 사용하는 컴포넌트 중 최고 부모에 만들어놓아야합니다.
+
+
+## input : 사용자가 입력한 글 다루기
+
+### <input>에 뭔가 입력시 코드를 실행하려면
+
+- 유저가 <input>에 뭔가 입력시 코드를 실행해주고 싶을 때가 많습니다.
+- 그러고 싶으면 onChange 아니면 onInput 이벤트핸들러를 부착하면 됩니다. 
+
+```jsx
+<input onChange={()=>{ 실행할코드 }}/>
+```
+
+- onChange, onInput은
+- <input>에 유저가 뭔가 입력할 때마다 안에 있는 코드를 실행해줍니다. 
+
+
+### <input>에 입력한 값 가져오는 법
+
+```jsx
+<input onChange={(e)=>{ console.log(e.target.value) }}/>
+```
+
+- e라는 파라미터를 추가해주고 
+- e.target.value라고 적으면 현재 <input>에 입력된 값을 가져올 수 있습니다. 
+
+- 이벤트핸들러에 들어가는 함수에 저렇게 파라미터 e를 추가하면
+- e는 이벤트 객체 이런 식으로 부르는데
+- 현재 발생하는 이벤트와 관련한 유용한 기능들을 제공하는 일종의 변수입니다.
+
+- e.target 이러면 현재 이벤트가 발생한 곳을 알려주고
+- e.preventDefault() 이러면 이벤트 기본 동작을 막아주고
+- e.stopPropagation() 이러면 이벤트 버블링도 막아줍니다. 이거 쓰면 좋아요버튼 누를 때 모달창도 떠버리는 버그 해결가능
+
+
+### 사용자가 input에 입력한 데이터 저장하기 
+
+- 사용자가 input에 입력한 데이터는 state 아니면 변수에 저장해서 쓰는게 일반적입니다. 
+- 그래야 편리하기 때문에 일단 저장부터 해봅시다.
+- state 배운 기념으로 state를 사용합시다. 
+
+```jsx
+function App (){
+
+  let [입력값, 입력값변경] = useState('');
+  return (
+    <input onChange={(e)=>{ 
+      입력값변경(e.target.value) 
+      console.log(입력값)
+    }} />
+  )
+}
+```
+
+- state를 하나 만들어주고 onChange될 때 마다 state에 e.target.value 넣으라고 코드를 짰습니다. 
+- state에 문자를 저장하고 싶은데 일단 기본값을 뭘 넣을지 모르겠으면 따옴표 2개만 치면 됩니다.
+- 따옴표 2개는 빈문자를 뜻합니다. 
+- 이제 입력값이라는 state를 필요한 곳에서 마음대로 사용하면 되겠습니다. 
+
+
+## 이미지 넣는 법 & public 폴더 이용하기
+
+리액트는 원래 좀 자유롭습니다. 
+이미지 넣는 법도 서너개 있습니다.
+
+
+### html 안에서 src 폴더의 이미지를 넣고 싶으면 
+
+```jsx
+import bg from './bg.png'
+
+function App(){
+  return (
+    <div>
+      <div className="main-bg" style={{ backgroundImage : 'url(' + bg + ')' }}></div>
+    </div>
+  )
+}
+```
+
+1. import 작명 from './이미지경로' 한 다음에
+2. 이미지경로가 필요한 곳에서 작명한걸 사용하면 됩니다. 
+<img>태그 쓰고싶으면 <img src={bg}/> 이렇게 써도 보입니다. 
+귀찮으면 css파일을 활용합시다. 
+
+
+### public 폴더의 용도 
+
+- 여러가지 소스코드는 src 폴더에 보관하면 되는데 이미지같은 static 파일의 경우 public 폴더에 보관해도 됩니다.
+- 리액트로 개발을 끝내면 build 작업이라는걸 하는데 지금까지 짰던 코드를 한 파일로 압축해주는 작업입니다. 
+- src 폴더에 있던 코드와 파일은 다 압축이 되는데 public 폴더에 있는 것들은 그대로 보존해줍니다. 
+- 그래서 형태를 보존하고 싶은 파일은 public 폴더에 넣으면 되는데 js 파일은 그럴 일은 거의 없고, 이미지, txt, json 등 수정이 필요없는 static 파일들의 경우엔 public 폴더에 보관해도 상관없습니다.
+
+
+### public 폴더에 있는 이미지 사용할 땐
+
+```jsx
+<img src="/logo192.png" /> 
+```
+- 그냥 /이미지경로 사용하면 됩니다. 편리하죠?
+- 그래서 페이지에 이미지 100장을 넣어야하는 경우 public 폴더에 밀어넣으면 import 100번 안해도 되니 편리합니다. 
+- css 파일에서도 /이미지경로 사용하면 됩니다.
+
+```jsx
+<img src={process.env.PUBLIC_URL + '/logo192.png'} /> 
+```
+하지만 권장되는 방식은 이렇게입니다. 
+- 왜냐면 리액트로 만든 html 페이지를 배포할 때
+- codingapple.com 경로에 배포하면 아무런 문제가 없지만
+- codingapple.com/어쩌구/ 경로에 배포하면
+- /logo192.png 이렇게 쓰면 파일을 찾을 수 없다고 나올 수도 있습니다. 
+- 그래서 /어쩌구/ 를 뜻하는 process.env.PUBLIC_URL 이것도 더해주면 된다고 하는군요.
+
+
+## 코드 길어지면 import export 하면 됩니다
+
+
+### export default / import 문법
+
+- 상품정보들을 state로 만들고 싶은데 useState() 안에 넣기엔 너무 깁니다.
+- 그럴 땐 다른파일에 보관했다가 import해올 수도 있습니다. 
+- 예를 들어서 data.js라는 파일이 있는데 거기 있던 변수를 App.js 에서 가져와서 쓰고 싶으면 
+
+```jsx
+(data.js 파일)
+
+let a = 10;
+export default a;
+```
+- export default 변수명; 이렇게 쓰면 원하는 변수를 밖으로 내보낼 수 있습니다.
+
+```jsx
+(App.js 파일)
+
+import a from './data.js';
+console.log(a)
+```
+
+- export 했던 변수를 다른 파일에서 사용하고 싶으면 import 작명 from './파일경로' 하면 됩니다.
+- 위 코드에선 a 출력해보면 진짜 10 나옴 
+
+(유의점)
+- 변수, 함수, 자료형 전부 export 가능합니다.
+- 파일마다 export default 라는 키워드는 하나만 사용가능합니다.
+- 파일경로는 ./ 부터 시작해야합니다. 현재경로라는 뜻임 
+
+
+### export { } / import { } 문법
+
+- 여러개의 변수들을 내보내고싶으면 export default 말고 이런 문법을 씁니다.
+
+```jsx
+(data.js 파일)
+
+var name1 = 'Kim';
+var name2 = 'Park';
+export { name1, name2 }
+```
+- 그럼 원하는 변수, 함수 등을 여러개 내보낼 수 있습니다.
+
+```jsx
+(App.js 파일)
+
+import { name1, name2 } from './data.js';
+```
+- export {} 이걸로 내보냈으면 가져다가 쓸 때 import {} 문법을 씁니다.
+
+(유의점)
+- export { } 했던 것들은 import { } 쓸 때 자유작명이 불가능합니다. export 했던 변수명 그대로 적어야함 
+
+그래서 결론은
+- export default / import 쓰거나
+- export { } / import { } 쓰거나 둘 중 마음에드는걸 써봅시다. 
