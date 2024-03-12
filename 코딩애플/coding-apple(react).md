@@ -1062,7 +1062,7 @@ A. 맞습니다. title같은 state도 자식컴포넌트 안에 만들어보면 
 
 ## input : 사용자가 입력한 글 다루기
 
-### <input>에 뭔가 입력시 코드를 실행하려면
+### input에 뭔가 입력시 코드를 실행하려면
 
 - 유저가 <input>에 뭔가 입력시 코드를 실행해주고 싶을 때가 많습니다.
 - 그러고 싶으면 onChange 아니면 onInput 이벤트핸들러를 부착하면 됩니다. 
@@ -1075,7 +1075,7 @@ A. 맞습니다. title같은 state도 자식컴포넌트 안에 만들어보면 
 - <input>에 유저가 뭔가 입력할 때마다 안에 있는 코드를 실행해줍니다. 
 
 
-### <input>에 입력한 값 가져오는 법
+### input에 입력한 값 가져오는 법
 
 ```jsx
 <input onChange={(e)=>{ console.log(e.target.value) }}/>
@@ -1231,3 +1231,7 @@ import { name1, name2 } from './data.js';
 그래서 결론은
 - export default / import 쓰거나
 - export { } / import { } 쓰거나 둘 중 마음에드는걸 써봅시다. 
+
+
+## 리액트 라우터 1 : 셋팅이랑 기본 라우팅
+
