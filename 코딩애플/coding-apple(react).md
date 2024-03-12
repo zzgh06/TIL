@@ -7,7 +7,7 @@
 
 - 스타일을 주기 위한 class명을 넣을 때 class=" " 가 아니라 className=" " 입니다.
 - 왜냐면 실은 App.js에 짜고 있는건 html이 아니라 JSX라고 부르는 언어이기 때문.
-- 원래 리액트환경에서 <div>하나 만들고 싶으면 자바스크립트로 React.createElement('div', null) 
+- 원래 리액트환경에서 `<div>`하나 만들고 싶으면 자바스크립트로 React.createElement('div', null) 
 
 이딴 식으로 어렵게 코드짜야합니다. 
 근데 그러면 유저들 다 도망가기 때문에 JSX라는 언어를 대신 사용합니다.
@@ -438,11 +438,11 @@ function Modal(){
 줄이는 법은
 1. function을 이용해서 함수를 하나 만들어주고 작명합니다. 
 2. 그 함수 안에 return () 안에 축약을 원하는 HTML을 담으면 됩니다.
-3. 그럼 원하는 곳에서 <함수명></함수명> 사용하면 아까 축약한 HTML이 등장합니다.
+3. 그럼 원하는 곳에서 `<함수명></함수명>` 사용하면 아까 축약한 HTML이 등장합니다.
 
 - 이렇게 축약한 HTML 덩어리를 Component 라고 부릅니다. 
 - 앞으로 HTML 깔끔하게 축약해서 쓰고싶으면 Component 이런 식으로 많이 만들어 쓰십시오.
-- <div> 뭉텅이보다 깔끔하게 <Modal> 이렇게 되어있으니
+- `<div>` 뭉텅이보다 깔끔하게 `<Modal>` 이렇게 되어있으니
 - 남이 봤을 때 & 미래의 내가 봤을 때 레이아웃을 바로 파악이 가능하니 나중에 관리하기도 좋겠죠?
 
 
@@ -454,7 +454,7 @@ function Modal(){
 3. function App(){} 내부에서 만들면 안됩니다. 
 왜냐면 function App(){} 이것도 다시보니 컴포넌트 생성문법이죠?
 component 안에 component 를 만들진 않습니다. 
-4. <컴포넌트></컴포넌트> 이렇게 써도 되고 <컴포넌트/> 이렇게 써도 됩니다. 
+4. `<컴포넌트></컴포넌트>` 이렇게 써도 되고 <컴포넌트/> 이렇게 써도 됩니다. 
 
 
 
@@ -561,7 +561,7 @@ function App (){
 
 
 그래서 아까 모달창으로 돌아가서
-저 state가 true면 <Modal></Modal> 보여주고, false면 아무것도 보여주지마세요~
+저 state가 true면 `<Modal></Modal>` 보여주고, false면 아무것도 보여주지마세요~
 라고 코드짜고 싶으면 어떻게 할까요? 
 
 ```jsx
@@ -645,7 +645,7 @@ function App (){
   )
 }
 ```
-▲ 이렇게 쓰면 <div>안녕</div> 이 3개나 생성됩니다.
+▲ 이렇게 쓰면 `<div>안녕</div>` 이 3개나 생성됩니다.
 진짜인지 미리보기화면에서 확인해봅시다.
 
 
@@ -679,13 +679,13 @@ function App (){
 
 ### 근데 반복된 HTML에 각각 다른 제목을 부여하고 싶다면
 
-- 지금 위의 코드를 잘 보시면 <h4>{ 글제목[0] }</h4> 이라는 것만 3번 반복되고 있습니다. 
+- 지금 위의 코드를 잘 보시면 `<h4>{ 글제목[0] }</h4>` 이라는 것만 3번 반복되고 있습니다. 
 - 그래서 같은 제목만 3번 출현하는듯요
 
 - 그게 아니라 반복문이 돌 때마다
-<h4>{ 글제목[0] }</h4>
-<h4>{ 글제목[1] }</h4>
-<h4>{ 글제목[2] }</h4>
+`<h4>{ 글제목[0] }</h4>`
+`<h4>{ 글제목[1] }</h4>`
+`<h4>{ 글제목[2] }</h4>`
 
 - 이런 데이터가 들어가게 만들고 싶으면 어떻게 코드를 수정해야할까요?
 - 그것은 아까 map 함수의 사용법을 잘 상기시켜보면 알 수 있습니다.
@@ -782,7 +782,7 @@ let [따봉, 따봉변경] = useState([0,0,0]);
 ```jsx
 <div className="list" key={i}> 
 ```
-그래야 리액트가 <div>들을 각각 구분할 수 있어서 그렇습니다. 
+그래야 리액트가 `<div>`들을 각각 구분할 수 있어서 그렇습니다. 
 없으면 워닝띄워줌 
 
 
@@ -792,9 +792,9 @@ let [따봉, 따봉변경] = useState([0,0,0]);
 - 그냥 쓰면 안되고 props로 전송해서 써야합니다. 
 
 
-### <Modal>안에 글제목 state 가 필요한데
+### `<Modal>`안에 글제목 state 가 필요한데
 
-저번에 만든 <Modal> 내부에 글제목 state를 집어넣고 싶으면 어떻게하죠? 
+저번에 만든 `<Modal>` 내부에 글제목 state를 집어넣고 싶으면 어떻게하죠? 
 
 ```jsx
 function App (){
@@ -835,7 +835,7 @@ function Modal(){
 1. 자식컴포넌트 사용하는 곳에 가서 <자식컴포넌트 작명={state이름} /> 
 2. 자식컴포넌트 만드는 function으로 가서 props라는 파라미터 등록 후 props.작명 사용
 
-- 글제목이라는 부모 컴포넌트의 state를 자식 컴포넌트 <Modal>에 전송해봅시다.
+- 글제목이라는 부모 컴포넌트의 state를 자식 컴포넌트 `<Modal>`에 전송해봅시다.
 
 ```jsx
 function App (){
@@ -860,11 +860,11 @@ function Modal(props){
 1. 자식컴포넌트 사용하는 곳에 가서 <자식컴포넌트 작명={state이름} /> 
 2. 자식컴포넌트 만드는 곳에 가서 props라는 파라미터 등록 후 props.작명 사용하면 됩니다.
 
-(참고1) props는 <Modal 이런거={이런거}  저런거={저런거}> 이렇게 10개 100개 1000개 무한히 전송이 가능합니다.
+(참고1) props는 `<Modal 이런거={이런거}  저런거={저런거}>` 이렇게 10개 100개 1000개 무한히 전송이 가능합니다.
 
 (참고2) 꼭 state만 전송할 수 있는건 아닙니다. 
-- <Modal 글제목={변수명}> 일반 변수, 함수 전송도 가능하고 
-- <Modal 글제목="강남우동맛집"> 일반 문자전송은 중괄호 없이 이렇게 해도 됩니다.
+- `<Modal 글제목={변수명}>` 일반 변수, 함수 전송도 가능하고 
+- `<Modal 글제목="강남우동맛집">` 일반 문자전송은 중괄호 없이 이렇게 해도 됩니다.
 
 - 자식 → 부모 패륜방향 전송은 불가능합니다.
 - 옆집 컴포넌트로의 불륜전송도 불가능합니다. 
@@ -914,8 +914,8 @@ function Modal(props){
 ```
 props.color 이런 식으로 구멍을 뚫어놓으면 이제 컴포넌트 사용할 때
 
-<Modal color={'skyblue'} /> 이러면 하늘색 모달창이 생성됩니다. 
-<Modal color={'orange'} /> 이러면 오렌지색 모달창이 생성됩니다.
+`<Modal color={'skyblue'} />` 이러면 하늘색 모달창이 생성됩니다. 
+`<Modal color={'orange'} />` 이러면 오렌지색 모달창이 생성됩니다.
 
 그래서 비슷한 컴포넌트를 또 만들 필요가 없어지는 것입니다. 
 
@@ -1064,7 +1064,7 @@ A. 맞습니다. title같은 state도 자식컴포넌트 안에 만들어보면 
 
 ### input에 뭔가 입력시 코드를 실행하려면
 
-- 유저가 <input>에 뭔가 입력시 코드를 실행해주고 싶을 때가 많습니다.
+- 유저가 `<input>`에 뭔가 입력시 코드를 실행해주고 싶을 때가 많습니다.
 - 그러고 싶으면 onChange 아니면 onInput 이벤트핸들러를 부착하면 됩니다. 
 
 ```jsx
@@ -1072,7 +1072,7 @@ A. 맞습니다. title같은 state도 자식컴포넌트 안에 만들어보면 
 ```
 
 - onChange, onInput은
-- <input>에 유저가 뭔가 입력할 때마다 안에 있는 코드를 실행해줍니다. 
+- `<input>`에 유저가 뭔가 입력할 때마다 안에 있는 코드를 실행해줍니다. 
 
 
 ### input에 입력한 값 가져오는 법
@@ -1082,7 +1082,7 @@ A. 맞습니다. title같은 state도 자식컴포넌트 안에 만들어보면 
 ```
 
 - e라는 파라미터를 추가해주고 
-- e.target.value라고 적으면 현재 <input>에 입력된 값을 가져올 수 있습니다. 
+- e.target.value라고 적으면 현재 `<input>`에 입력된 값을 가져올 수 있습니다. 
 
 - 이벤트핸들러에 들어가는 함수에 저렇게 파라미터 e를 추가하면
 - e는 이벤트 객체 이런 식으로 부르는데
@@ -1140,7 +1140,7 @@ function App(){
 
 1. import 작명 from './이미지경로' 한 다음에
 2. 이미지경로가 필요한 곳에서 작명한걸 사용하면 됩니다. 
-<img>태그 쓰고싶으면 <img src={bg}/> 이렇게 써도 보입니다. 
+`<img>태그 쓰고싶으면 <img src={bg}/>` 이렇게 써도 보입니다. 
 귀찮으면 css파일을 활용합시다. 
 
 
@@ -1235,3 +1235,516 @@ import { name1, name2 } from './data.js';
 
 ## 리액트 라우터 1 : 셋팅이랑 기본 라우팅
 
+`페이지를 나누고 싶으면`
+
+- 반 html css js 사이트는 그냥 html 파일 여러개 만들면 그게 하나의 페이지인데 근데 리액트는 html 파일을 하나만 사용합니다.
+- 래서 리액트에선 누가 다른 페이지 요청하면 그냥 내부에 있는 `<div>`를 갈아치워서 보여주면 됩니다. 
+- 데 직접 코드짜면 귀찮으니 react-router-dom 이라는 외부 라이브러리 설치해서 구현하는게 일반적이라 그렇게 해봅시다.
+
+
+### react-router-dom 설치하려면 
+
+외부라이브러리라서 설치 셋팅하는 법은
+`react-router-dom 홈페이지` 들어가서 그대로 따라하면 되는데 그냥 알려드리자면 
+
+터미널 열어서 
+`npm install react-router-dom@6` 입력해서 설치합니다.
+
+셋팅은 index.js 파일로 가서 
+
+```jsx
+import { BrowserRouter } from "react-router-dom";
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+  </React.StrictMode>
+); 
+```
+▲ import 어쩌구 해오고
+`<BrowserRouter> 이걸로 <App/>` 이걸 감싸면 끝입니다.
+
+
+### 라우터로 페이지 나누는 법 
+
+다른 웹사이트를 잘 살펴보면 
+- `codingapple.com/어쩌구`로 접속하면 A페이지를 보여주고 
+- `codingapple.com/저쩌구`로 접속하면 B페이지를 보여줍니다. 
+
+이런 식으로 url 경로마다 다른 페이지를 보여주고 싶으면 이렇게 작성합니다.
+
+```jsx
+// (App.js)
+
+import { Routes, Route, Link } from 'react-router-dom'
+
+function App(){
+  return (
+    (생략)
+    <Routes>
+      <Route path="/detail" element={ <div>상세페이지임</div> } />
+      <Route path="/about" element={ <div>어바웃페이지임</div> } />
+    </Routes>
+  )
+}
+```
+1. 우선 상단에서 여러가지 컴포넌트를 import 해오고 
+2. `<Routes>` 만들고 그 안에 `<Route>`를 작성합니다.
+3. `<Route path="/url경로" element={ <보여줄html> } />` 이렇게 작성하면 됩니다. 
+
+```jsx
+<Route path="/" element={ <div>메인페이지에서 보여줄거</div> } /> 
+```
+▲ 이 url 경로는 메인페이지입니다.
+
+Q. 저는 메인페이지 접속시에만 상품목록 보여주고 싶습니다 
+A. 그럼 element={ } 안에 상품목록 레이아웃 다 넣으면 되는거 아닙니까 
+
+```jsx
+<Route path="/" element={ 
+  <>
+   <div className="main-bg"></div>
+   <div className="container">
+     <div className="row">
+       { shoes.map((a, i)=>{
+         return <Card shoes={shoes[i]} i={i} ></Card>
+        })}
+      </div>
+    </div> 
+  </>
+} /> 
+```
+- 이러면 메인페이지 접속시에만 상품목록이 보이고 나머지 /detail 그리고 /about 페이지에선 안보이겠군요. 
+- 이렇게 페이지에서 보여줄 html 내용은 마음대로 작성하면 됩니다. 
+
+
+### 페이지 이동 버튼은
+
+- 유저들은 주소창에 url 입력해서 들어가지 않고 링크타고 들어갑니다. 
+- 링크를 만들고 싶으면 react-router-dom에서 Link 컴포넌트 import 해오고 원하는 곳에서 `<Link>` 쓰면 됩니다. 
+
+```jsx
+<Link to="/">홈</Link>
+<Link to="/detail">상세페이지</Link>
+```
+이러면 각각 url 경로로 이동하는 링크를 생성할 수 있습니다.
+
+
+## 리액트 라우터 2 : navigate, nested routes, outlet
+
+- 오늘은 navigate() 함수와 간단한 프로젝트에선 쓸데없는데 가끔 쓰는 nested routes라는 기능을 배워봅시다.
+
+
+### 리액트 프로젝트 폴더구조는
+
+리액트는 그냥 html 이쁘게 만들어주는 쪼그만한 라이브러리일 뿐입니다. 
+
+- 그래서 여러분이 만들 파일들은 95% 확률로 .js 파일이기 때문에 
+- 비슷한 .js 파일끼리 한 폴더에 묶어놓으면 그냥 그게 좋은 폴더구조입니다. 
+
+- 컴포넌트 역할하는 js 파일은 components 폴더에 묶고
+- 페이지 역할하는 js 파일은 routes 아니면 pages 폴더에 묶고
+- 자주 쓰는 함수가 들어있는 js 파일은 utils 폴더에 묶고
+알아서 필요할 때마다 폴더 만들어쓰십시오 
+
+```jsx
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
+```
+우선 상단에서 이런 것들을 import 해옵시다.
+
+
+### 1. 페이지 이동기능을 만들고 싶으면 useNavigate() 씁니다.
+
+페이지 이동은 Link 써도 된다고 했는데 그게 못생겼으면 이거 쓰면 됩니다. 
+
+```jsx
+function App(){
+  let navigate = useNavigate()
+  
+  return (
+    (생략)
+    <button onClick={()=>{ navigate('/detail') }}>이동버튼</button>
+  )
+}
+```
+
+- useNavigate() 쓰면 그 자리에 유용한 함수가 남습니다. 페이지 이동시켜주는 함수입니다.
+- 그럼 이제 navigate('/detail') 이런 코드가 실행되면 /detail 페이지로 이동가능합니다.
+- navigate(2) 숫자넣으면 앞으로가기, 뒤로가기 기능개발도 가능합니다.
+    - -1 넣으면 뒤로 1번 가기
+    - 2 넣으면 앞으로 2번 가기 기능입니다. 
+
+
+### 2. 404페이지는 
+
+- 유저가 이상한 경로로 접속했을 때 "없는 페이지입니다" 이런거 보여주고 싶으면
+
+```jsx
+<Route path="*" element={ <div>없는페이지임</div> } />
+```
+- `<Route path="*">` 하나 맨 밑에 만들어두면 됩니다.
+    - `*` 경로는 모든 경로를 뜻해서
+    - 위에 만들어둔 /detail 이런게 아닌 이상한 페이지 접속시 * 경로로 안내해줍니다.
+
+
+### 3. 서브경로 만들 수 있는 nested routes
+
+- /about/member로 접속하면 회사멤버 소개하는 페이지
+- /about/location으로 접속하면 회사위치 소개하는 페이지를 만들고 싶으면 어떻게 합니까. 
+
+```jsx
+<Route path="/about/member" element={ <div>멤버들</div> } />
+<Route path="/about/location" element={ <div>회사위치</div> } />
+```
+이렇게 만들어도 되겠지만
+
+```jsx
+<Route path="/about" element={ <About/> } >  
+  <Route path="member" element={ <div>멤버들</div> } />
+  <Route path="location" element={ <div>회사위치</div> } />
+</Route>
+```
+이렇게 만들어도 됩니다.
+
+- `<Route>`안에 `<Route>`를 넣을 수 있는데 이걸 Nested routes 라고 부릅니다.
+- 저렇게 쓰면 /about/member로 접속시 `<About> &<div>멤버들</div>` 을 보여줍니다.
+- /about/location으로 접속시 `<About> & <div>회사위치</div>` 을 보여줍니다.
+
+Q. <div>는 안보이는데요
+
+실은 위처럼 코드짜면 
+- /about/member로 접속시 `<About>안에 <div>멤버들</div>` 을 보여줍니다.
+- 그래서 `<About`> 컴포넌트 안에 `<div>`를 어디다 보여줄지 표기해야 잘보여줍니다. 
+
+```jsx
+<Route path="/about" element={ <About/> } >  
+  <Route path="member" element={ <div>멤버들</div> } />
+  <Route path="location" element={ <div>회사위치</div> } />
+</Route>
+...
+function About(){
+  return (
+    <div>
+      <h4>about페이지임</h4>
+      <Outlet></Outlet>
+    </div>
+  )
+}
+```
+- 위에서 import해온 `<Outlet>`은 nested routes안의 element들을 어디에 보여줄지 표기하는 곳입니다. 
+- 그래서 이렇게 해두면 /about/member로 접속시 `<Outlet>`자리에 아까의 `<div>` 박스들이 잘 보입니다. 
+- 그래서 유사한 서브페이지들이 많이 필요하다면 이렇게 만들어도 됩니다.
+
+
+## 리액트 라우터 3 : URL 파라미터로 상세페이지 100개 만들기
+
+### 상세페이지에 상품명 넣어봅시다
+
+- 임시 글자들만 들어있으면 밋밋해서 그렇습니다.
+- 그래서 shoes 라는 state에 있던 상품정보들을 Detail 컴포넌트에 꽂아넣어봅시다.
+- 근데 안타깝게도 shoes는 App 컴포넌트에 있으니 App -> Detail 이렇게 전송하면 쓸 수 있겠군요. 
+
+```jsx
+<Route path="/detail" element={ <Detail shoes={shoes}/> }/> 
+```
+그래서 App.js 안에 <Detail> 쓰는 곳에서 일단 props 전송하고 
+
+```jsx
+// (Detail.js)
+<div className="container>
+  <div className="row">
+    <div className="col-md-6">
+      <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+    </div>
+    <div className="col-md-6 mt-4">
+      <h4 className="pt-5">{props.shoes[0].title}</h4>
+      <p>{props.shoes[0].content}</p>
+      <p>{props.shoes[0].price}원</p>
+      <button className="btn btn-danger">주문하기</button>
+    </div>
+  </div> 
+</div>
+```
+- Detail 컴포넌트는 props 파라미터 등록해서 shoes를 자유롭게 사용했습니다.
+- props.shoes[0].title 하면 0번째 상품명 나올듯 
+
+Q. 근데 shoes라는 state를 Detail.js 안에서 또 만들면 굳이 props 필요없지 않나요?
+A. 나중에 수정이 필요하면 두군데 수정해야해서 귀찮으니 그러면 안됩니다. 
+
+### 상세페이지 여러개 만들려면
+
+- 방금 만든건 0번 상품의 상세페이지일 뿐입니다.
+- 상품이 3개니까 상세페이지도 3개 필요할텐데 
+- 그럼 이렇게 코드짜면 되겠군요.
+    - `<Route>` 쓰면 페이지하나 만들 수 있다고 했으니까...
+
+```jsx
+<Route path="/detail/0" element={ <Detail shoes={shoes}/> }/>
+<Route path="/detail/1" element={ <Detail shoes={shoes}/> }/>
+<Route path="/detail/2" element={ <Detail shoes={shoes}/> }/> 
+```
+- `<Route>`를 3개 만드는겁니다. 그럼 페이지 3개 완성 
+- path 작명시 슬래시 기호도 맘대로 사용가능한데 단어간 띄어쓰기용으로 많이 사용합니다.
+- 근데 상품이 100만개라면 `<Route>`도 100만개 만들것입니까?
+- 그건 너무 끔찍하기 때문에 다른 방법을 사용합니다
+
+
+```jsx
+<Route path="/detail/:id" element={ <Detail shoes={shoes}/> }/>
+```
+- 페이지를 여러개 만들고 싶으면 `URL 파라미터`라는 문법을 사용가능합니다. 
+- path 작명할 때 `/:어쩌구` 이렇게 사용하면 `"아무 문자"`를 뜻합니다.
+- 그래서 위의 `<Route>`는 누군가 주소창에 `/detail/아무거나` 입력했을 때 `<Detail> 컴포넌트` 보여달라는 뜻입니다.
+
+이제 그럼
+- /detail/0
+- /detail/1
+- /detail/2
+이렇게 접속해도 `<Detail> 컴포넌트` 잘 보여줄 수 있습니다. 
+
+
+### 페이지마다 똑같은 내용은 보여주기 싫은데요
+
+- 페이지는 여러개 만들어놨지만 접속해보면 다 똑같은 0번째 상품명만 보여주고 있습니다.
+- 왜냐면 0번째 상품명 보여달라고 여러분이 코드짰으니까요.
+- 이게 싫으면 이렇게 코드짤 수 있지않을까요. 
+
+```jsx
+// (Detail.js)
+<h4 className="pt-5">{props.shoes[현재url에입력된숫자].title}</h4>
+<p>{props.shoes[0].content}</p>
+<p>{props.shoes[0].price}원</p>
+<button className="btn btn-danger">주문하기</button>
+```
+- 0이라고 하드코딩해놨던 자리에
+- 현재url파라미터에 입력된숫자를 넣는겁니다.
+- 그럼 /detail/1로 접속하면 1번째 상품명을 보여줄 수 있을듯요. 
+
+```jsx
+import { useParams } from 'react-router-dom'
+
+function Detail(){
+  let {id} = useParams();
+  console.log(id)
+  
+  return (
+    <div className="container>
+      <div className="row">
+        <div className="col-md-6">
+          <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+        </div>
+        <div className="col-md-6 mt-4">
+        <h4 className="pt-5">{props.shoes[id].title}</h4>
+        <p>{props.shoes[0].content}</p>
+        <p>{props.shoes[0].price}원</p>
+        <button className="btn btn-danger">주문하기</button>
+      </div>
+    </div>
+  </div>
+  )
+}
+```
+- `useParams() 라는 함수`를 상단에서 import 해오면 쓸 수 있는데
+- 이거 쓰면 현재 /:url파라미터 자리에 유저가 입력한 값을 가져올 수 있습니다.
+- 변수에 저장해서 쓰든가 하면 됩니다.
+
+그래서 위처럼 사용하면
+- 누가 /detail/1로 접속하면 id라는 변수에 1이 들어옵니다.
+- 누가 /detail/2로 접속하면 id라는 변수에 2가 들어옵니다.
+- 그래서 props.shoes[id].title 이러면 아까 의도했던 기능이 완성되겠군요. 
+- 페이지마다 각각 다른 상품명이 보입니다.
+
+
+#### 응용문제 :
+Q. 자료의 순서가 변경되면 상세페이지도 고장나는 문제는 어떻게 해결할까요?
+
+상품 순서를 가나다순으로 변경하는 버튼을 만들어버렸다고 가정합시다.
+그거 누르면 shoes라는 state 안의 상품이 가나다순으로 정렬됩니다. 
+그럼 Grey Yordan이 0번 상품이 되겠군요. 
+
+그럼 평소엔 /detail/0으로 접속하면 0번째 상품을 보여주니까 White and Black 이 뜰텐데
+버튼 누른 후엔 /detail/0으로 접속하면 0번째 상품을 보여주니까 Grey Yordan 이 뜨겠군요.
+
+이처럼 상세페이지가 불규칙해지는 문제는 어떻게 해결하면 좋을까요? 
+
+```jsx
+// (data.js)
+[
+  {
+    id : 0,
+    title : "White and Black",
+    content : "Born in France",
+    price : 120000
+  },
+  {둘째상품},
+  {셋째상품}
+] 
+```
+- 현재 shoes라는 상품데이터들 안엔 id : 0 이런 영구번호가 있습니다.
+- 그럼 현재 /:id 자리에 입력한 값과 영구번호가 같은 상품을 찾아서 데이터바인딩해주면 되는게 아닐까요.
+- 자바스크립트엔 .find() 라는 문법이 있는데 이거 쓰면 array 자료안에서 원하는 항목만 찾아올 수 있습니다. 
+- array자료.find(()=>{ return 조건식 }) 
+
+이렇게 쓰면 조건식에 맞는 자료를 찾아서 이 자리에 남겨줍니다.
+
+```jsx
+// (Detail.js)
+
+function Detail(props){
+
+  let { id } = useParams();
+  let 찾은상품 = props.shoes.find(function(x){
+    return x.id == id
+  });
+
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-md-6">
+          <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+        </div>
+        <div className="col-md-6 mt-4">
+          <h4 className="pt-5">{찾은상품.title}</h4>
+          <p>{찾은상품.content}</p>
+          <p>{찾은상품.price}원</p>
+          <button className="btn btn-danger">주문하기</button> 
+        </div>
+      </div>
+  </div>  
+  )
+};
+
+export default Detail 
+```
+1. find()는 array 뒤에 붙일 수 있으며 return 조건식 적으면 됩니다. 그럼 조건식에 맞는 자료 남겨줌 
+2. find() 콜백함수에 파라미터 넣으면 array자료에 있던 자료를 뜻합니다. 전 x라고 작명해봤음 
+3. x.id == id 라는 조건식을 써봤습니다. 그럼 array자료.id == url에입력한번호 일 경우 결과를 변수에 담아줍니다. 그럼 {상품1개} 이런거 남을듯요 출력해봅시다. 
+4. 마지막으로 찾은 {상품1개}를 html에 데이터바인딩해놨습니다. 
+
+
+## styled-components 쓰면 CSS 파일 없어도 되는데
+
+컴포넌트가 많은 경우 스타일링을 하다보면 불편함이 생기는데
+
+1. class 만들어놓은걸 까먹고 중복해서 또 만들거나
+2. 갑자기 다른 이상한 컴포넌트에 원하지않는 스타일이 적용되거나
+3. CSS 파일이 너무 길어져서 수정이 어렵거나
+
+이런 경우가 있습니다.
+- 그래서 스타일을 바로 입혀서 컴포넌트를 만들어버릴 수도 있는데
+- styled-components 라는 인기 라이브러리를 설치하여 이용하시면 됩니다.
+
+
+### 일단 설치부터 해봅시다
+
+터미널 열어서 `npm install styled-components` 해주면 됩니다.
+
+```jsx
+import styled from 'styled-components'
+```
+- 그리고 사용하고 싶은 컴포넌트 맨위에 이런걸 import 해와야합니다.
+- Detail.js 파일 위에 ▲ 위처럼 입력해서 import 해오십시오. 그럼 셋팅 끝 
+
+
+### styled-components 기본적인 사용법 
+
+- 이 라이브러리를 이용하면 컴포넌트를 만들 때 스타일을 미리 주입해서 만들 수 있습니다.
+- 제가 한번 예시로 padding : 20px인 div박스를 styled-components를 이용해 만들어보겠습니다.
+
+```jsx
+import styled from 'styled-components';
+
+let Box = styled.div`
+  padding : 20px;
+  color : grey
+`;
+let YellowBtn = styled.button`
+  background : yellow;
+  color : black;
+  padding : 10px;
+`;
+
+function Detail(){
+  return (
+    <div>
+      <Box>
+        <YellowBtn>버튼임</YellowBtn>
+      </Box>
+    </div>
+  )
+}
+```
+1. `<div>`를 하나 만들고 싶으면 저렇게 `styled.div` 라는걸 사용하면 됩니다. `<p>` 만들려면 `styled.p` 이런 식임 
+2. 오른쪽에 `` backtick 기호를 이용해서 CSS 스타일을 넣을 수 있습니다. 
+3. 그럼 그 자리에 컴포넌트를 남겨주는데 변수에 저장해서 쓰면 됩니다. 
+
+- 장점1. CSS 파일 오픈할 필요없이 JS 파일에서 바로 스타일넣을 수 있습니다.
+- 장점2. 여기 적은 스타일이 다른 JS 파일로 오염되지 않습니다. 원래 그냥 CSS파일은 오염됩니다.
+- 장점3. 페이지 로딩시간 단축됩니다.
+- 왜냐면 저기 적은 스타일은 html 페이지의 `<style>태그`에 넣어줘서 그렇습니다. 
+
+
+### 실은 일반 CSS 파일도 오염방지 가능
+
+- 여러분이 App.css 파일을 만들어서 App.js에서 import해서 쓴다고 해도 거기 적은 클래스명들은 Detail.js까지 사용가능합니다. (오염됨)
+- 프로젝트 사이즈가 작을 땐 편리하겠지만 사이즈가 커지면 관리하기 힘들어집니다. 
+- 그럴 땐 styled-components 써도 되지만 그냥 CSS파일에서도 다른 JS 파일에 간섭하지 않는 '모듈화' 기능을 제공하는데
+- `컴포넌트명.module.css` 이렇게 CSS 파일을 작명하면 됩니다.
+- 그리고 컴포넌트명.js 파일에서 import 해서 쓰면 그 스타일들은 컴포넌트명.js 파일에만 적용됩니다.
+
+
+### 추가 문법 : props로 재활용가능
+
+- 여러가지 비슷한 UI가 필요한 경우 어쩌죠?
+- 예를 들어 지금 노란 버튼말고 오렌지색 버튼이 필요해지면?
+- 물론 예전 강의를 잘 되살려보면 props 이용하면 기존 컴포넌트를 살짝씩 다르게 이용할 수 있다고 했습니다.
+- 그래서 여기도 props 문법 지원합니다. 
+
+```jsx
+import styled from 'styled-components';
+
+let YellowBtn = styled.button`
+  background : ${ props => props.bg };
+  color : black;
+  padding : 10px;
+`;
+
+function Detail(){
+  return (
+    <div>
+        <YellowBtn bg="orange">오렌지색 버튼임</YellowBtn>
+        <YellowBtn bg="blue">파란색 버튼임</YellowBtn>
+    </div>
+  )
+}
+```
+- `${ props => props.bg }` 이게 styled-components 에서의 props 뚫는 문법입니다.
+- bg부분에 자유롭게 작명하면되고
+- 이제 컴포넌트 쓸 때 bg라는 props를 입력가능합니다.
+
+```jsx
+let YellowBtn = styled.button` 
+  background : ${ props => props.bg };
+  color : ${ props => props.bg == 'blue' ? 'white' : 'black' };
+  padding : 10px; 
+`; 
+```
+- 자바스크립트 적는 공간이다보니까 이런 식의 스타일 프로그래밍도 가능합니다. 
+
+### 세상에 장점만 있는게 어딨습니까 
+
+`단점1. JS 파일이 매우 복잡해집니다.`
+- 그리고 이 컴포넌트가 styled 인지 아니면 일반 컴포넌트인지 구분도 어렵습니다.
+
+`단점2. JS 파일 간 중복 디자인이 많이 필요하면 어쩌죠?`
+- 다른 파일에서 스타일 넣은 것들 import 해와서 쓰면 됩니다.
+근데 그럼 CSS파일 쓰는거랑 차이가 없을 수도요
+
+`단점3. CSS 담당하는 디자이너가 있다면 협업시 불편할텐데` 
+- 그 사람이 styled-components 문법을 모른다면 
+- 그 사람이 CSS로 짠걸 styled-components 문법으로 다시 바꾸거나 그런 작업이 필요하겠군요.
+
+그래서 신기술같은거 도입시엔 언제나 미래를 생각해보아야합니다. 
