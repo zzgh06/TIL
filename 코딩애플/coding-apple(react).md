@@ -1748,3 +1748,347 @@ let YellowBtn = styled.button`
 - 그 사람이 CSS로 짠걸 styled-components 문법으로 다시 바꾸거나 그런 작업이 필요하겠군요.
 
 그래서 신기술같은거 도입시엔 언제나 미래를 생각해보아야합니다. 
+
+
+## Lifecycle과 useEffect 1
+
+### 컴포넌트의 인생 : Lifecycle
+
+- 컴포넌트는 Lifecycle이라는 개념이 있습니다.
+
+컴포넌트는
+1. 생성이 될 수도 있고 (전문용어로 mount)
+2. 재렌더링이 될 수도 있고 (전문용어로 update)
+3. 삭제가 될 수도 있습니다. (전문용어로 unmount)
+
+- 컴포넌트의 인생을 배우는 이유는 컴포넌트 인생 중간중간에 간섭할 수 있기 때문입니다.
+
+간섭이 뭐냐면 그냥 코드실행인데 
+- 컴포넌트가 장착이 될 때 특정 코드를 실행할 수도 있고 
+- 컴포넌트가 업데이트될 때 특정 코드를 실행할 수도 있다는 겁니다.
+
+
+### 인생에 간섭하는 방법 
+
+"Detail 컴포넌트 등장 전에 이것좀 해줘"
+"Detail 컴포넌트 사라지기 전에 이것좀 해줘"
+"Detail 컴포넌트 업데이트 되고나서 이것좀 해줘"
+이렇게 코드좀 실행해달라고 간섭할 수 있는데
+
+갈고리를 달아서 코드를 넣어주면 됩니다.
+- 그럼 진짜 페이지 장착시, 업데이트시, 제거시 코드실행가능 
+- 갈고리는 영어로 hook이라고 합니다. 
+- 그래서 저걸 Lifecycle hook 이라고 부릅니다. 
+
+
+### 요즘 React에서 Lifecycle hook 쓰는 법
+
+```jsx
+import {useState, useEffect} from 'react';
+
+function Detail(){
+
+  useEffect(()=>{
+    //여기적은 코드는 컴포넌트 로드 & 업데이트 마다 실행됨
+    console.log('안녕')
+  });
+  
+  return (생략)
+}
+```
+- 상단에서 useEffect import해오고 
+- 콜백함수 추가해서 안에 코드 적으면 이제 그 코드는 컴포넌트가 mount & update시 실행됩니다.
+- 그래서 이게 Lifecycle hook 입니다. 
+
+
+### 근데 useEffect 밖에 적어도 똑같은데요
+
+- 실은 useEffect 바깥에 적어도 똑같이 컴포넌트 mount & update시 실행됩니다. 
+- 컴포넌트가 mount & update시 function 안에 있는 코드도 다시 읽고 지나가서 그렇습니다. 
+
+그럼 대체 useEffect 왜 만들어놓은 것이죠 
+- 그래서 문법 배우는게 중요한게 아니라 이걸 배웠으면 어떤 상황에서 언제 사용할지도 함께 배워야합니다. 
+- 그래야 나중에 "여기서 useEffect 써도 되나요" 이런 초보질문 안함
+- useEffect 안에 적은 코드는 html 렌더링 이후에 동작합니다.
+- 그럼 이제 useEffect가 뭔가 유용할 것 같지 않습니까 
+
+예를 들어서 굉장히 시간이 오래걸리는 쓸데없는 코드가 필요하다고 가정해봅시다.
+
+```jsx
+function Detail(){
+
+  (반복문 10억번 돌리는 코드)
+  return (생략)
+}
+```
+▲ 여기에 대충 적으면 반복문 돌리고 나서 하단의 html 보여줌
+
+```jsx
+function Detail(){
+
+  useEffect(()=>{
+    (반복문 10억번 돌리는 코드)
+  });
+  
+  return (생략)
+}
+```
+▲ useEffect 안에 적으면 html 보여주고 나서 반복문 돌림 
+
+- 이런 식으로 코드의 실행 시점을 조절할 수 있기 때문에
+- 조금이라도 html 렌더링이 빠른 사이트를 원하면 쓸데없는 것들은 useEffect 안에 넣어보길 바랍니다. 
+
+- 그래서 이걸 알면 리액트만든 놈이 이 함수를 useEffect라고 작명한 이유도 알 수 있는데 
+- 함수안에 이것저것 코드짤 때, 함수의 핵심기능 외에 쓸데없는 기능들을 프로그래밍 용어로 side effect라고 부릅니다.
+
+- 그래서 useEffect도 거기서 따온건데
+- 컴포넌트의 핵심 기능은 html 렌더링이라 그거 외의 쓸데없는 기능들은 useEffect 안에 적으라는 소리입니다. 
+- 오래걸리는 반복연산, 서버에서 데이터가져오는 작업, 타이머다는거 이런건 useEffect 안에 많이 적습니다.
+
+
+## Lifecycle과 useEffect 2
+
+### 저번시간 숙제는 : Detail 페이지 후 2초 후에 박스가 사라지게 만들기
+
+동적인 UI 같은거라 그런거 만들 땐 
+1. UI 상태를 저장할 state 만들고
+2. state에 따라서 UI가 어떻게 보일지 작성하라고 했으니 그거부터 해봅시다. 
+
+```jsx
+function Detail(){
+
+  let [alert, setAlert] = useState(true)
+
+  return (
+  {
+    alert == true
+    ? <div className="alert alert-warning">
+        2초이내 구매시 할인
+      </div>
+    : null
+  }
+  )
+}
+```
+
+그랬습니다.
+- 이제 alert라는 state를 true로 바꾸면 노란박스가 보이고 false로 바꾸면 안보임 
+- 그럼 이제 Detail 페이지 접속 후 2초 후에 저걸 안보이게 처리하려면 
+
+useEffect와 setTimeout 이런거 쓰면 될듯요 
+
+```jsx
+function Detail(){
+
+  let [alert, setAlert] = useState(true)
+  useEffect(()=>{
+    setTimeout(()=>{ setAlert(false) }, 2000)
+  }, [])
+
+  return (
+  {
+    alert == true
+    ? <div className="alert alert-warning">
+        2초이내 구매시 할인
+      </div>
+    : null
+  }
+  )
+} 
+```
+이랬더니 2초 후에 잘 동작하는군요. 
+근데 [ ] 이거가 갑자기 어디서 나온건지 알아봅시다.
+
+
+### useEffect에 넣을 수 있는 실행조건 
+
+```jsx
+useEffect(()=>{ 실행할코드 }, [count])
+```
+
+- useEffect()의 둘째 파라미터로 [ ] 를 넣을 수 있는데 거기에 변수나 state같은 것들을 넣을 수 있습니다.
+- 그렇게 하면 [ ]에 있는 변수나 state 가 변할 때만 useEffect 안의 코드를 실행해줍니다.
+- 그래서 위의 코드는 count라는 변수가 변할 때만 useEffect 안의 코드가 실행되겠군요. 
+- (참고) [ ] 안에 state 여러개 넣을 수 있음
+
+```jsx
+useEffect(()=>{ 실행할코드 }, [])
+```
+- 아무것도 안넣으면 컴포넌트 mount시 (로드시) 1회 실행하고 영영 실행해주지 않습니다.
+- 그래서 저번시간 숙제에도 [ ] 이걸 넣어봤습니다. 
+
+
+### clean up function
+
+- useEffect 동작하기 전에 특정코드를 실행하고 싶으면
+- return ()=>{} 안에 넣을 수 있습니다. 
+
+```jsx
+useEffect(()=>{ 
+  그 다음 실행됨 
+  return ()=>{
+    여기있는게 먼저실행됨
+  }
+}, [count])
+```
+
+- 그럼 useEffect 안에 있는 코드를 실행하기 전에
+- return ()=>{ } 안에 있는 코드를 실행해줍니다. 
+- 참고로 저걸 clean up function 이라고 부릅니다. 
+
+`왜 저딴 쓸데없는 기능이 있냐고요?`
+
+여러분 복잡하고 어려운 숙제할 때 책상을 싹 치우고 하면 잘되는 것 처럼 
+useEffect 안에 있는 코드를 실행할 때도 싹 치우고 깔끔한 마음으로 실행하는게 좋을 때가 있습니다. 
+
+예를 들면 숙제로 했던 setTimeout 타이머인데
+setTimeout() 쓸 때마다 브라우저 안에 타이머가 하나 생깁니다.
+근데 useEffect 안에 썼기 때문에 컴포넌트가 mount 될 때 마다 실행됩니다. 
+
+그럼 잘못 코드를 짜면 타이머가 100개 1000개 생길 수도 있겠군요.
+
+나중에 그런 버그를 방지하고 싶으면useEffect에서 타이머 만들기 전에 기존 타이머를 싹 제거하라고 코드를 짜면 되는데
+그런거 짤 때 return ()=>{} 안에 짜면 됩니다. 
+
+```jsx
+useEffect(()=>{ 
+  let a = setTimeout(()=>{ setAlert(false) }, 2000)
+  return ()=>{
+    clearTimeout(a)
+  }
+}, [])
+```
+- 타이머 제거하고 싶으면 clearTimeout(타이머)
+- 이렇게 코드짜면 됩니다. 
+- 그래서 숙제를 이렇게 하면 좀 더 안전한 코드가 되겠군요.
+- 타이머 장착하기 전에 기존 타이머가 있으면 제거를 해줄듯요 
+
+- (참고1) clean up function에는 타이머제거, socket 연결요청제거, ajax요청 중단 이런 코드를 많이 작성합니다.
+- (참고2) 컴포넌트 unmount 시에도 clean up function 안에 있던게 1회 실행됩니다.
+
+
+### 정리
+
+```jsx
+useEffect(()=>{ 실행할코드 })
+```
+1. 이러면 재렌더링마다 코드를 실행가능합니다.
+
+```jsx
+useEffect(()=>{ 실행할코드 }, [])
+```
+2. 이러면 컴포넌트 mount시 (로드시) 1회만 실행가능합니다.
+
+```jsx
+useEffect(()=>{ 
+  return ()=>{
+    실행할코드
+  }
+})
+```
+3. 이러면 useEffect 안의 코드 실행 전에 항상 실행됩니다. 
+
+```jsx
+useEffect(()=>{ 
+  return ()=>{
+    실행할코드
+  }
+}, [])
+```
+4. 이러면 컴포넌트 unmount시 1회 실행됩니다.
+
+```jsx
+useEffect(()=>{ 
+  실행할코드
+}, [state1])
+```
+5. 이러면 state1이 변경될 때만 실행됩니다. 
+
+
+## 리액트에서 서버와 통신하려면 ajax 1
+
+### AJAX란? 
+
+- 서버에 GET, POST 요청을 할 때 새로고침 없이 데이터를 주고받을 수 있게 도와주는 간단한 브라우저 기능을 AJAX라고 합니다. 
+- 그거 쓰면 새로고침 없이도 쇼핑몰 상품을 더 가져올 수도 있고 새로고침 없이도 댓글을 서버로 전송할 수도 있고 그런 기능을 만들 수 있는 것임 
+
+AJAX로 GET/POST요청하려면 방법 3개 중 택1 하면 됩니다.
+1. XMLHttpRequest라는 옛날 문법 쓰기
+2. fetch() 라는 최신 문법 쓰기
+3. axios 같은 외부 라이브러리 쓰기 
+
+### AJAX 요청하는 법
+
+- 버튼누르면 제가 만든 서버로 ajax 요청을 해봅시다.
+- `https://codingapple1.github.io/shop/data2.json` 이 URL로 GET요청을 하면 상품 3개를 가져와줍니다.
+
+여기로 요청해봅시다. 
+
+```jsx
+import axios from 'axios'
+
+function App(){
+  return (
+    <button onClick={()=>{
+      axios.get('https://codingapple1.github.io/shop/data2.json').then((결과)=>{
+        console.log(결과.data)
+      })
+      .catch(()=>{
+        console.log('실패함')
+      })
+    }}>버튼</button>
+  )
+}
+```
+1. axios를 쓰려면 상단에서 import해오고
+2. axios.get(URL) 이러면 그 URL로 GET요청이 됩니다.
+3. 데이터 가져온 결과는 결과.data 안에 들어있습니다. 
+그래서 위의 버튼 누르면 서버에서 가져온 데이터가 콘솔창에 출력됩니다. 
+4. 인터넷이 안되거나 URL이 이상하면 실패하는데 실패했을 때 실행할 코드는 .catch() 안에 적으면 됩니다.
+
+
+## 리액트에서 서버와 통신하려면 ajax 2 : post, fetch
+
+### POST요청 하는 법
+
+```jsx
+axios.post('URL', {name : 'kim'})
+```
+- 이거 실행하면 서버로 { name : 'kim' } 자료가 전송됩니다. 
+- 완료시 특정 코드를 실행하고 싶으면 이것도 역시 .then() 뒤에 붙이면 됩니다.
+
+
+### 동시에 AJAX 요청 여러개 날리려면
+
+```jsx
+Promise.all( [axios.get('URL1'), axios.get('URL2')] )
+```
+- 이러면 URL1, URL2로 GET요청을 동시에 해줍니다.
+- 둘 다 완료시 특정 코드를 실행하고 싶으면 .then() 뒤에 붙이면 됩니다.
+
+
+### 원래 서버와 문자자료만 주고받을 수 있음 
+
+object/array 이런거 못주고받습니다.
+근데 방금만해도 array 자료 받아온 것 같은데 그건 어떻게 한거냐면 
+object/array 자료에 따옴표를 쳐놓으면 됩니다.
+
+"{"name" : "kim"}"
+이걸 JSON 이라고 합니다.
+JSON은 문자 취급을 받기 때문에 서버와 자유롭게 주고받을 수 있습니다.
+
+그래서 실제로 결과.data 출력해보면 따옴표쳐진 JSON이 나와야하는데
+axios 라이브러리는 JSON -> object/array 변환작업을 자동으로 해줘서 
+출력해보면 object/array가 나옵니다. 
+
+
+### 자주묻는 질문 : ajax로 가져온 데이터를 html에 꽂을 때 왜 에러남? 
+
+1. ajax요청으로 데이터를 가져와서 
+2. state에 저장하라고 코드를 짜놨고
+3. state를 html에 넣어서 보여달라고 `<div> {state.어쩌구} </div>` 
+
+이렇게 코드 짰습니다.
+- 잘 될 것 같은데 이 상황에서 state가 텅 비어있다고 에러가 나는 경우가 많습니다.
+- 이유는 ajax 요청보다 html 렌더링이 더 빨라서 그럴 수 있습니다. 
+- state안에 뭐가 들어있으면 보여달라고 if문 같은걸 추가하거나 그러면 됩니다.
