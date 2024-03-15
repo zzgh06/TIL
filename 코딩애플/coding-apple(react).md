@@ -2092,3 +2092,331 @@ axios 라이브러리는 JSON -> object/array 변환작업을 자동으로 해�
 - 잘 될 것 같은데 이 상황에서 state가 텅 비어있다고 에러가 나는 경우가 많습니다.
 - 이유는 ajax 요청보다 html 렌더링이 더 빨라서 그럴 수 있습니다. 
 - state안에 뭐가 들어있으면 보여달라고 if문 같은걸 추가하거나 그러면 됩니다.
+
+
+## 리액트에서 탭 UI 만들기
+
+오늘은 쇼핑몰에서 흔히 볼 수 있는 탭 UI를 만들어봅시다. 
+버튼 3개와 박스 3개를 미리 만들어놓고 버튼 누를 때 마다 그에 맞는 박스 보여주는게 탭 UI입니다. 
+동적인 UI 만드는 법 다 알려드렸는데 그거 가지고 혼자 코드짜보는게 실력향상에 많은 도움이 될듯 합니다. 
+
+1. html css로 디자인 미리 완성해놓고
+2. UI의 현재 상태를 저장할 state 하나 만들고
+3. state에 따라서 UI가 어떻게 보일지 작성하면 된다고 했습니다. 
+
+
+### 1. html css로 탭 디자인 미리 완성하기
+
+```jsx
+<Nav variant="tabs"  defaultActiveKey="link0">
+    <Nav.Item>
+      <Nav.Link eventKey="link0">버튼0</Nav.Link>
+    </Nav.Item>
+    <Nav.Item>
+      <Nav.Link eventKey="link1">버튼1</Nav.Link>
+    </Nav.Item>
+    <Nav.Item>
+      <Nav.Link eventKey="link2">버튼2</Nav.Link>
+    </Nav.Item>
+</Nav>
+<div>내용0</div>
+<div>내용1</div>
+<div>내용2</div> 
+```
+- 문서 보니까 eventKey 속성은 버튼마다 맘대로 작명하면 된다고 합니다. 
+- defaultActiveKey 여기는 페이지 로드시 어떤 버튼에 눌린효과를 줄지 결정하는 부분입니다. 
+
+
+### 2. UI의 현재 상태를 저장할 state 하나 만들기
+
+```jsx
+function Detail(){
+  let [탭, 탭변경] = useState(0)
+  (생략)
+}
+```
+- 상단에 state 하나 만들었습니다.
+- 탭 UI의 상태는 0번 내용이 보이거나 / 1번 내용이 보이거나 / 2번 내용이 보이거나 
+- 셋 중 하나기 때문에 저는 0, 1, 2 숫자로 상태를 표현해보겠습니다.
+
+
+### 3. state에 따라서 UI가 어떻게 보일지 작성
+
+state가 0이면 0번 내용 보여주세요~ 1이면 1번 내용 보여주세요~
+이렇게 코드짜면 됩니다. 삼항연산자 이런거 써도 되는데 심심하니까 컴포넌트로 만들어봅시다.
+
+```jsx
+function Detail(){
+  let [탭, 탭변경] = useState(0)
+  
+  return (
+    <TabContent 탭={탭}/>
+  )
+}
+
+function TabContent(props){
+  if (props.탭 === 0){
+    return <div>내용0</div>
+  }
+  if (props.탭 === 1){
+    return <div>내용1</div>
+  }
+  if (props.탭 === 2){
+    return <div>내용2</div>
+  }
+}
+```
+- 완성이군요 이제 탭이라는 state를 0, 1, 2로 변경할 때마다 원하는 내용들이 잘 보입니다.
+
+그럼 0번 버튼 누르면 0번 내용 1번 버튼 누르면 1번 내용 2번 버튼 누르면 2번 내용을 보여주고 싶으면 코드 어떻게 짜야합니까?
+
+```jsx
+<Nav variant="tabs"  defaultActiveKey="link0">
+    <Nav.Item>
+      <Nav.Link onClick={()=>{ 탭변경(0) }} eventKey="link0">버튼0</Nav.Link>
+    </Nav.Item>
+    <Nav.Item>
+      <Nav.Link onClick={()=>{ 탭변경(1) }} eventKey="link1">버튼1</Nav.Link>
+    </Nav.Item>
+    <Nav.Item>
+      <Nav.Link onClick={()=>{ 탭변경(2) }} eventKey="link2">버튼2</Nav.Link>
+    </Nav.Item>
+</Nav>
+```
+이러면 버튼 누를 때 마다 원하는 탭 내용을 보여줄 수 있습니다. 
+
+
+### 센스좋으면 if 필요 없을 수도 있습니다
+
+```jsx
+function TabContent(props){
+  return [ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][props.탭]
+}
+```
+이래도 될듯요, 왜냐면 props.탭이 0이면 저 긴 array자료에서 0번 자료를 꺼내줄테니까요. 
+
+
+### 참고사항 : props 쉽게 쓰고 싶으면
+
+```jsx
+function TabContent({탭}){
+  return [ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][탭]
+}
+```
+- 자식컴포넌트에서 props라고 파라미터를 하나만 작명하는게 아니라
+- {state1이름, state2이름 ... }
+- 이렇게 작성하면 props.state1이름 이렇게 쓸 필요가 없어집니다. 
+
+
+### 멋있게 컴포넌트 전환 애니메이션 주는 법 (transition)
+
+- 컴포넌트 등장, 퇴장 애니메이션같은게 필요하면 
+- 라이브러리설치해서 써도 되겠지만 CSS 잘하면 간단한건 알아서 개발가능합니다.
+- 옛날에 배웠던 useEffect 이런거 활용하면 되는데 
+- CSS 애니메이션 처음인 분들을 위해 오늘도 정확한 개발스텝을 알려드립니다. 
+
+`애니메이션 만들고 싶으면` 
+1. 애니메이션 동작 전 스타일을 담을 className 만들기 
+2. 애니메이션 동작 후 스타일을 담을 className 만들기 
+3. transition 속성도 추가
+4. 원할 때 2번 탈부착
+
+이게 끝입니다. CSS 잘쓰면 모든 애니메이션 알아서 만들 수 있습니다. 
+저번에 만들었던 탭의 내용이 서서히 등장하는 fade in 애니메이션을 만들어봅시다.
+
+
+### 1. 애니메이션 동작 전 2. 애니메이션 동작 후 className 만들기 
+
+```css
+.start {
+  opacity : 0
+}
+.end {
+  opacity : 1;
+}
+```
+CSS 파일 열어서 이런거 추가하면 됩니다. 
+애니메이션 동작 전엔 투명도가 0, 동작 후엔 투명도가 1이 되면 좋을듯요 
+
+
+### 3. transition 추가
+
+```css
+.start {
+  opacity : 0
+}
+.end {
+  opacity : 1;
+  transition : opacity 0.5s;
+}
+```
+- transition은 "해당 속성이 변할 때 서서히 변경해주세요~" 라는 뜻입니다. 
+- 그럼 이제 원하는 <div> 요소에 start 넣어두고 end 를 탈부착할 때 마다 fade in이 됩니다. 
+
+```jsx
+function TabContent({탭}){
+
+  return (
+    <div className="start end">
+      { [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][탭] }
+    </div>
+  )
+}
+```
+▲ end라는 className 떼었다가 붙여보면 진짜로 애니메이션이 동작합니다. 
+안보이면 저장을 안했거나 CSS파일이 import 안되어있는 것임 
+
+### 4. 원할 때 end 부착
+
+- `버튼누르면 end 부착하라고 코드`짜려면 코드를 3번이나 짜야할듯요 버튼이 3개니까요.
+- 이제 "버튼을 누를 때 마다 end를 저기 부착해주세요" 라고 코드짜면 애니메이션 동작합니다.
+- 그게 싫으면 `useEffect` 이런거 활용해봐도 됩니다.
+- useEffect 쓰면 `특정 state 아니면 props가 변할 때` 마다 코드실행이 가능하다고 했습니다. 
+- 그래서 `"탭이라는 state가 변할 때 end를 저기 부착해주세요"` 라고 코드짜도 같을듯 
+
+```jsx
+function TabContent({탭}){
+
+  let [fade, setFade] = useState('')
+
+  useEffect(()=>{
+    setFade('end')
+  }, [탭])
+
+  return (
+    <div className={'start ' + fade}>
+      { [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][탭] }
+    </div>
+  )
+}
+```
+
+탭이라는게 변할 때 end를 저기 부착하고 싶으면 동적인 UI 만드는 법 떠올리면 됩니다. 
+- fade라는 state 하나 만들고 
+- state에 따라서 className이 어떻게 보일지 작성하고
+- 원할 때 fade를 변경했습니다.
+
+이제 탭이라는 state가 변할 때 마다 fade라는 state가 'end'로 변하고 
+그럼 lassName="start end" 이렇게 변합니다.  
+이제 버튼 막 누르면 end가 부착되니까 애니메이션이 잘 보이겠군요 
+
+Q. 안보이는데요
+내 의도와 다르게 동작하는건 개발자도구에서 검사해보면 됩니다. 
+end라는 클래스명을 부착하는게 맞긴 맞는데 
+실은 떼었다가 붙여야 애니메이션이 보입니다. end를 떼었다가 붙여보셈 
+
+```jsx
+function TabContent({탭}){
+
+  let [fade, setFade] = useState('')
+
+  useEffect(()=>{
+    setTImeout(()=>{ setFade('end') }, 100)
+  return ()=>{
+    setFade('')
+  }
+  }, [탭])
+
+  return (
+    <div className={'start ' + fade}>
+      { [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][탭] }
+    </div>
+  )
+}
+```
+▲ 떼었다가 부착하라고 코드짜봤습니다.
+clean up function 안에 fade라는 state를 공백으로 바꾸라고 했으니
+useEffect 실행 전엔 'end'가 ' ' 이걸로 바뀝니다.
+
+Q. setTimeout 왜 씁니까
+- 리액트 18버전 이상부터는 automatic batch 라는 기능이 생겼습니다.
+- state 변경함수들이 연달아서 여러개 처리되어야한다면 
+- state 변경함수를 다 처리하고 마지막에 한 번만 재렌더링됩니다. 
+- 그래서 'end' 로 변경하는거랑 ' ' 이걸로 변경하는거랑 약간 시간차를 뒀습니다.
+- 찾아보면 setTimeout 말고 flushSync() 이런거 써도 될 것 같기도 합니다. automatic batching을 막아줍니다.
+
+
+## props 싫으면 Context API 써도 됩니다
+
+`App에 있던 state를 TabContent 컴포넌트에서 사용하고 싶어지면 어떻게 코드짜야하죠?`
+- App -> Detail -> TabContent 이렇게 props를 2번 전송해주면 됩니다.
+- 이게 귀찮으면 Context API 문법을 쓰거나 Redux 같은 외부 라이브러리 쓰면 되는데 오늘은 전자를 알아봅시다.
+
+
+### Context API 문법으로 props 없이 state 공유하기
+
+재고라는 state를 App 컴포넌트에 만들어봅시다.
+이걸 TabContent라는 자식컴포넌트에서 쓰고싶다고 가정해봅시다.
+Context API 문법을 쓰면 props 전송없이도 TabContent 컴포넌트가 쓸 수 있는데 이거 쓰려면 일단 셋팅부터 해야합니다.
+
+```jsx
+// (App.js)
+export let Context1 = React.createContext();
+
+function App(){
+  let [재고, 재고변경] = useState([10,11,12]);
+
+  (생략)
+}
+```
+▲ 1. 일단 createContext() 함수를 가져와서 context를 하나 만들어줍니다.
+context를 쉽게 비유해서 설명하자면 state 보관함입니다.
+
+```jsx
+export let Context1 = React.createContext();
+
+function App(){
+  let [재고, 재고변경] = useState([10,11,12]);
+
+  return (
+    <Context1.Provider value={ {재고, shoes} }>
+      <Detail shoes={shoes}/>
+    </Context1.Provider>
+    
+  )
+}
+```
+▲ 2. 아까만든 Context1로 원하는 곳을 감싸고 공유를 원하는 state를 value 안에 다 적으면 됩니다.
+그럼 이제 Context1로 감싼 모든 컴포넌트와 그 자식컴포넌트는 state를 props 전송없이 직접 사용가능합니다.
+
+
+### Context 안에 있던 state 사용하려면
+
+1. 만들어둔 Context를 import 해옵니다.
+2. useContext() 안에 넣습니다. 
+
+그럼 이제 그 자리에 공유했던 state가 전부 남는데 그거 쓰면 됩니다. 
+
+```jsx
+// (Detail.js)
+
+import {useState, useEffect, useContext} from 'react';
+import {Context1} from './../App.js';
+
+function Detail(){
+  let {재고} = useContext(Context1)
+
+  return (
+    <div>{재고}</div>
+  )
+}
+```
+▲ 예를 들어서 Detail 컴포넌트에서 Context에 있던 state를 꺼내 쓰려면
+1. Context1을 import 하고 
+2. useContext() 안에 담으면 됩니다. Context 해체해주는 함수임
+
+그럼 그 자리에 공유했던 모든 state가 남습니다.
+변수에 담아서 가져다쓰거나 하면 됩니다. 
+
+심지어 Detail 안에 있는 모든 자식컴포넌트도 useContext() 쓰면 자유롭게 재고 state를 사용가능합니다.
+
+TabContent 안에서 실험해봅시다.
+
+
+### Context API 단점
+
+실은 잘 안쓰는 이유는 
+1. state 변경시 쓸데없는 컴포넌트까지 전부 재렌더링이 되고 
+2. useContext() 를 쓰고 있는 컴포넌트는 나중에 다른 파일에서 재사용할 때 Context를 import 하는게 귀찮아질 수 있습니다.
+
+그래서 이것 보다는 redux 같은 외부라이브러리를 많이들 사용합니다.
