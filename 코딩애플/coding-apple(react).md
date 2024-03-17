@@ -2420,3 +2420,6 @@ TabContent 안에서 실험해봅시다.
 2. useContext() 를 쓰고 있는 컴포넌트는 나중에 다른 파일에서 재사용할 때 Context를 import 하는게 귀찮아질 수 있습니다.
 
 그래서 이것 보다는 redux 같은 외부라이브러리를 많이들 사용합니다.
+
+
+## 장바구니 페이지 만들기 & Redux 1 : Redux Toolkit 설치
