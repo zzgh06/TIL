@@ -2423,3 +2423,307 @@ TabContent 안에서 실험해봅시다.
 
 
 ## 장바구니 페이지 만들기 & Redux 1 : Redux Toolkit 설치
+
+- redux toolkit 설치시 `npm install @reduxjs/toolkit@1.8.1 react-redux` 입력합시다.
+
+### 장바구니 페이지만들기
+
+- 페이지하나 필요하면 어떻게 해야합니까.
+- 라우터 쓰면 되는 것 아니겠습니까 그래서 `App.js의 <Routes>` 쓰던 곳을 찾아가봅시다.
+
+```jsx
+<Route path="/cart" element={ <Cart/> } /> 
+```
+- 그리고 <Route>를 하나 추가했습니다. 누가 /cart 로 접속하면 <Cart> 컴포넌트를 보여주기로 했습니다.
+
+
+### Redux 쓰면 뭐가 좋냐면
+
+- Redux는 props 없이 state를 공유할 수 있게 도와주는 라이브러리입니다. 
+
+- 이거 설치하면 `js 파일 하나에 state들을 보관`할 수 있는데 그걸 모든 컴포넌트가 직접 꺼내쓸 수 있습니다. 
+- 그래서 귀찮은 props 전송이 필요없어집니다. 
+- 컴포넌트가 많아질 수록 좋겠군요. 
+- 그래서 사이트가 커지면 쓸 수 밖에 없어서 개발자 구인시에도 redux같은 라이브러리 숙련도를 대부분 요구합니다. 
+
+
+### Redux 설치는 
+
+`npm install @reduxjs/toolkit@1.8.1 react-redux `
+터미널에 입력하면됩니다. 
+
+참고로 redux toolkit이라는 라이브러리를 설치할 건데 redux의 개선버전이라고 보면 됩니다. 문법이 좀 더 쉬워짐 
+
+근데 설치하기 전에 package.json 파일을 열어서
+"react"
+"react-dom" 
+항목의 버전을 확인합시다.
+이거 두개가 18.1.x 이상이면 사용가능합니다. 
+
+그게 아니면 직접 두개를 18.1.0 이렇게 수정한 다음 파일저장하고
+터미널에서 npm install 누르면 됩니다. 그럼 이제 redux 설치가능
+
+
+### Redux 셋팅은 
+
+```jsx
+import { configureStore } from '@reduxjs/toolkit'
+
+export default configureStore({
+  reducer: { }
+}) 
+```
+1. 아무데나 store.js 파일을 만들어서 위 코드를 복붙해줍니다. 
+    - 저는 src 폴더 안에 만들었음 
+    - 이게 뭐냐면 아까 말했던 state들을 보관하는 파일입니다. 
+
+```jsx
+import { Provider } from "react-redux";
+import store from './store.js'
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
+); 
+```
+2. index.js 파일가서 Provider 라는 컴포넌트와 아까 작성한 파일을 import 해옵니다. 
+    - 그리고 밑에 <Provider store={import해온거}> 이걸로 <App/> 을 감싸면 됩니다. 
+    - 그럼 이제 <App>과 그 모든 자식컴포넌트들은 store.js에 있던 state를 맘대로 꺼내쓸 수 있습니다.
+
+
+## Redux 2 : store에 state 보관하고 쓰는 법 
+
+- 뭐 배우기 전에 항상 이걸 왜 쓰는지 생각해보는게 중요합니다. 그래야 나중에 "여기서 Redux 쓰는게 맞나요?" 이런 질문 안하고 알아서 코드 잘짬 
+- Redux 라이브러리 왜 쓴다고 했냐면
+- state를 Redux store에 보관해둘 수 있는데 모든 컴포넌트가 거기 있던 state를 직접 꺼내쓸 수 있어서
+- props 없어도 편리하게 state 공유가 가능하다고 했습니다. 
+- 오늘은 Redux store에 state 보관하는 법을 알아봅시다
+
+
+### Redux store에 state 보관하는 법 
+
+저번시간에 만들어둔 store.js 파일 열어서 이렇게 코드짜면 state 하나 만들 수 있습니다.
+step 1. createSlice( ) 로 state 만들고
+step 2. configureStore( ) 안에 등록하면 됩니다.
+
+```jsx
+import { configureStore, createSlice } from '@reduxjs/toolkit'
+
+let user = createSlice({
+  name : 'user',
+  initialState : 'kim'
+})
+
+export default configureStore({
+  reducer: {
+    user : user.reducer
+  }
+}) 
+```
+1. createSlice( ) 상단에서 import 해온 다음에 
+    - { name : 'state이름', initialState : 'state값' } 이거 넣으면 state 하나 생성가능합니다. 
+    - (createSlice( ) 는 useState( ) 와 용도가 비슷하다고 보면 됩니다)
+
+2. state 등록은 configureStore( ) 안에 하면 됩니다.
+    - { 작명 : createSlice만든거.reducer } 이러면 등록 끝입니다. 
+    - 여기 등록한 state는 모든 컴포넌트가 자유롭게 사용가능합니다. 
+
+
+### Redux store에 있던 state 가져다쓰는 법
+
+```jsx
+// (Cart.js)
+
+import { useSelector } from "react-redux"
+
+function Cart(){
+  let a = useSelector((state) => { return state } )
+  console.log(a)
+
+  return (생략)
+}
+```
+- 아무 컴포넌트에서 useSelector((state) => { return state } ) 쓰면 store에 있던 모든 state가 그 자리에 남습니다. 
+- 변수에 저장해서 진짜로 출력해보십시오. 
+- { user : 'kim' } 이런거 출력될듯
+
+
+### Redux 편하니까 맨날 쓰면 되겠네요
+
+- 간단한거 만들 때
+- 컴포넌트가 몇개 없을 때 
+- 이럴 땐 그냥 props 쓰는게 더 코드가 짧습니다. 
+
+
+## Redux 3 : store의 state 변경하는 법
+
+Redux의 state를 변경하고 싶으면 변경하는 법이 따로 있습니다. 
+1. store.js에 state변경해주는 함수부터 만들고
+2. export 해두고
+3. 필요할 때 import 해서 쓰면 되는데 dispatch() 로 감싸서 써야합니다.
+
+### store의 state 변경하는 법 
+
+큰 그림부터 그려드리면 
+    - state 수정해주는 함수부터 store.js에 만들어두고 그걸 컴포넌트에서 원할 때 실행하는 식으로 코드를 짭니다. 
+    - 버튼누르면 예전에 'kim' 이라고 저장해놓은걸 'john kim' 으로 수정하고 싶으면 어떻게 해야할지 알아봅시다. 
+    - 정확한 step으로 딱딱 알려드려야 혼자 코드짤 때 편하니까 step을 알려드리면 
+
+
+1. store.js 안에 state 수정해주는 함수부터 만듭니다. 
+```jsx
+let user = createSlice({
+  name : 'user',
+  initialState : 'kim',
+  reducers : {
+    changeName(state){
+      return 'john ' + state
+    }
+  }
+}) 
+```
+slice 안에 reducers : { } 열고 거기 안에 함수 만들면 됩니다.
+- 함수 작명 맘대로 합니다.
+- 파라미터 하나 작명하면 그건 기존 state가 됩니다.
+- return 우측에 새로운 state 입력하면 그걸로 기존 state를 갈아치워줍니다. 
+- 이제 changeName() 쓸 때 마다 'kim' -> 'john kim' 이렇게 변할듯 
+
+
+2. 다른 곳에서 쓰기좋게 export 해둡니다.
+```jsx
+export let { changeName } = user.actions 
+```
+- 이런 코드 store.js 밑에 추가하면 됩니다.
+- slice이름.actions 라고 적으면 state 변경함수가 전부 그 자리에 출력됩니다.
+- 그걸 변수에 저장했다가 export 하라는 뜻일 뿐임 
+
+
+3. 원할 때 import 해서 사용합니다. 근데 dispatch() 로 감싸서 써야함 
+
+예를 들어서 Cart.js 에서 버튼같은거 하나 만들고
+그 버튼 누르면 state를 'kim' -> 'john kim' 이렇게 변경하고 싶으면
+
+```jsx
+// (Cart.js)
+
+import { useDispatch, useSelector } from "react-redux"
+import { changeName } from "./../store.js"
+
+(생략) 
+
+<button onClick={()=>{
+  dispatch(changeName())
+}}>버튼임</button> 
+```
+이렇게 코드짜면 됩니다. 
+- store.js에서 원하는 state변경함수 가져오면 되고 
+- useDispatch 라는 것도 라이브러리에서 가져옵니다.
+- 그리고 dispatch( state변경함수() ) 이렇게 감싸서 실행하면 state 진짜로 변경됩니다.
+
+
+### 그지같고 복잡한데요
+
+store안에 있는 state를 수정하고 싶으면 
+- state 수정해주는 함수를 store.js에 만들어두고 
+- 컴포넌트는 그걸 부르기만 하는 식으로 state 수정하게 되어있습니다. 
+
+Q. 왜 이렇게 복잡하고 그지같나요?
+Redux 만든 사람이 정한 문법일 뿐이라 Redux 만든사람에게 뭐라하면 됩니다. 
+
+Q. 컴포넌트에서 state 직접 수정하면 편하지 않나요?
+그럼 당장은 편한데 나중에 프로젝트가 커지면 심각한 단점이 있을 수 있습니다. 
+
+- 컴포넌트 100개에서 직접 'kim' 이라는 state 변경하다가 갑자기 'kim'이 123이 되어버리는 버그가 발생하면 범인 찾으려고 컴포넌트 100개를 다 뒤져야합니다. 
+- 근데 state 수정함수를 store.js에 미리 만들어두고 컴포넌트는 그거 실행해달라고 부탁만 하는 식으로 코드를 짜놓으면 'kim'이 123이 되어버리는 버그가 발생했을 때 범인찾기가 수월합니다.
+- 범인은 무조건 store.js에 있으니까요. (수정함수를 잘 만들어놨다면)
+
+
+## Redux 4 : state가 object/array일 경우 변경하는 법
+
+store에 저장된 state가 array, object 자료인 경우 state 변경을 좀 쉽게 편리하게 할 수 있는데 오늘은 그 방법을 알아봅시다. 
+
+
+### redux state가 array/object인 경우 변경하려면 
+
+대충 {name : 'kim', age : 20} 이렇게 생긴 자료를 state로 만들어봅시다. 
+근데 저기서 'kim' -> 'park' 이렇게 변경하고 싶으면 state 변경함수 어떻게 만들어야할까요? 
+
+```jsx
+let user = createSlice({
+  name : 'user',
+  initialState : {name : 'kim', age : 20},
+  reducers : {
+    changeName(state){
+      return {name : 'park', age : 20}
+    }
+  }
+}) 
+```
+- 당연히 저렇게 쓰면 changeName() 사용시 변경됩니다.
+- return 오른쪽에 적은걸로 기존 state를 갈아치워주니까요. 
+
+```jsx
+let user = createSlice({
+  name : 'user',
+  initialState : {name : 'kim', age : 20},
+  reducers : {
+    changeName(state){
+      state.name = 'park'
+    }
+  }
+}) 
+```
+- 근데 state를 직접 수정하라고해도 변경 잘 됩니다. 
+- state를 직접 수정하는 문법을 사용해도 잘 변경되는 이유는
+- `Immer.js 라이브러리`가 state 사본을 하나 더 생성해준 덕분인데 Redux 설치하면 딸려와서 그렇습니다.
+
+- 그래서 결론은 array/object 자료의 경우 state변경은 state를 직접 수정해버려도 잘 되니까 직접 수정하십시오. 
+- (참고) 그래서 state 만들 때 문자나 숫자하나만 필요해도 redux에선 일부러 object 아니면 array에 담는 경우도 있습니다. 수정이 편리해지니까요. 
+
+
+### state 변경함수가 여러개 필요하면
+
+함수는 파라미터문법 이용하면 비슷한 함수 여러개 만들 필요가 없다고 했습니다. 
+state변경함수에도 파라미터문법 사용가능함 
+
+```jsx
+let user = createSlice({
+  name : 'user',
+  initialState : {name : 'kim', age : 20},
+  reducers : {
+    increase(state, a){
+      state.age += a.payload
+    }
+  }
+}) 
+```
+state변경함수의 둘째 파라미터를 작명하면 이제 
+increase(10)
+increase(100)
+이런 식으로 파라미터입력을 해서 함수사용이 가능합니다.
+파라미터자리에 넣은 자료들은 a.payload 하면 나옵니다.
+
+그래서 위처럼 코드 작성해놓으면
+increase(10) 이거 실행하면 +10 됩니다.
+increase(100) 이거 실행하면 +100 됩니다. 
+
+여기서도 파라미터문법 이용하면 비슷한 함수들은 여러개 만들 필요없습니다. 
+
+(참고)
+- a 말고 action 이런 식으로 작명 많이 합니다. 
+- action.type 하면 state변경함수 이름이 나오고
+- action.payload 하면 파라미터가 나옵니다. 
+
+
+### 파일 분할은
+
+- 코드가 길어서 보기싫으면 코드 덩어리들을 다른 파일로 빼면 됩니다. 
+- 그래서 강의에선 let user 변수와 state변경함수 export 부분을
+- store폴더/userSlice.js로 빼봤습니다.
+- import export 문법 배웠으면 알아서 잘할 수 있겠군요. 
