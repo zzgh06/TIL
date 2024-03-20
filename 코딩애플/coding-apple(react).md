@@ -2727,3 +2727,286 @@ increase(100) 이거 실행하면 +100 됩니다.
 - 그래서 강의에선 let user 변수와 state변경함수 export 부분을
 - store폴더/userSlice.js로 빼봤습니다.
 - import export 문법 배웠으면 알아서 잘할 수 있겠군요. 
+
+
+## localStorage로 만드는 최근 본 상품 기능 1
+
+- 새로고침하면 모든 state 데이터는 리셋됩니다.
+- 왜냐면 새로고침하면 브라우저는 html css js 파일들을 첨부터 다시 읽기 때문입니다.
+- 이게 싫다면 state 데이터를 서버로 보내서 DB에 저장하거나 하면 됩니다.
+- 내가 서버나 DB 지식이 없다면 localStorage를 이용해도 됩니다.
+
+### localStorage 문법 
+
+그냥 js 파일 아무데서나 다음 문법을 쓰면 localStorage에 데이터 입출력할 수 있습니다.
+
+```jsx
+localStorage.setItem('데이터이름', '데이터');
+localStorage.getItem('데이터이름');
+localStorage.removeItem('데이터이름')
+```
+차례로 추가, 읽기, 삭제 문법입니다.
+진짜 저장되었는지 application 탭에서 확인해보십시오.
+
+
+### localStorage에 array/object 자료를 저장하려면
+
+- 문자만 저장할 수 있는 공간이라 array/object를 바로 저장할 수는 없습니다. 
+- 강제로 저장해보면 문자로 바꿔서 저장해주는데 그럼 array/object 자료가 깨져서 저장됩니다.
+- 그래서 편법이 하나 있는데 array/object -> JSON 이렇게 변환해서 저장하면 됩니다. 
+- JSON은 문자취급을 받아서 그렇습니다. 
+- JSON은 그냥 따옴표친 array/object 자료입니다. 
+
+```jsx
+localStorage.setItem('obj', JSON.stringify({name:'kim'}) );
+```
+- JSON.stringify() 라는 함수에 array/object를 집어넣으면 그 자리에 JSON으로 변환된걸 남겨줍니다.
+- 그래서 위처럼 코드짜면 저장가능합니다. 
+- "{"name":"kim"}" 이런거 저장될듯 
+
+```jsx
+var a = localStorage.getItem('obj');
+var b = JSON.parse(a)
+```
+- 당연히 데이터를 다시 꺼내면 JSON이 나옵니다. 
+- JSON -> array/object 변환하고 싶으면 JSON.parse()를 쓰면 되겠습니다.
+
+
+### 최근 본 상품 UI 기능 만들기 
+
+누가 내 사이트로 접속시 localStorage에 [ ] 가 하나 있어야 자료 추가같은게 쉬울 것 같습니다. 
+
+```jsx
+function App() {
+
+  useEffect(()=>{
+    localStorage.setItem('watched', JSON.stringify( [] ))
+  },[]) 
+
+}
+```
+그래서 이런코드 하나 넣고 시작하면 편리할듯요
+
+
+## localStorage로 만드는 최근 본 상품 기능 2
+
+### 저번시간 숙제는
+1. 누가 Detail페이지 접속하면 
+2. 현재 페이지에 보이는 상품id 가져와서
+3. localStorage에 watch항목에 있던 [ ] 에 추가
+
+```jsx
+// (Detail.js)
+
+useEffect(()=>{
+  console.log(찾은상품.id)
+}, [])
+```
+1번 2번은 이렇게 하면 되겠군요. 
+Detail.js 아무데나 useEffect() 하나 집어넣으면 1번 번역 끝이고
+2번은 아마 예전에 let 찾은상품 이런거 만들어둔 적이 있을겁니다 
+그거 쓰면 현재 페이지의 상품번호도 잘 출력가능합니다.
+2번 번역 끝 
+
+3번 localStorage에 watch항목에 추가는 localStorage에 있던 기존 데이터를 수정하고 그런건 불가능하다고 했습니다.
+입력/출력밖에 안됩니다. 
+
+그래서 watch에 있던 [ ] 빼서 
+찾은상품.id를 추가하고 다시 watch 항목으로 저장하는 식으로 코드짜면 됩니다.
+localStorage 수정할 때 이렇게 하라고 저번시간에 배운듯
+
+```jsx
+// (Detail.js)
+
+useEffect(()=>{
+  let 꺼낸거 = localStorage.getItem('watched')
+  꺼낸거 = JSON.parse(꺼낸거)
+  꺼낸거.push(찾은상품.id)
+  localStorage.setItem('watched', JSON.stringify(꺼낸거))
+}, [])
+```
+
+그래서 watched에 있던 [ ] 꺼내서 찾은상품.id 추가하고 다시 watched 이름으로 집어넣으라고 했습니다. 
+3번 번역 끝 
+
+근데 같은 상품페이지 계속 접속하면 
+똑같은 상품id가 계속 추가되는 현상이 발생하는군요. 
+
+
+### 중복제거하기
+
+그런 버그같은건 여러분이 한글을 대충적어놔서 생기는 것입니다.
+한글을 아주 상세히 정확히 짜면 이론상 버그가 절대없음 
+
+"상품id가 이미 [ ]에 있으면 추가하지 말아주세요" 라고 추가만 하면 될 것 같은데 자바스크립트 기초를 잘 배운 분들은 딱봐도 if 대충 쓰면 되는구나 각이 나올텐데
+
+if 이런거 쓰기 귀찮으면 Set 자료형 쓰면 됩니다.
+Set은 array와 똑같은데 중복을 알아서 제거해주는 array입니다. 
+그리고 array <-> Set 변환도 쉬워서 
+array -> Set -> array 이런 식으로 쓰면 array에서 중복제거를 좀 쉽게 할 수 있습니다. 
+
+```jsx
+// (Detail.js)
+
+useEffect(()=>{
+  let 꺼낸거 = localStorage.getItem('watched')
+  꺼낸거 = JSON.parse(꺼낸거)
+  꺼낸거.push(찾은상품.id)
+
+  //Set으로 바꿨다가 다시 array로 만들기
+  꺼낸거 = new Set(꺼낸거)
+  꺼낸거 = Array.from(꺼낸거)
+  localStorage.setItem('watched', JSON.stringify(꺼낸거))
+}, [])
+```
+- 그래서 Set으로 바꿨다가 다시 array로 변환해봤습니다. 
+    - 구글찾아보니 new Set(array자료) 하면 array를 Set으로 바꿀 수 있고
+    - Array.from(Set자료) 하면 Set을 array로 바꿀 수 있다는군요.  
+    - 아무튼 이제 상세페이지 접속할 때 마다 localStorage에 상품번호들이 중복없이 잘 추가됩니다. 
+
+- 이제 심심하면 메인페이지 이런데다가 UI 하나 만들고 그 안에 최근 본 상품 id를 진열해주거나 그래봅시다.
+
+- 상품id만 진열하면 안이쁠테니 상품id가지고 실제 상품명이나 이미지나 그런걸 진열해보는 것도 좋겠군요. 
+
+
+### localStorage에 state를 자동저장되게 만들고 싶으면
+
+직접 코드짜도 되긴 하는데 
+redux-persist 이런 라이브러리 설치해서 쓰면 redux store 안에 있는 state를 자동으로 localStorage에 저장해줍니다.
+state 변경될 때마다 그에 맞게 localStorage 업데이트도 알아서 해줌 
+하지만 셋팅문법 복잡하고 귀찮습니다. 
+
+그래서 요즘은 신규 사이트들은 Redux 대신 Jotai, Zustand 같은 라이브러리를 사용합니다. 
+같은 기능을 제공하는데 셋팅도 거의 필요없고 문법이 훨씬 더 쉬우니까요.
+그리고 그런 라이브러리들도 아마 localStorage 자동저장기능들이 있습니다. 
+
+## redux-persist 설치방법 및 셋팅(redux toolkit + redux-persist)
+
+- `redux 상태 관리 라이브러리`를 많이 사용하실 것입니다.
+- 리덕스의 store는 페이지를 새로고침 할 경우 state가 날아가는 것을 보실 수 있습니다.
+- 이것에 대한 대응 방안으로 `localStorage 또는 session`에 저장하고자 하는 reducer state를 저장하여, 새로고침 하여도 저장공간에 있는 데이터를 redux에 불러오는 형식으로 이루어집니다.
+- 위에서 말한 이 작동을 위해 `redux-persist`를 사용합니다.
+
+### 설치
+
+터미널 창에 
+`npm install redux-persist` 
+입력하여 Redux Persist 설치합니다.
+
+### store.js 코드
+
+```jsx
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import rootReducer from './reducers/rootReducer';
+
+// Redux Persist 설정
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+};
+
+// rootReducer에 추가할 리듀서들 추가
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// Redux 스토어 생성
+const store = configureStore({
+  reducer: persistedReducer,
+});
+
+const persistor = persistStore(store);
+
+export { store, persistor };
+```
+
+### reducer에 persist store 정의 및 설정
+localStorage에 저장하고 싶으면
+```jsx
+import storage from 'redux-persist/lib/storage
+```
+
+session Storage에 저장하고 싶으면
+```jsx
+import storageSession from 'redux-persist/lib/storage/session
+```
+
+```jsx
+const persistConfig = {
+  // 로컬 스토리지에 저장될 키(key)의 이름입니다.
+  key: 'root',
+  // localStorage에 저장
+  storage: storage,
+};
+```
+
+### rootReducer에 추가할 리듀서들 추가
+
+rootReducer.js 파일에 필요한 리듀서 함수들을 import 하여 담아준다.
+
+```jsx
+(rootReducer.js)
+
+import { combineReducers  } from "@reduxjs/toolkit";
+import userReducer from './userSlice';
+import cartReducer from './cartSlice';
+
+const rootReducer = combineReducers({
+  user : userReducer.reducer,
+  cart: cartReducer.reducer, 
+});
+
+export default rootReducer;
+```
+주의할점은
+- Redux Toolkit에서 createSlice 함수를 사용하면 액션 생성자와 리듀서를 함께 정의하는 것이 가능하지만 이 객체를 바로 combineReducers 함수에 넣을 수는 없기 때문에 
+- 따라서 Redux의 combineReducers 함수에는 직접적으로 createSlice로 생성한 객체를 넣을 수 없습니다.
+- 대신에 createSlice로 생성한 객체 안에 있는 reducer 속성을 사용해야 합니다. reducer 속성에는 실제 리듀서 함수가 들어 있습니다. 이 함수를 - combineReducers에 전달하면 됩니다.
+
+```jsx
+(store.js)
+
+import rootReducer from './reducers/rootReducer';
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+```
+`persistedReducer`를 통해 로컬 스토리지에 Redux 상태를 지속적으로 저장
+
+
+### Redux 스토어 생성
+
+```jsx
+const store = configureStore({
+  reducer: persistedReducer,
+});
+
+const persistor = persistStore(store);
+
+export { store, persistor };
+```
+
+### 컴포넌트에서 Redux Store 사용: Redux 스토어를 컴포넌트에 제공
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store'; // Redux 스토어 및 persistor를 가져옵니다.
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+      <App />
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>
+);
+```
+
