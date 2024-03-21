@@ -3010,3 +3010,350 @@ root.render(
 );
 ```
 
+
+## 성능개선 1 : 개발자도구 & lazy import
+
+- props를 보냈는데 출력이 안된다거나 이미지를 넣었는데 안보이는 버그같은게 생기면 개발자도구를 켜서 Elements 탭 살펴보면 되는데
+- 여기선 여러분이 짠 코드가 실제 html css로 변환되어서 보여집니다. 
+- 그게 싫고 컴포넌트로 미리보고 싶으면 리액트 개발자도구를 설치해서 켜보면 됩니다. 
+
+
+### 크롬 확장프로그램 : React Developer Tools 
+
+- 크롬 웹스토어 들어가면 확장프로그램 설치가 가능합니다. 
+- 여기서 React Developer Tools 설치하면 Components 탭이 생기는데 여러분들이 개발중인 리액트사이트를 컴포넌트로 미리볼 수 있습니다. 
+
+- 왼쪽에서 컴포넌트구조 파악이 가능하고 왼쪽상단 아이콘눌러서 컴포넌트 찍어보면 거기 있는 state, props 이런거 조회가능합니다. 수정해볼 수도 있음 
+
+
+### Profiler 탭에서 성능평가 가능
+
+Profiler 탭 들어가서
+- 녹화버튼 누르고
+- 페이지 이동이나 버튼조작을 해보고
+- 녹화를 끝내면 
+
+방금 렌더링된 모든 컴포넌트의 렌더링시간을 측정해줍니다. 
+
+- 이상하게 느린 컴포넌트가 있다면 여기서 범인을 찾을 수 있습니다. 
+- <div>를 1만개 만들거나 그러지 않는 이상 보통은 걱정할 필요는 없습니다.
+- 지연 원인 대부분은 서버에서 ajax 요청결과가 늦게 도착해서 그런 경우가 많습니다.
+- 서버가 느린 건 어쩔 수 없음 
+
+
+### Redux Developer Tools 
+
+- 이것도 크롬 웹스토어에서 설치가능합니다. 
+- Redux store에 있던 state를 전부 확인가능합니다.
+- 그리고 dispatch 날릴 때 마다 뭐가 어떻게 바뀌었는지 로그를 작성해줍니다. 
+- store 복잡해지면 유용함 
+
+
+### lazy import
+
+- 리액트 코드 다 짰으면 npm run build 입력해서 여러분이 짰던 이상한 코드들을 역사와 전통의 html css js 파일로 변환해야합니다.  
+- 근데 리액트로 만드는 Single Page Application의 특징은 html, js 파일이 하나만 생성됩니다. 
+- 그 안에 지금까지 만든 App / Detail / Cart 모든 내용이 들어있어서 파일사이즈가 좀 큽니다. 
+- 원래 그래서 리액트 사이트들은 첫 페이지 로딩속도가 매우 느릴 수 있습니다. 
+
+- 그게 싫다면 js 파일을 잘게 쪼개면 됩니다.
+- 쪼개는 방법은 import 문법을 약간 고치면 되는데 지금 메인페이지 보면 Detail, Cart를 import 해서 쓰고있습니다.
+- 근데 잘 생각해보면 Detail, Cart 컴포넌트는 메인페이지에서 전혀 보이지 않고 있기 때문에 이런 컴포넌트들은 이런 문법으로 import 해놓으면 좋습니다. 
+
+```jsx
+(App.js)
+
+import Detail from './routes/Detail.js'
+import Cart from './routes/Cart.js'
+```
+
+▼▼▼▼
+
+```jsx
+(App.js)
+import {lazy, Suspense, useEffect, useState} from 'react'
+
+const Detail = lazy( () => import('./routes/Detail.js') )
+const Cart = lazy( () => import('./routes/Cart.js') )
+```
+이렇게 바꾸라는 소리입니다.
+
+- lazy 문법으로도 똑같이 import가 가능한데 이 경우엔
+- "Detail 컴포넌트가 필요해지면 import 해주세요" 라는 뜻이 됩니다. 
+- 그리고 이렇게 해놓으면 Detail 컴포넌트 내용을 다른 js 파일로 쪼개줍니다.
+- 그래서 첫 페이지 로딩속도를 향상시킬 수 있습니다.
+
+```jsx
+<Suspense fallback={ <div>로딩중임</div> }>
+  <Detail shoes={shoes} />
+</Suspense>
+```
+
+lazy 사용하면 당연히 Detail 컴포넌트 로드까지 지연시간이 발생할 수 있습니다. 그럴 땐
+1. Suspense 라는거 import 해오고
+2. Detail 컴포넌트를 감싸면
+
+Detail 컴포넌트가 로딩중일 때 대신 보여줄 html 작성도 가능합니다. 
+귀찮으면 `<Suspense>` 이걸로 `<Routes>` 전부 감싸도 됩니다. 
+
+
+## 성능개선 2 : 재렌더링 막는 memo, useMemo
+
+- 컴포넌트가 재렌더링되면 거기 안에 있는 자식컴포넌트는 항상 함께 재렌더링됩니다.
+- 리액트는 그렇게 대충 무식하게 동작하는데 평소엔 별 문제가 없겠지만 자식컴포넌트가 렌더링시간이 1초나 걸리는 무거운 컴포넌트면 어쩔 것입니까. 
+- 부모컴포넌트에 있는 버튼 누를 때 마다 1초 버벅이는 불상사가 발생합니다. 
+- 그럴 땐 자식을 memo로 감싸놓으면 됩니다. 
+
+
+### 테스트용 자식 컴포넌트 하나 만들어보기 
+
+```jsx
+function Child(){
+  console.log('재렌더링됨')
+  return <div>자식임</div>
+}
+
+function Cart(){ 
+
+  let [count, setCount] = useState(0)
+
+  return (
+    <Child />
+    <button onClick={()=>{ setCount(count+1) }}> + </button>
+  )
+}
+```
+- Cart 컴포넌트 안에 Child 컴포넌트를 만들었습니다.
+- 그리고 버튼누를 때 Cart 컴포넌트가 재렌더링되게 만들어놨는데 이 경우 `<Child>` 이것도 재렌더링됩니다.
+
+- 평소엔 별 문제가 없겠지만 `<Child>` 얘가 렌더링이 2초정도 걸리는 느린 컴포넌트면 어쩌죠?
+- 그럼 버튼 누를 때 마다 버벅일듯요.
+
+- 그럴 땐 memo라는 함수를 쓰면
+- "꼭 필요할 때만 `<Child>` 컴포넌트 재렌더링해주세요" 라고 코드를 짤 수도 있습니다. 
+
+
+### memo()로 컴포넌트 불필요한 재렌더링 막기
+
+memo() 써보려면 'react' 라이브러리로부터 import 해오시면 됩니다.
+
+```jsx
+import {memo, useState} from 'react'
+
+let Child = memo( function(){
+  console.log('재렌더링됨')
+  return <div>자식임</div>
+})
+
+function Cart(){ 
+
+  let [count, setCount] = useState(0)
+
+  return (
+    <Child />
+    <button onClick={()=>{ setCount(count+1) }}> + </button>
+  )
+}
+```
+1. memo를 import 해와서
+2. 원하는 컴포넌트 정의부분을 감싸면 됩니다. 
+
+- 근데 컴포넌트를 let 컴포넌트명 = function( ){ } 이런 식으로 만들어야 감쌀 수 있습니다.
+- 그럼 이제 Child로 전송되는 props가 변하거나 그런 경우에만 재렌더링됩니다. 
+
+- `Q. 어 그럼 memo는 좋은거니까 막써도 되겠네요?`
+    - memo로 감싼 컴포넌트는 헛된 재렌더링을 안시키려고 기존 props와 바뀐 props를 비교하는 연산이 추가로 진행됩니다.
+    - props가 크고 복잡하면 이거 자체로도 부담이 될 수도 있습니다.
+    - 그래서 꼭 필요한 곳에만 사용합시다. 
+
+
+### 비슷하게 생긴 useMemo
+
+- 비슷한 useMemo라는 문법도 있는데 이건 그냥 useEffect와 비슷한 용도입니다.
+- 컴포넌트 로드시 1회만 실행하고 싶은 코드가 있으면 거기 담으면 됩니다. 
+
+```jsx
+import {useMemo, useState} from 'react'
+
+function 함수(){
+  return 반복문10억번돌린결과
+}
+
+function Cart(){ 
+
+  let result = useMemo(()=>{ return 함수() }, [])
+
+  return (
+    <Child />
+    <button onClick={()=>{ setCount(count+1) }}> + </button>
+  )
+}
+```
+
+1. 예를 들어서 반복문을 10억번 돌려야하는 경우 
+2. 그 함수를 useMemo 안에 넣어두면 컴포넌트 로드시 1회만 실행됩니다. 
+
+그럼 재렌더링마다 동작안하니까 좀 효율적으로 동작하겠죠? 
+useEffect 처럼 dependency도 넣을 수 있어서 특정 state, props가 변할 때만 실행할 수도 있습니다. 
+
+
+## 성능개선 3 : useTransition, useDeferredValue
+
+리액트18버전 이후부터
+- 렌더링 성능이 저하되는 컴포넌트에서 쓸 수 있는 혁신적인 기능이 하나 추가되었습니다. 
+- useTransition 이건데 이걸로 오래걸리는 부분을 감싸면 렌더링시 버벅이지 않게 해줍니다.
+- 실은 코드 실행시점만 조절해주는 식임
+
+
+### 리액트 18버전부터 추가된 기능 1 : 일관된 batching
+
+automatic batching 이라는 기능이 있는데 
+
+```jsx
+setCount(1) 
+setName(2) 
+setValue(3)   //여기서 1번만 재렌더링됨
+```
+- state변경함수를 연달아서 3개 사용하면 재렌더링도 원래 3번 되어야하지만 
+- 리액트는 똑똑하게도 재렌더링을 마지막에 1회만 처리해줍니다. 
+- 일종의 쓸데없는 재렌더링 방지기능이고 batching이라고 합니다.
+
+```jsx
+fetch().then(() => {
+    setCount(1)   //재렌더링됨
+    setName(2)   //재렌더링됨
+}) 
+```
+- 근데 문제는 ajax요청, setTimeout안에 state변경함수가 있는 경우 batching이 일어나지 않습니다. 
+- 리액트 17버전까진 그런 식으로 일관적이지 않게 동작했는데
+- 18버전 이후 부터는 어디 있든 간에 재렌더링은 마지막에 1번만 됩니다. 
+
+
+### 리액트 18버전부터 추가된 기능 2 : useTransition 추가됨
+
+- 렌더링시간이 매우 오래걸리는 컴포넌트가 있다고 칩시다. 
+- 버튼클릭, 타이핑할 때 마다 그 컴포넌트를 렌더링해야한다면 이상하게 버튼클릭, 타이핑 반응속도도 느려집니다. 
+- 사람들은 원래 클릭, 타이핑을 했을 때 0.3초 이상 반응이 없으면 불편함을 느끼기 때문에 (한국인은 0.2초)
+
+개선방법을 알아봅시다. 
+- 당연히 그 컴포넌트 안의 html 갯수를 줄이면 대부분 해결됩니다. 
+- 근데 그런게 안되면 useTransition 기능을 쓰면 됩니다. 
+
+
+### 우선 재렌더링이 느린 컴포넌트 만들어보기 
+
+```jsx
+import {useState} from 'react'
+
+let a = new Array(10000).fill(0)
+
+function App(){
+  let [name, setName] = useState('')
+  
+  return (
+    <div>
+      <input onChange={ (e)=>{ setName(e.target.value) }}/>
+      {
+        a.map(()=>{
+          return <div>{name}</div>
+        })
+      }
+    </div>
+  )
+}
+```
+- 데이터가 10000개 들어있는 array자료를 하나 만들고
+- 그 갯수만큼 `<div>`를 생성하라고 했습니다.
+- 그리고 유저가 타이핑할 수 있는 `<input>`도 만들어봤습니다.
+
+유저가 `<input>`에 타이핑하면 그 글자를 `<div>` 1만개안에 집어넣어줘야하는데
+`<div>` 1만개 렌더링해주느라 `<input>`도 많은 지연시간이 발생합니다.
+타이핑한 결과가 바로바로 반응이 안옵니다. 답답해죽음 
+
+
+### useTransition 쓰면 
+
+```jsx
+import {useState, useTransition} from 'react'
+
+let a = new Array(10000).fill(0)
+
+function App(){
+  let [name, setName] = useState('')
+  let [isPending, startTransition] = useTransition()
+  
+  return (
+    <div>
+      <input onChange={ (e)=>{ 
+        startTransition(()=>{
+          setName(e.target.value) 
+        })
+      }}/>
+
+      {
+        a.map(()=>{
+          return <div>{name}</div>
+        })
+      }
+    </div>
+  )
+}
+```
+- useTransition() 쓰면 그 자리에 [변수, 함수]가 남습니다. 
+- 그 중 우측에 있는 startTransition() 함수로 state변경함수 같은걸 묶으면 `그걸 다른 코드들보다 나중에` 처리해줍니다.
+
+- 그래서 <input> 타이핑같이 즉각 반응해야하는걸 우선적으로 처리해줄 수 있습니다. 
+- 타이핑해보면 아까보다 반응속도가 훨씬 낫습니다. 
+- 물론 근본적인 성능개선이라기보단 특정코드의 실행시점을 뒤로 옮겨주는 것일 뿐입니다. 
+- html이 많으면 여러페이지로 쪼개십시오. 
+
+
+### isPending은 어디다 쓰냐면 
+
+startTransition() 으로 감싼 코드가 처리중일 때 true로 변하는 변수입니다.
+
+```jsx
+{
+  isPending ? "로딩중기다리셈" :
+  a.map(()=>{
+    return <div>{name}</div>
+  })
+} 
+```
+그래서 이런 식으로 코드짜는 것도 가능합니다.
+위의 코드는 useTransition으로 감싼게 처리완료되면 `<div>{name}</div>` 이게 보이겠군요.
+
+
+### useDeferredValue 이것도 비슷함
+
+- startTransition() 이거랑 용도가 똑같습니다.
+- 근데 얘는 state 아니면 변수하나를 집어넣을 수 있게 되어있습니다. 
+- 그래서 그 변수에 변동사항이 생기면 그걸 늦게 처리해줍니다. 
+
+```jsx
+import {useState, useTransition, useDeferredValue} from 'react'
+
+let a = new Array(10000).fill(0)
+
+function App(){
+  let [name, setName] = useState('')
+  let state1 = useDeferredValue(name)
+  
+  return (
+    <div>
+      <input onChange={ (e)=>{ 
+          setName(e.target.value) 
+      }}/>
+
+      {
+        a.map(()=>{
+          return <div>{state1}</div>
+        })
+      }
+    </div>
+  )
+}
+```
+이렇게 쓰면 아까랑 똑같은 기능을 개발가능합니다.
+- useDeferredValue 안에 state를 집어넣으면 그 state가 변동사항이 생겼을 때 나중에 처리해줍니다.
+- 그리고 처리결과는 let state에 저장해줍니다. 
